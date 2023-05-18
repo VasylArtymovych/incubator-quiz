@@ -1,6 +1,6 @@
 <template>
   <div>
-    Quizzes Page
+    Users List Page
   </div>
 </template>
 

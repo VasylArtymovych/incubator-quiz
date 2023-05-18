@@ -2,9 +2,8 @@ import type { RouteRecordRaw } from 'vue-router'
 
 import { routeNames } from './route-names'
 import { authRoutes } from '@/views/auth/auth.routes'
-import { questionsRoutes } from '@/views/questions/questions.routes'
-import { quizzesRoutes } from '@/views/quizzes/quizzes.routes'
-
+import { adminRoutes } from '@/views/admin/admin.routes'
+import { userRoutes } from '@/views/user/user.routes'
 import App from '@/App.vue'
 
 export const routes: Array<RouteRecordRaw> = [
@@ -19,7 +18,7 @@ export const routes: Array<RouteRecordRaw> = [
   },
 
   ...authRoutes,
-  ...questionsRoutes,
-  ...quizzesRoutes
+  ...adminRoutes,
+  ...userRoutes
 
 ]

@@ -16,7 +16,15 @@
           <el-input v-model="regForm.email" />
         </el-form-item>
 
+        <el-form-item label="User full name" prop="name">
+          <el-input v-model="regForm.email" />
+        </el-form-item>
+
         <el-form-item label="User password" prop="password">
+          <el-input v-model="regForm.password" type="password" show-password />
+        </el-form-item>
+
+        <el-form-item label="Confirm password" prop="confirmPassword">
           <el-input v-model="regForm.password" type="password" show-password />
         </el-form-item>
 
@@ -46,7 +54,9 @@ const regForm = useElFormModel({
 
 const regFormRules = useElFormRules({
   email: [useRequiredRule(), useEmailRule()],
-  password: [useRequiredRule(), useMinLenRule(6)]
+  name: [useRequiredRule()],
+  password: [useRequiredRule(), useMinLenRule(6)],
+  confirmPassword: [useRequiredRule(), useMinLenRule(6)]
 })
 
 const loading = ref(false)

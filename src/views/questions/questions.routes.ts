@@ -6,7 +6,7 @@ export const questionsRoutesNames = {
 
 export const questionsRoutes: RouteRecordRaw[] = [
   {
-    path: '/questions',
+    path: 'questions',
     name: questionsRoutesNames.questions,
     component: () => import('@/views/questions/Questions.vue')
   }

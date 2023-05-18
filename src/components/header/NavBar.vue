@@ -8,7 +8,7 @@
       v-for="item in items" :key="item"
       class="flex justify-center p-4 hover:bg-slate-300 md:p-0 relative uppercase font-bold"
     >
-      <RouterLink :to="`/${item}`">{{ item }}</RouterLink>
+      <RouterLink :to="`/admin/${item}`">{{ item }}</RouterLink>
     </li>
   </ul>
 </template>

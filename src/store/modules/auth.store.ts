@@ -7,23 +7,9 @@ export const useAuthStore = defineStore('authStore', () => {
     tokenExpiresInTime: ref(localStorage.getItem('si-expiresInTime'))
   }
 
-  function setTokens<T extends {access_token: string; refresh_token: string; expires_in: number}> (res: T) {
-    tokenData.accessToken.value = res.access_token
-    localStorage.setItem('si-token', res.access_token)
+  function setTokens() {}
 
-    tokenData.refreshToken.value = res.refresh_token
-    localStorage.setItem('si-refreshToken', res.refresh_token)
-
-    tokenData.tokenExpiresInTime.value = String(Date.now() + res.expires_in * 1000)
-    localStorage.setItem('si-expiresInTime', tokenData.tokenExpiresInTime.value)
-  }
-
-  function login (payload: ILoginRequest) {
-    return authService.login(payload)
-      .then((res) => {
-        setTokens(res)
-      })
-  }
+  function login () {}
 
   function logout () {
     localStorage.removeItem('si-token')

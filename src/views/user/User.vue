@@ -1,6 +1,7 @@
 <template>
+  <Header />
   <div>
-    Quizzes Page
+    User Page
   </div>
 </template>
 

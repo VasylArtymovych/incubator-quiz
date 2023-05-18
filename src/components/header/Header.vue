@@ -2,7 +2,7 @@
   <header class="flex justify-between items-center p-6 relative bg-slate-200">
     <div>Logo</div>
 
-    <NavBar :isActive="isActive" />
+    <NavBar v-show="isNavShown" :isActive="isActive" />
 
     <div class="flex">
       <BurgerButton :isActive="isActive" class="md:hidden" @toggleActive="isActive = !isActive" />
@@ -24,9 +24,11 @@
 
 <script setup lang="ts">
 import type { DropdownInstance } from 'element-plus'
-
+const route = useRoute()
 const isActive = ref(false)
 const dropdownRef = ref<DropdownInstance>()
+
+const isNavShown = computed(() => route.meta.role === 'Admin')
 
 function showClick () {
   if (!dropdownRef.value) return

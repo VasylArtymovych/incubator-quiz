@@ -1,10 +1,10 @@
 import { authRoutesNames } from '@/views/auth/auth.routes'
-import { questionsRoutesNames } from '@/views/questions/questions.routes'
-import { quizzesRoutesNames } from '@/views/quizzes/quizzes.routes'
+import { adminRoutesNames } from '@/views/admin/admin.routes'
+import { userRoutesNames } from '@/views/user/user.routes'
 
 export const routeNames = {
   rootPage: 'rootPage',
   ...authRoutesNames,
-  ...questionsRoutesNames,
-  ...quizzesRoutesNames
+  ...adminRoutesNames,
+  ...userRoutesNames
 }

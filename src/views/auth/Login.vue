@@ -55,10 +55,6 @@ function submit () {
   formRef.value?.validate(isValid => {
     if (isValid) {
       loading.value = true
-
-      login(formModel)
-        // .then(() => router.push({ name: $routeNames.contacts }))
-        .finally(() => (loading.value = false))
     }
   })
 }
