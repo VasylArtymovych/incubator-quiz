@@ -21,10 +21,21 @@
         </el-form-item>
 
         <div class="flex justify-between">
-          <el-button native-type="submit" :type="$elComponentType.primary">
-            Login
-          </el-button>
-          <el-button link :type="$elComponentType.primary" @click="$router.push({name: $routeNames.register})">
+          <div class="flex flex-col items-start">
+            <el-button native-type="submit" :type="$elComponentType.primary">
+              Login
+            </el-button>
+            <el-button
+              :type="$elComponentType.primary" link class="recovery"
+              @click="$router.push({name: $routeNames.recovery})"
+            >
+              Recover password
+            </el-button>
+          </div>
+          <el-button
+            link :type="$elComponentType.primary"
+            @click="$router.push({name: $routeNames.register})"
+          >
             Sign Up
           </el-button>
         </div>
@@ -36,7 +47,6 @@
 <script lang="ts" setup>
 const router = useRouter()
 const { $routeNames } = useGlobalProperties()
-const { login } = useAuthStore()
 
 const formRef = useElFormRef()
 
@@ -54,8 +64,28 @@ const formRules = useElFormRules({
 function submit () {
   formRef.value?.validate(isValid => {
     if (isValid) {
-      loading.value = true
+      supabase.auth.signInWithPassword(formModel)
+        .then(({ data, error }) => {
+          if (error) {
+            throw new Error(error.message)
+          }
+          if (data.user && data.user.email === 'yerimm@gmail.com') {
+            router.push({ name: $routeNames.admin })
+          } else {
+            router.push({ name: $routeNames.user })
+          }
+        })
+        .catch(error => {
+          useErrorNotification(error.message)
+        })
+        .finally(() => (loading.value = false))
     }
   })
 }
 </script>
+
+<style scoped lang="scss">
+  .el-button.recovery {
+    margin-left: 0;
+  }
+</style>

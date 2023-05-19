@@ -28,7 +28,7 @@ const route = useRoute()
 const isActive = ref(false)
 const dropdownRef = ref<DropdownInstance>()
 
-const isNavShown = computed(() => route.meta.role === 'Admin')
+const isNavShown = computed(() => route.meta.role === 'Admin' || true)
 
 function showClick () {
   if (!dropdownRef.value) return

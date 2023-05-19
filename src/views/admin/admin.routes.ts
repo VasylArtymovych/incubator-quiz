@@ -2,6 +2,7 @@ import type { RouteRecordRaw } from 'vue-router'
 import { questionsRoutesNames, questionsRoutes } from '@/views/questions/questions.routes'
 import { quizzesRoutesNames, quizzesRoutes } from '@/views/quizzes/quizzes.routes'
 import { usersRoutesNames, usersRoutes } from '@/views/users-list/users-list.routes'
+import { authRoutesNames } from '@/views/auth/auth.routes'
 
 export const adminRoutesNames = {
   admin: 'admin',
@@ -20,6 +21,15 @@ export const adminRoutes: RouteRecordRaw[] = [
       ...quizzesRoutes,
       ...usersRoutes
     ],
-    meta: { role: 'Admin', isProtected: true }
+    meta: { role: 'admin@softonix.org', isProtected: true },
+    beforeEnter: (to, from, next) => {
+      const { currentUser } = useAuthStore()
+
+      if (to.meta.isProtected && currentUser !== to.meta.role) {
+        next({ name: authRoutesNames.login })
+      } else {
+        next()
+      }
+    }
   }
 ]

@@ -13,11 +13,7 @@
         @submit.prevent="submit"
       >
         <el-form-item label="User email" prop="email">
-          <el-input v-model="regForm.email" />
-        </el-form-item>
-
-        <el-form-item label="User full name" prop="name">
-          <el-input v-model="regForm.email" />
+          <el-input v-model="regForm.email" type="email" />
         </el-form-item>
 
         <el-form-item label="User password" prop="password">
@@ -25,7 +21,7 @@
         </el-form-item>
 
         <el-form-item label="Confirm password" prop="confirmPassword">
-          <el-input v-model="regForm.password" type="password" show-password />
+          <el-input v-model="regForm.confirmPassword" type="password" show-password />
         </el-form-item>
 
         <div class="flex justify-between">
@@ -42,38 +38,45 @@
 </template>
 
 <script setup lang="ts">
-const router = useRouter()
-const { $routeNames } = useGlobalProperties()
-
 const regFormRef = useElFormRef()
 
 const regForm = useElFormModel({
   email: '',
-  password: ''
+  password: '',
+  confirmPassword: ''
 })
 
 const regFormRules = useElFormRules({
   email: [useRequiredRule(), useEmailRule()],
-  name: [useRequiredRule()],
   password: [useRequiredRule(), useMinLenRule(6)],
   confirmPassword: [useRequiredRule(), useMinLenRule(6)]
 })
 
 const loading = ref(false)
+const { register } = useAuthStore()
+const router = useRouter()
+const { $routeNames } = useGlobalProperties()
 
 const submit = () => {
   regFormRef.value?.validate((valid) => {
     if (valid) {
+      if (regForm.password !== regForm.confirmPassword) {
+        return useErrorNotification('Confirm password does not match the password')
+      }
       loading.value = true
 
-      authService.register(regForm)
-        .then(() => {
-          useSuccessNotification('Confirmation link was sent to your email')
-          router.push({ name: $routeNames.login })
+      register({
+        email: regForm.email,
+        password: regForm.password
+      })
+        .then((data) => {
+          if (data.user && data.user.email === 'admin@softonix.org') {
+            router.push({ name: $routeNames.admin })
+          } else {
+            router.push({ name: $routeNames.user })
+          }
         })
-        .catch(error => {
-          useSuccessNotification(error.message)
-        })
+        .catch(error => (useErrorNotification(error.message)))
         .finally(() => (loading.value = false))
     }
   })
