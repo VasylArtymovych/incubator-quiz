@@ -14,7 +14,8 @@ export const userRoutes: RouteRecordRaw[] = [
     beforeEnter (to) {
       const { activeUserData } = useAuthStore()
 
-      if (to.meta.isProtected && !activeUserData) {
+      if ((to.meta.isProtected && !activeUserData) ||
+        (to.meta.isProtected && activeUserData?.email === 'admin@softonix.org')) {
         return { name: authRoutesNames.login }
       }
       return true
