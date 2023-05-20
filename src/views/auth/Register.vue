@@ -38,6 +38,8 @@
 </template>
 
 <script setup lang="ts">
+import { navigateToAdminOrUserPage } from '@/views/auth/auth.helpers'
+
 const regFormRef = useElFormRef()
 
 const regForm = useElFormModel({
@@ -53,9 +55,7 @@ const regFormRules = useElFormRules({
 })
 
 const loading = ref(false)
-const { register } = useAuthStore()
-const router = useRouter()
-const { $routeNames } = useGlobalProperties()
+const { setUserData } = useAuthStore()
 
 const submit = () => {
   regFormRef.value?.validate((valid) => {
@@ -63,17 +63,19 @@ const submit = () => {
       if (regForm.password !== regForm.confirmPassword) {
         return useErrorNotification('Confirm password does not match the password')
       }
+
       loading.value = true
 
-      register({
+      authService.register({
         email: regForm.email,
         password: regForm.password
       })
-        .then((data) => {
-          if (data.user && data.user.email === 'admin@softonix.org') {
-            router.push({ name: $routeNames.admin })
-          } else {
-            router.push({ name: $routeNames.user })
+        .then(({ data, error }) => {
+          if (error) throw new Error(error.message)
+
+          if (data.user) {
+            setUserData(data.user)
+            navigateToAdminOrUserPage(data.user.email)
           }
         })
         .catch(error => (useErrorNotification(error.message)))

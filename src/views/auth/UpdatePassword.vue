@@ -2,7 +2,7 @@
   <div class="max-w-[500px] m-auto">
     <el-card v-loading="loading">
       <template #header>
-        <p class="font-semibold text-xl">Update password</p>
+        <p class="font-semibold text-xl">Reset password</p>
       </template>
 
       <el-form
@@ -48,10 +48,18 @@ const formRules = useElFormRules({
 function submit () {
   formRef.value?.validate(isValid => {
     if (isValid) {
-      supabase.auth.updateUser(formModel)
-        .then((data) => {
-          console.log(data)
+      if (updateForm.password !== updateForm.confirmPassword) {
+        return useErrorNotification('Confirm password does not match the password')
+      }
+
+      loading.value = true
+      authService.updatePassword({ password: updateForm.password })
+        .then(({ data, error }) => {
+          if (error) throw new Error(error.message)
+          data.user && router.push({ name: $routeNames.login, replace: true })
         })
+        .catch(error => (useErrorNotification(error.message)))
+        .finally(() => (loading.value = false))
     }
   })
 }

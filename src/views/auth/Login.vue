@@ -29,7 +29,7 @@
               :type="$elComponentType.primary" link class="recovery"
               @click="$router.push({name: $routeNames.recovery})"
             >
-              Recover password
+              Reset password
             </el-button>
           </div>
           <el-button
@@ -45,8 +45,7 @@
 </template>
 
 <script lang="ts" setup>
-const router = useRouter()
-const { $routeNames } = useGlobalProperties()
+import { navigateToAdminOrUserPage } from '@/views/auth/auth.helpers'
 
 const formRef = useElFormRef()
 
@@ -55,6 +54,7 @@ const formModel = useElFormModel({
   password: ''
 })
 const loading = ref(false)
+const { setUserData } = useAuthStore()
 
 const formRules = useElFormRules({
   email: [useRequiredRule(), useEmailRule()],
@@ -64,15 +64,13 @@ const formRules = useElFormRules({
 function submit () {
   formRef.value?.validate(isValid => {
     if (isValid) {
-      supabase.auth.signInWithPassword(formModel)
+      authService.login(formModel)
         .then(({ data, error }) => {
-          if (error) {
-            throw new Error(error.message)
-          }
-          if (data.user && data.user.email === 'yerimm@gmail.com') {
-            router.push({ name: $routeNames.admin })
-          } else {
-            router.push({ name: $routeNames.user })
+          if (error) throw new Error(error.message)
+
+          if (data.user) {
+            setUserData(data.user)
+            navigateToAdminOrUserPage(data.user.email)
           }
         })
         .catch(error => {

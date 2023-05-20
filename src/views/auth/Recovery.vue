@@ -42,7 +42,7 @@ function submit () {
   formRef.value?.validate(isValid => {
     if (isValid) {
       loading.value = true
-      supabase.auth.resetPasswordForEmail(formModel.email)
+      authService.recovery(formModel.email)
         .then(() => {
           useSuccessNotification(`Recovery link sent to ${formModel.email}`)
           loading.value = false
