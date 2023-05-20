@@ -6,7 +6,7 @@ import { adminRoutes } from '@/views/admin/admin.routes'
 import { userRoutes } from '@/views/user/user.routes'
 import App from '@/App.vue'
 
-export const routes: Array<RouteRecordRaw> = [
+export const routes: RouteRecordRaw[] = [
   {
     path: '/:pathMatch(.*)*',
     redirect: '/'
