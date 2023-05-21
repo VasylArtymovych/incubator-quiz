@@ -10,7 +10,7 @@ export const router = createRouter({
 router.beforeEach((to) => {
   const { activeUserData, logOut } = useAuthStore()
 
-  if (!activeUserData && to.meta.isProtected) {
+  if (to.meta.isProtected && !activeUserData) {
     logOut()
     return false
   }

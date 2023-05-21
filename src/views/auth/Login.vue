@@ -21,24 +21,22 @@
         </el-form-item>
 
         <div class="flex justify-between">
-          <div class="flex flex-col items-start">
-            <el-button native-type="submit" :type="$elComponentType.primary">
-              Login
-            </el-button>
-            <el-button
-              :type="$elComponentType.primary" link class="recovery"
-              @click="$router.push({name: $routeNames.recovery})"
-            >
-              Reset password
-            </el-button>
-          </div>
+          <el-button native-type="submit" :type="$elComponentType.primary">
+            LogIn
+          </el-button>
           <el-button
             link :type="$elComponentType.primary"
             @click="$router.push({name: $routeNames.register})"
           >
-            Sign Up
+            SignUp
           </el-button>
         </div>
+        <el-button
+          :type="$elComponentType.primary" link class="recovery"
+          @click="$router.push({name: $routeNames.recovery})"
+        >
+          Reset password
+        </el-button>
       </el-form>
     </el-card>
   </div>

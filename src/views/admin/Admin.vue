@@ -1,7 +1,7 @@
 <template>
   <Header />
 
-  <DefaultContainer class="text-center">
+  <DefaultContainer class="minHeightVh text-center">
     ADMIN PAGE
     <RouterView />
   </DefaultContainer>

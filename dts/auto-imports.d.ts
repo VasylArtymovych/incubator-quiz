@@ -80,6 +80,7 @@ declare global {
   const useRouter: typeof import('vue-router')['useRouter']
   const useSlots: typeof import('vue')['useSlots']
   const useSuccessNotification: typeof import('../src/composables/el-notification')['useSuccessNotification']
+  const usersListService: typeof import('../src/views/users-list/users-list.service')['usersListService']
   const watch: typeof import('vue')['watch']
   const watchEffect: typeof import('vue')['watchEffect']
   const watchPostEffect: typeof import('vue')['watchPostEffect']

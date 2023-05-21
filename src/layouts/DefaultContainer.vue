@@ -3,3 +3,9 @@
     <slot />
   </div>
 </template>
+
+<style>
+  .minHeightVh {
+    min-height: calc(100vh - 64px);
+  }
+</style>
