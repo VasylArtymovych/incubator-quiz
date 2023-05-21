@@ -1,5 +1,5 @@
 <template>
-  <div class="max-w-[500px] mx-auto">
+  <div class="max-w-[500px] mx-auto mt-12">
     <el-card v-loading="loading">
       <template #header>
         <p class="font-semibold text-xl">Registration</p>
@@ -26,10 +26,10 @@
 
         <div class="flex justify-between">
           <el-button native-type="submit" :type="$elComponentType.primary">
-            Sign Up
+            SignUp
           </el-button>
           <el-button link :type="$elComponentType.primary" @click="$router.push({name: $routeNames.login})">
-            Login
+            LogIn
           </el-button>
         </div>
       </el-form>

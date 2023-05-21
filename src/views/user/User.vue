@@ -1,10 +1,11 @@
 <template>
   <Header />
-  <div>
+  <DefaultContainer>
     User Page
-  </div>
+  </DefaultContainer>
 </template>
 
 <script setup lang="ts">
+import DefaultContainer from '@/layouts/DefaultContainer.vue'
 
 </script>

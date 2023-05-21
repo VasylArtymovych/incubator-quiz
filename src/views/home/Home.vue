@@ -1,9 +1,7 @@
 <template>
   <Header />
-
-  <DefaultContainer class="text-center">
-    ADMIN PAGE
-    <RouterView />
+  <DefaultContainer>
+    Home
   </DefaultContainer>
 </template>
 

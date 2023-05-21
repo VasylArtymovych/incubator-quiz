@@ -1,5 +1,5 @@
 <template>
-  <div class="max-w-[500px] m-auto">
+  <div class="max-w-[500px] m-auto mt-12">
     <el-card v-loading="loading">
       <template #header>
         <p class="font-semibold text-xl">Recover password</p>

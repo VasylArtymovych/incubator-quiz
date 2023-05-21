@@ -1,6 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { routes } from './routes'
-
 export * from './route-names'
 
 export const router = createRouter({
@@ -8,13 +7,13 @@ export const router = createRouter({
   routes
 })
 
-// router.beforeEach((to, from, next) => {
-//   const { tokenData, logout } = useAuthStore()
+router.beforeEach((to) => {
+  const { activeUserData, logOut } = useAuthStore()
 
-//   if (!tokenData.accessToken && to.meta.isProtected) {
-//     next(false)
-//     return logout()
-//   }
+  if (!activeUserData && to.meta.isProtected) {
+    logOut()
+    return false
+  }
 
-//   next()
-// })
+  return true
+})

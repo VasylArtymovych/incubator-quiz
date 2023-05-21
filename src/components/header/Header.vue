@@ -1,46 +1,50 @@
 <template>
-  <header class="flex justify-between items-center p-6 relative bg-slate-200">
-    <div>Logo</div>
+  <header class="relative py-2  bg-slate-200">
+    <DefaultContainer class="flex justify-between items-center">
+      <div
+        class="flex justify-center items-center cursor-pointer"
+        @click="$router.push({name: $routeNames.rootPage})"
+      >
+        <img :src="owlLogo" alt="logo" class="w-12 h-12">
+        <p class="font-bold font-main">QUIZ</p>
+      </div>
 
-    <NavBar v-if="isNavShown" :isActive="isActive" />
+      <NavBar :isActive="isActive" />
 
-    <div class="flex">
-      <BurgerButton :isActive="isActive" class="md:hidden" @toggleActive="isActive = !isActive" />
+      <div class="flex">
+        <BurgerButton :isActive="isActive" class="md:hidden" @toggleActive="isActive = !isActive" />
 
-      <el-dropdown trigger="click" @command="handleClick">
-        <el-avatar
-          :src="userLogo"
-          alt="user-logo"
-          class="ml-2 shrink-0 text-base"
-        >
-          User
-        </el-avatar>
-        <template #dropdown>
-          <el-dropdown-menu>
-            <el-dropdown-item>Log out</el-dropdown-item>
-          </el-dropdown-menu>
-        </template>
-      </el-dropdown>
-    </div>
+        <el-dropdown trigger="click" @command="handleClick">
+          <el-avatar
+            :src="userLogo"
+            alt="user-logo"
+            class="ml-6 shrink-0 text-base"
+          >
+            User
+          </el-avatar>
+          <template #dropdown>
+            <el-dropdown-menu>
+              <el-dropdown-item>Log out</el-dropdown-item>
+            </el-dropdown-menu>
+          </template>
+        </el-dropdown>
+      </div>
+    </DefaultContainer>
   </header>
 </template>
 
 <script setup lang="ts">
 import userLogo from '@/assets/images/person-icon.png'
-const route = useRoute()
-const router = useRouter()
-const { $routeNames } = useGlobalProperties()
+import owlLogo from '@/assets/images/owl_logo.png'
+import DefaultContainer from '@/layouts/DefaultContainer.vue'
+
+const authStore = useAuthStore()
 
 const isActive = ref(false)
 
-const isNavShown = computed(() => route.meta.role === 'admin@softonix.org')
-
 const handleClick = () => {
   localStorage.removeItem('iq-user')
-  authService.logOut()
-    .then(() => {
-      window.location.href = router.resolve($routeNames.login).href
-    })
+  authStore.logOut()
 }
 </script>
 

@@ -1,15 +1,33 @@
 <template>
   <ul
-    class="absolute top-[80px] w-full p-6 transition-[right] duration-300 ears-in md:static
-    md:flex justify-end gap-4 md:p-0"
+    class="absolute top-[64px] w-full py-4 transition-[right] duration-300 ears-in md:static
+    md:flex justify-end gap-4 md:p-0 bg-white md:bg-inherit"
     :class="[isActive ? 'right-0': 'right-[-100%]']"
   >
     <li
-      v-for="item in items" :key="item"
+      v-show="$route.path !== '/'"
       class="flex justify-center p-4 hover:bg-slate-300 md:p-0 relative uppercase font-bold"
     >
-      <RouterLink :to="`/admin/${item}`">{{ item }}</RouterLink>
+      <RouterLink :to="$routeNames.rootPage">
+        home
+      </RouterLink>
     </li>
+    <li
+      v-show="$route.path === '/'"
+      class="flex justify-center p-4 hover:bg-slate-300 md:p-0 relative uppercase font-bold"
+    >
+      <RouterLink :to="isAdmin ? $routeNames.admin : $routeNames.user">
+        dashboard
+      </RouterLink>
+    </li>
+    <template v-if="isAdmin">
+      <li
+        v-for="item in items" :key="item"
+        class="flex justify-center p-4 hover:bg-slate-300 md:p-0 relative uppercase font-bold"
+      >
+        <RouterLink :to="`/admin/${item}`">{{ item }}</RouterLink>
+      </li>
+    </template>
   </ul>
 </template>
 
@@ -19,6 +37,9 @@ defineProps<{
 }>()
 
 const items = ['quizzes', 'questions', 'users']
+const authStore = useAuthStore()
+
+const isAdmin = computed(() => authStore.activeUserData?.email === 'admin@softonix.org')
 </script>
 
 <style scoped>
@@ -29,7 +50,7 @@ const items = ['quizzes', 'questions', 'users']
   width: 100%;
   height: 2px;
   position: absolute;
-  bottom: -23px;
+  bottom: -20px;
   left: 0;
   background-color: blue;
 }
