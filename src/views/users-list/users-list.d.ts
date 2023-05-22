@@ -4,3 +4,5 @@ interface IUserData {
   id: string
   role: 'user' | 'admin'
 }
+
+type TAddUserPayload = Pick<IUserData, 'email' | 'role'>

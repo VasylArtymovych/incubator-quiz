@@ -1,6 +1,6 @@
 <template>
   <Header />
-  <DefaultContainer>
+  <DefaultContainer class="min-height-vh">
     User Page
   </DefaultContainer>
 </template>

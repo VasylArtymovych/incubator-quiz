@@ -1,6 +1,6 @@
 <template>
   <Header />
-  <DefaultContainer class="minHeightVh">
+  <DefaultContainer class="min-height-vh">
     Home
   </DefaultContainer>
 </template>

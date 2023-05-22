@@ -57,7 +57,7 @@ const handleClick = () => {
   -webkit-text-fill-color: transparent;
   -moz-background-clip: text;
   -moz-text-fill-color: transparent;
-  animation: rainbow-text 1000ms linear infinite;
+  animation: rainbow-text 1000ms linear alternate infinite;
 }
 @keyframes rainbow-text {
   20% {

@@ -5,7 +5,10 @@
 </template>
 
 <style>
-  .minHeightVh {
+  .min-height-vh {
     min-height: calc(100vh - 64px);
+  }
+  .height-vh {
+    height: calc(100vh - 64px);
   }
 </style>
