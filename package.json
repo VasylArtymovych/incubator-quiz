@@ -10,6 +10,7 @@
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.22.0",
     "axios": "^1.1.3",
     "element-plus": "^2.2.15",
     "pinia": "^2.0.23",

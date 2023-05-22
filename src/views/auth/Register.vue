@@ -1,5 +1,5 @@
 <template>
-  <div class="max-w-[500px] mx-auto">
+  <div class="max-w-[500px] mx-auto mt-12">
     <el-card v-loading="loading">
       <template #header>
         <p class="font-semibold text-xl">Registration</p>
@@ -13,19 +13,23 @@
         @submit.prevent="submit"
       >
         <el-form-item label="User email" prop="email">
-          <el-input v-model="regForm.email" />
+          <el-input v-model="regForm.email" type="email" />
         </el-form-item>
 
         <el-form-item label="User password" prop="password">
           <el-input v-model="regForm.password" type="password" show-password />
         </el-form-item>
 
+        <el-form-item label="Confirm password" prop="confirmPassword">
+          <el-input v-model="regForm.confirmPassword" type="password" show-password />
+        </el-form-item>
+
         <div class="flex justify-between">
           <el-button native-type="submit" :type="$elComponentType.primary">
-            Sign Up
+            SignUp
           </el-button>
           <el-button link :type="$elComponentType.primary" @click="$router.push({name: $routeNames.login})">
-            Login
+            LogIn
           </el-button>
         </div>
       </el-form>
@@ -34,36 +38,47 @@
 </template>
 
 <script setup lang="ts">
-const router = useRouter()
-const { $routeNames } = useGlobalProperties()
+import { navigateToAdminOrUserPage } from '@/views/auth/auth.helpers'
 
 const regFormRef = useElFormRef()
 
 const regForm = useElFormModel({
   email: '',
-  password: ''
+  password: '',
+  confirmPassword: ''
 })
 
 const regFormRules = useElFormRules({
   email: [useRequiredRule(), useEmailRule()],
-  password: [useRequiredRule(), useMinLenRule(6)]
+  password: [useRequiredRule(), useMinLenRule(6)],
+  confirmPassword: [useRequiredRule(), useMinLenRule(6)]
 })
 
 const loading = ref(false)
+const { setUserData } = useAuthStore()
 
 const submit = () => {
   regFormRef.value?.validate((valid) => {
     if (valid) {
+      if (regForm.password !== regForm.confirmPassword) {
+        return useErrorNotification('Confirm password does not match the password')
+      }
+
       loading.value = true
 
-      authService.register(regForm)
-        .then(() => {
-          useSuccessNotification('Confirmation link was sent to your email')
-          router.push({ name: $routeNames.login })
+      authService.register({
+        email: regForm.email,
+        password: regForm.password
+      })
+        .then(({ data, error }) => {
+          if (error) throw new Error(error.message)
+
+          if (data.user) {
+            setUserData(data.user)
+            navigateToAdminOrUserPage(data.user.email)
+          }
         })
-        .catch(error => {
-          useSuccessNotification(error.message)
-        })
+        .catch(error => (useErrorNotification(error.message)))
         .finally(() => (loading.value = false))
     }
   })

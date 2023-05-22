@@ -1,5 +1,5 @@
 <template>
-  <div class="max-w-[500px] m-auto">
+  <div class="max-w-[500px] m-auto mt-12">
     <el-card v-loading="loading">
       <template #header>
         <p class="font-semibold text-xl">Login</p>
@@ -22,21 +22,28 @@
 
         <div class="flex justify-between">
           <el-button native-type="submit" :type="$elComponentType.primary">
-            Login
+            LogIn
           </el-button>
-          <el-button link :type="$elComponentType.primary" @click="$router.push({name: $routeNames.register})">
-            Sign Up
+          <el-button
+            link :type="$elComponentType.primary"
+            @click="$router.push({name: $routeNames.register})"
+          >
+            SignUp
           </el-button>
         </div>
+        <el-button
+          :type="$elComponentType.primary" link class="recovery"
+          @click="$router.push({name: $routeNames.recovery})"
+        >
+          Reset password
+        </el-button>
       </el-form>
     </el-card>
   </div>
 </template>
 
 <script lang="ts" setup>
-const router = useRouter()
-const { $routeNames } = useGlobalProperties()
-const { login } = useAuthStore()
+import { navigateToAdminOrUserPage } from '@/views/auth/auth.helpers'
 
 const formRef = useElFormRef()
 
@@ -45,6 +52,7 @@ const formModel = useElFormModel({
   password: ''
 })
 const loading = ref(false)
+const { setUserData } = useAuthStore()
 
 const formRules = useElFormRules({
   email: [useRequiredRule(), useEmailRule()],
@@ -54,12 +62,26 @@ const formRules = useElFormRules({
 function submit () {
   formRef.value?.validate(isValid => {
     if (isValid) {
-      loading.value = true
+      authService.login(formModel)
+        .then(({ data, error }) => {
+          if (error) throw new Error(error.message)
 
-      login(formModel)
-        // .then(() => router.push({ name: $routeNames.contacts }))
+          if (data.user) {
+            setUserData(data.user)
+            navigateToAdminOrUserPage(data.user.email)
+          }
+        })
+        .catch(error => {
+          useErrorNotification(error.message)
+        })
         .finally(() => (loading.value = false))
     }
   })
 }
 </script>
+
+<style scoped lang="scss">
+  .el-button.recovery {
+    margin-left: 0;
+  }
+</style>

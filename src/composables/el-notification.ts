@@ -1,3 +1,5 @@
+import { ElNotification } from 'element-plus'
+
 export const useSuccessNotification = (message: string) => (
   ElNotification({
     title: 'Success',
