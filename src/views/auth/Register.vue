@@ -13,15 +13,15 @@
         @submit.prevent="submit"
       >
         <el-form-item label="User email" prop="email">
-          <el-input v-model="regForm.email" type="email" />
+          <el-input v-model.trim="regForm.email" type="email" />
         </el-form-item>
 
         <el-form-item label="User password" prop="password">
-          <el-input v-model="regForm.password" type="password" show-password />
+          <el-input v-model.trim="regForm.password" type="password" show-password />
         </el-form-item>
 
         <el-form-item label="Confirm password" prop="confirmPassword">
-          <el-input v-model="regForm.confirmPassword" type="password" show-password />
+          <el-input v-model.trim="regForm.confirmPassword" type="password" show-password />
         </el-form-item>
 
         <div class="flex justify-between">

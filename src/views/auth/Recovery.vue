@@ -9,11 +9,11 @@
         ref="formRef"
         label-position="top"
         :rules="formRules"
-        :model="formModel"
+        :model="recoveryForm"
         @submit.prevent="submit"
       >
         <el-form-item label="Email" prop="email">
-          <el-input v-model="formModel.email" type="email" />
+          <el-input v-model.trim="recoveryForm.email" type="email" />
         </el-form-item>
 
         <div class="flex justify-between">
@@ -29,7 +29,7 @@
 <script lang="ts" setup>
 const formRef = useElFormRef()
 
-const formModel = useElFormModel({
+const recoveryForm = useElFormModel({
   email: ''
 })
 const loading = ref(false)
@@ -42,9 +42,9 @@ function submit () {
   formRef.value?.validate(isValid => {
     if (isValid) {
       loading.value = true
-      authService.recovery(formModel.email)
+      authService.recovery(recoveryForm.email)
         .then(() => {
-          useSuccessNotification(`Recovery link sent to ${formModel.email}`)
+          useSuccessNotification(`Recovery link sent to ${recoveryForm.email}`)
           loading.value = false
           formRef.value.resetFields()
         })

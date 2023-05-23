@@ -1,6 +1,6 @@
 interface IOption {
-  label: string
-  correct: boolean
+  title: string
+  is_correct: boolean
 }
 
 interface IQuestion {

@@ -43,6 +43,7 @@
     "onUnmounted": true,
     "onUpdated": true,
     "provide": true,
+    "questionsService": true,
     "reactive": true,
     "readonly": true,
     "ref": true,

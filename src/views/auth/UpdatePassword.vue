@@ -13,11 +13,11 @@
         @submit.prevent="submit"
       >
         <el-form-item label="Password" prop="password">
-          <el-input v-model="updateForm.password" type="password" show-password />
+          <el-input v-model.trim="updateForm.password" type="password" show-password />
         </el-form-item>
 
         <el-form-item label="Confirm password" prop="confirmPassword">
-          <el-input v-model="updateForm.confirmPassword" type="password" show-password />
+          <el-input v-model.trim="updateForm.confirmPassword" type="password" show-password />
         </el-form-item>
 
         <el-button native-type="submit" :type="$elComponentType.primary">

@@ -9,15 +9,15 @@
         ref="formRef"
         label-position="top"
         :rules="formRules"
-        :model="formModel"
+        :model="loginForm"
         @submit.prevent="submit"
       >
         <el-form-item label="Email" prop="email">
-          <el-input v-model="formModel.email" type="email" />
+          <el-input v-model.trim="loginForm.email" type="email" />
         </el-form-item>
 
         <el-form-item label="Password" prop="password">
-          <el-input v-model="formModel.password" type="password" show-password />
+          <el-input v-model.trim="loginForm.password" type="password" show-password />
         </el-form-item>
 
         <div class="flex justify-between">
@@ -47,7 +47,7 @@ import { navigateToAdminOrUserPage } from '@/views/auth/auth.helpers'
 
 const formRef = useElFormRef()
 
-const formModel = useElFormModel({
+const loginForm = useElFormModel({
   email: '',
   password: ''
 })
@@ -62,7 +62,7 @@ const formRules = useElFormRules({
 function submit () {
   formRef.value?.validate(isValid => {
     if (isValid) {
-      authService.login(formModel)
+      authService.login(loginForm)
         .then(({ data, error }) => {
           if (error) throw new Error(error.message)
 
