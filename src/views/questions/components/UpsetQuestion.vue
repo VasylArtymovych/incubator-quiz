@@ -7,60 +7,66 @@
     <el-form
       ref="formRef"
       :model="formModel"
+      :rules="formRules"
       label-position="top"
     >
       <el-form-item
         prop="title"
         label="Question title"
-        :rules="[
-          {
-            required: true,
-            message: 'This field is required',
-            trigger: 'blur',
-          },
-        ]"
       >
         <el-input
           v-model="formModel.title" type="textarea"
-          :autosize="{ minRows: 2, maxRows: 4 }" resize="none" placeholder="Type your question"
+          :autosize="{ minRows: 2, maxRows: 2 }"
+          resize="none"
+          placeholder="Type your question"
         />
       </el-form-item>
 
       <el-form-item
         v-for="(opt, index) in formModel.options"
         :key="index"
-        :label="'Option' + index"
+        :label="'Option' + (index+1)"
         :prop="'options.' + index + '.title'"
-        :rules="{
-          required: true,
-          message: 'Option can not be null',
-          trigger: 'blur',
-        }"
+        :rules="optionRules"
         class="options"
       >
         <el-input v-model="opt.title" />
-        <el-radio v-model="correctOpt" :label="index" class="shrink-0 text-[10px] flex"> Correct</el-radio>
+        <el-radio
+          v-model="correctOpt"
+          :label="index"
+          class="shrink-0 text-[10px] flex"
+        >
+          Correct
+        </el-radio>
 
         <el-button
+          v-if="index>1"
           type="danger" :size="$elComponentSize.small" circle
           @click="removeOption(index)"
         >
           <span class="w-3 h-3">X</span>
         </el-button>
       </el-form-item>
-      <el-form-item>
+
+      <el-form-item
+        prop="timer"
+        label="Question time"
+        class="timerItem"
+      >
+        <el-input-number v-model="formModel.timer" :size="$elComponentSize.small" :min="5" :max="60" />
+
         <el-button :size="$elComponentSize.small" @click="addOption">
           <template #icon>
             <IconPlus />
           </template>
-          add
+          Add option
         </el-button>
       </el-form-item>
     </el-form>
     <template #footer>
       <span class="dialog-footer">
         <el-button @click="dialogVisible = false">Cancel</el-button>
-        <el-button type="primary" @click="submitForm">Submit</el-button>
+        <el-button type="primary" @click="submitForm">Create</el-button>
       </span>
     </template>
   </el-dialog>
@@ -70,11 +76,15 @@
 import cloneDeep from 'lodash.clonedeep'
 
 const dialogVisible = ref(false)
-
 const formRef = useElFormRef()
 const initialFormData = {
   title: '',
+  timer: 5,
   options: [
+    {
+      title: '',
+      is_correct: false
+    },
     {
       title: '',
       is_correct: false
@@ -83,6 +93,11 @@ const initialFormData = {
   tags: []
 }
 const formModel = ref(cloneDeep(initialFormData))
+const formRules = useElFormRules({
+  title: [useRequiredRule(), useMinLenRule(12)],
+  timer: [useRequiredRule()]
+})
+const optionRules = [useRequiredRule()]
 const correctOpt = ref<number>()
 
 const removeOption = (index: number) => {
@@ -142,6 +157,10 @@ defineExpose({
   display: flex;
   align-items: center;
   gap: 2px;
+}
+
+.timerItem .el-form-item__content {
+  justify-content: space-between;
 }
 
 </style>
