@@ -1,13 +1,8 @@
-@forward 'element-plus/theme-chalk/src/common/var.scss' with (
-  $colors: (
-    'primary': (
-      'base': #3b82f6, // todo: this MUST be a valid 6-digit HEX color in order to make it correctly work
+@forward 'element-plus/theme-chalk/src/common/var.scss' with ($colors: ('primary': ('base': #3b82f6, // todo: this MUST be a valid 6-digit HEX color in order to make it correctly work
     ),
   ),
-  $button-border-radius: (
-    'default': 4px,
-  )
-);
+  $button-border-radius: ('default': 4px,
+  ));
 
 @use "element-plus/theme-chalk/src/base";
 @use "element-plus/theme-chalk/src/button";
@@ -27,3 +22,4 @@
 @use "element-plus/theme-chalk/src/popconfirm";
 @use "element-plus/theme-chalk/src/overlay";
 @use "element-plus/theme-chalk/src/dialog";
+@use "element-plus/theme-chalk/src/pagination";

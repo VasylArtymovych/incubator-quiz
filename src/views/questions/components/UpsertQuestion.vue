@@ -89,7 +89,7 @@
     <template #footer>
       <span class="dialog-footer">
         <el-button @click="dialogVisible = false">Cancel</el-button>
-        <el-button type="primary" @click="submitForm">Create</el-button>
+        <el-button type="primary" @click="submitForm">{{ updatingQuestionId ? "Update": 'Create' }}</el-button>
       </span>
     </template>
   </el-dialog>

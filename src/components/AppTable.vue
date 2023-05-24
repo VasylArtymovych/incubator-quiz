@@ -80,9 +80,10 @@ const checkForDate = (heading: ITableHeading, row: any) => {
 
 <style lang="scss" scoped>
   .el-table {
-  &__body-wrapper, &__header-wrapper {
-    @apply overflow-visible #{!important}
+    &__body-wrapper, &__header-wrapper {
+      @apply overflow-visible #{!important}
+    }
+    @apply overflow-auto #{!important}
   }
-  @apply overflow-auto #{!important}
-}
+
 </style>

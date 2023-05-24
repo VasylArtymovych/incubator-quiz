@@ -1,6 +1,8 @@
 class QuestionsService {
-  getQuestions () {
-    return supabase.from('questions').select('*')
+  getQuestions (from: number, to: number) {
+    return supabase.from('questions')
+      .select('*', { count: 'exact' })
+      .range(from, to)
   }
 
   addQuestion (payload: TUpsetQuestion) {
