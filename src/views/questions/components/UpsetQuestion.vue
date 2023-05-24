@@ -62,6 +62,29 @@
           Add option
         </el-button>
       </el-form-item>
+
+      <el-form-item
+        prop="tags"
+        label="Position tags"
+      >
+        <el-select
+          v-model="formModel.tags"
+          multiple
+          filterable
+          allow-create
+          default-first-option
+          :reserve-keyword="false"
+          placeholder="Choose/create tags"
+          class="w-full"
+        >
+          <el-option
+            v-for="item in tagOptions"
+            :key="item"
+            :label="item"
+            :value="item"
+          />
+        </el-select>
+      </el-form-item>
     </el-form>
     <template #footer>
       <span class="dialog-footer">
@@ -73,11 +96,10 @@
 </template>
 
 <script setup lang="ts">
-import cloneDeep from 'lodash.clonedeep'
-
 const dialogVisible = ref(false)
 const formRef = useElFormRef()
-const initialFormData = {
+
+const formModel = ref<TUpsetQuestion>({
   title: '',
   timer: 5,
   options: [
@@ -91,18 +113,16 @@ const initialFormData = {
     }
   ],
   tags: []
-}
-const formModel = ref(cloneDeep(initialFormData))
+})
 const formRules = useElFormRules({
   title: [useRequiredRule(), useMinLenRule(12)],
-  timer: [useRequiredRule()]
+  timer: [useRequiredRule()],
+  tags: [useRequiredRule()]
 })
 const optionRules = [useRequiredRule()]
-const correctOpt = ref<number>()
 
-const removeOption = (index: number) => {
-  formModel.value.options.splice(index, 1)
-}
+const correctOpt = ref<number>()
+const tagOptions = ref(['FE', 'BE'])
 
 const addOption = () => {
   formModel.value.options.push({
@@ -111,19 +131,25 @@ const addOption = () => {
   })
 }
 
+const removeOption = (index: number) => {
+  formModel.value.options.splice(index, 1)
+}
+
 const submitForm = () => {
   if (!formRef.value) return
   formRef.value.validate((valid) => {
     if (valid) {
-      console.log('submit!')
       formModel.value.options.map((opt, i) => {
         if (i === correctOpt.value) {
           opt.is_correct = true
         }
         return opt
       })
-      console.log(formModel.value)
-      dialogVisible.value = false
+      questionsService.addQuestion(formModel.value)
+        .then(data => {
+          console.log(data)
+          dialogVisible.value = false
+        })
     } else {
       console.log('error submit!')
       return false
@@ -132,7 +158,21 @@ const submitForm = () => {
 }
 
 const resetFrom = () => {
-  formModel.value = cloneDeep(initialFormData)
+  formModel.value = {
+    title: '',
+    timer: 5,
+    options: [
+      {
+        title: '',
+        is_correct: false
+      },
+      {
+        title: '',
+        is_correct: false
+      }
+    ],
+    tags: []
+  }
   correctOpt.value = undefined
 }
 
@@ -140,8 +180,13 @@ const onCloseDialog = () => {
   resetFrom()
 }
 
-const openQuestionDialog = () => (dialogVisible.value = true)
-
+const openQuestionDialog = (row?: IQuestion) => {
+  if (row) {
+    formModel.value = row
+    correctOpt.value = row.options.findIndex(opt => (opt.is_correct === true))
+  }
+  dialogVisible.value = true
+}
 defineExpose({
   openQuestionDialog
 })

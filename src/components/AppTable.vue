@@ -42,7 +42,7 @@
           :column="column"
           :index="$index"
         >
-          {{ heading.isDate ? new Intl.DateTimeFormat('en-US').format(row[heading.value]) : row[heading.value] }}
+          {{ checkForDate(heading, row) }}
         </slot>
       </template>
     </el-table-column>
@@ -67,6 +67,14 @@ withDefaults(defineProps<{
   rowKey: 'id',
   showHeader: true
 })
+
+const checkForDate = (heading: ITableHeading, row: any) => {
+  if (heading.isDate) {
+    return new Intl.DateTimeFormat('en-US').format(row[heading.value])
+  } else {
+    return row[heading.value]
+  }
+}
 
 </script>
 

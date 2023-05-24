@@ -44,7 +44,7 @@ function submit () {
       loading.value = true
       authService.recovery(recoveryForm.email)
         .then(() => {
-          useSuccessNotification(`Recovery link sent to ${recoveryForm.email}`)
+          useSuccessNotification(`Recovery link was sent to ${recoveryForm.email}`)
           loading.value = false
           formRef.value.resetFields()
         })

@@ -37,7 +37,7 @@
     <AppTable v-if="users" :data=" users" :headings="usersHeadings" class="text-black">
       <template #actions="{row}">
         <el-popconfirm
-          width="220" title="Are you sure to delete user?"
+          width="220" title="Are you sure to delete this?"
           confirm-button-text="Yes"
           cancel-button-text="No"
           @confirm="deleteUser(row)"

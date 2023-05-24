@@ -1,10 +1,12 @@
 class QuestionsService {
   getQuestions () {
-    return ''
+    return supabase.from('questions').select('*')
   }
 
-  addQuestion () {
-    return ''
+  addQuestion (payload: TUpsetQuestion) {
+    return supabase
+      .from('questions')
+      .insert([payload])
   }
 }
 
