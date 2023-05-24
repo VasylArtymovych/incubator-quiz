@@ -46,6 +46,7 @@ declare module '@vue/runtime-core' {
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     TestForm: typeof import('./../src/views/questions/components/TestForm.vue')['default']
+    UpsertQuestion: typeof import('./../src/views/questions/components/UpsertQuestion.vue')['default']
     UpsetQuestion: typeof import('./../src/views/questions/components/UpsetQuestion.vue')['default']
   }
   export interface ComponentCustomProperties {

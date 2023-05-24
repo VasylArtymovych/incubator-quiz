@@ -98,8 +98,9 @@
 <script setup lang="ts">
 const dialogVisible = ref(false)
 const formRef = useElFormRef()
+const updatingQuestionId = ref('')
 
-const formModel = ref<TUpsetQuestion>({
+const formModel = ref<TUpsetQuestion | IQuestion>({
   title: '',
   timer: 5,
   options: [
@@ -116,8 +117,7 @@ const formModel = ref<TUpsetQuestion>({
 })
 const formRules = useElFormRules({
   title: [useRequiredRule(), useMinLenRule(12)],
-  timer: [useRequiredRule()],
-  tags: [useRequiredRule()]
+  timer: [useRequiredRule()]
 })
 const optionRules = [useRequiredRule()]
 
@@ -140,16 +140,31 @@ const submitForm = () => {
   formRef.value.validate((valid) => {
     if (valid) {
       formModel.value.options.map((opt, i) => {
-        if (i === correctOpt.value) {
-          opt.is_correct = true
-        }
+        (i === correctOpt.value)
+          ? opt.is_correct = true
+          : opt.is_correct = false
+
         return opt
       })
-      questionsService.addQuestion(formModel.value)
-        .then(data => {
-          console.log(data)
-          dialogVisible.value = false
-        })
+      if (updatingQuestionId.value) {
+        questionsService.updateQuestion(formModel.value as IQuestion)
+          .then(data => {
+            if (data.error) {
+              return useErrorNotification(data.error.message)
+            }
+            dialogVisible.value = false
+            useSuccessNotification('Question was successfully updated')
+          })
+      } else {
+        questionsService.addQuestion(formModel.value)
+          .then(data => {
+            if (data.error) {
+              return useErrorNotification(data.error.message)
+            }
+            dialogVisible.value = false
+            useSuccessNotification('Question was successfully updated')
+          })
+      }
     } else {
       console.log('error submit!')
       return false
@@ -181,7 +196,10 @@ const onCloseDialog = () => {
 }
 
 const openQuestionDialog = (row?: IQuestion) => {
+  updatingQuestionId.value = ''
+
   if (row) {
+    updatingQuestionId.value = row.id
     formModel.value = row
     correctOpt.value = row.options.findIndex(opt => (opt.is_correct === true))
   }

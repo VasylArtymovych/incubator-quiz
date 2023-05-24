@@ -1,5 +1,5 @@
 <template>
-  <UpsetQuestion ref="dialogRef" />
+  <UpsertQuestion ref="dialogRef" />
 
   <el-button :type="$elComponentType.success" @click="upsetQuestion()">
     <template #icon>
@@ -13,8 +13,12 @@
         <span>{{ i+1 }}</span>: {{ opt.title }}
       </p>
     </template>
+
     <template #tags="{row}">
-      <span v-for="tag in row.tags" :key="tag">{{ tag }}; </span>
+      <template v-if="row.tags.length > 0">
+        <span v-for="tag in row.tags" :key="tag">{{ tag }}; </span>
+      </template>
+      <p v-else />
     </template>
     <template #actions="{row}">
       <el-button size="small" @click.stop="handleEdit(row)">
@@ -38,24 +42,12 @@
 </template>
 
 <script setup lang="ts">
-import UpsetQuestion from './components/UpsetQuestion.vue'
+import UpsertQuestion from './components/UpsertQuestion.vue'
 import type { ITableHeading } from '@/types'
 
-const dialogRef = ref<InstanceType<typeof UpsetQuestion> | null >(null)
+const dialogRef = ref<InstanceType<typeof UpsertQuestion> | null >(null)
 
-const questions = ref<IQuestion[] | null>([
-  {
-    id: '1',
-    title: 'Is possible to change the name already defined function?',
-    timer: 5,
-    options: [
-      { title: 'No, it is impossible', is_correct: false },
-      { title: 'Func.name = newFuncName', is_correct: false },
-      { title: 'Object.defineProperty()', is_correct: true }
-    ],
-    tags: ['FE', 'junior']
-  }
-])
+const questions = ref<IQuestion[] | null>(null)
 
 const headings: ITableHeading[] = [
   { label: 'Title', value: 'title', sortable: true, minWidth: 200 },
@@ -70,7 +62,14 @@ const handleEdit = (row: IQuestion) => {
 }
 
 const handleDelete = (row: IQuestion) => {
-  return row
+  return questionsService.deleteQuestion(row.id)
+    .then(data => {
+      if (data.status === 204) {
+        return useSuccessNotification('Question was successfully deleted')
+      } else if (data.error) {
+        return useErrorNotification(data.error.message)
+      }
+    })
 }
 
 const upsetQuestion = (row?: IQuestion) => {
@@ -80,8 +79,11 @@ const upsetQuestion = (row?: IQuestion) => {
 }
 
 questionsService.getQuestions()
-  .then(data => {
-    console.log(data)
+  .then(({ data, error }) => {
+    if (error) {
+      return useErrorNotification(error.message)
+    }
+    questions.value = data as IQuestion[]
   })
 
 </script>
