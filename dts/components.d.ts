@@ -10,6 +10,7 @@ declare module '@vue/runtime-core' {
     AppButton: typeof import('./../src/components/AppButton.vue')['default']
     AppInput: typeof import('./../src/components/AppInput.vue')['default']
     AppModal: typeof import('./../src/components/AppModal.vue')['default']
+    AppPagination: typeof import('./../src/components/AppPagination.vue')['default']
     AppTable: typeof import('./../src/components/AppTable.vue')['default']
     BurgerButton: typeof import('./../src/components/header/BurgerButton.vue')['default']
     Card: typeof import('./../src/components/Card.vue')['default']
@@ -47,7 +48,7 @@ declare module '@vue/runtime-core' {
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     TestForm: typeof import('./../src/views/questions/components/TestForm.vue')['default']
-    UpsertQuestion: typeof import('./../src/views/questions/components/UpsertQuestion.vue')['default']
+    UpsertQuestion: typeof import('./../src/views/admin/questions/components/UpsertQuestion.vue')['default']
     UpsetQuestion: typeof import('./../src/views/questions/components/UpsetQuestion.vue')['default']
   }
   export interface ComponentCustomProperties {

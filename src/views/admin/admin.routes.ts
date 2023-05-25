@@ -1,7 +1,7 @@
 import type { RouteRecordRaw } from 'vue-router'
-import { questionsRoutesNames, questionsRoutes } from '@/views/questions/questions.routes'
-import { quizzesRoutesNames, quizzesRoutes } from '@/views/quizzes/quizzes.routes'
-import { usersRoutesNames, usersRoutes } from '@/views/users-list/users-list.routes'
+import { questionsRoutesNames, questionsRoutes } from './questions/questions.routes'
+import { quizzesRoutesNames, quizzesRoutes } from './quizzes/quizzes.routes'
+import { usersRoutesNames, usersRoutes } from './users-list/users-list.routes'
 import { authRoutesNames } from '@/views/auth/auth.routes'
 
 export const adminRoutesNames = {

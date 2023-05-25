@@ -6,6 +6,7 @@
   >
     <el-form
       ref="formRef"
+      v-loading="loading"
       :model="formModel"
       :rules="formRules"
       label-position="top"
@@ -96,9 +97,11 @@
 </template>
 
 <script setup lang="ts">
+const emit = defineEmits(['inserted', 'updated'])
 const dialogVisible = ref(false)
 const formRef = useElFormRef()
 const updatingQuestionId = ref('')
+const loading = ref(false)
 
 const formModel = ref<TUpsetQuestion | IQuestion>({
   title: '',
@@ -137,7 +140,7 @@ const removeOption = (index: number) => {
 
 const submitForm = () => {
   if (!formRef.value) return
-  formRef.value.validate((valid) => {
+  formRef.value.validate(async (valid) => {
     if (valid) {
       formModel.value.options.map((opt, i) => {
         (i === correctOpt.value)
@@ -147,23 +150,9 @@ const submitForm = () => {
         return opt
       })
       if (updatingQuestionId.value) {
-        questionsService.updateQuestion(formModel.value as IQuestion)
-          .then(data => {
-            if (data.error) {
-              return useErrorNotification(data.error.message)
-            }
-            dialogVisible.value = false
-            useSuccessNotification('Question was successfully updated')
-          })
+        updateQuestion()
       } else {
-        questionsService.addQuestion(formModel.value)
-          .then(data => {
-            if (data.error) {
-              return useErrorNotification(data.error.message)
-            }
-            dialogVisible.value = false
-            useSuccessNotification('Question was successfully updated')
-          })
+        createQuestion()
       }
     } else {
       console.log('error submit!')
@@ -204,6 +193,42 @@ const openQuestionDialog = (row?: IQuestion) => {
     correctOpt.value = row.options.findIndex(opt => (opt.is_correct === true))
   }
   dialogVisible.value = true
+}
+
+const updateQuestion = async () => {
+  try {
+    loading.value = true
+    const { error, status } = await questionsService.updateQuestion(formModel.value as IQuestion)
+    if (error) throw new Error(error.message)
+    if (status === 204) {
+      emit('updated')
+      dialogVisible.value = false
+      useSuccessNotification('Question was successfully updated')
+    }
+  } catch (error: any) {
+    return useErrorNotification(error.message)
+  } finally {
+    loading.value = false
+  }
+}
+
+const createQuestion = async () => {
+  try {
+    loading.value = true
+    const { error, status } = await questionsService.addQuestion(formModel.value)
+    if (error) {
+      return useErrorNotification(error.message)
+    }
+    if (status === 201) {
+      emit('inserted')
+      dialogVisible.value = false
+      useSuccessNotification('Question was successfully updated')
+    }
+  } catch (error) {
+
+  } finally {
+    loading.value = false
+  }
 }
 defineExpose({
   openQuestionDialog

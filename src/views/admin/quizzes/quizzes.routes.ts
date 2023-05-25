@@ -8,6 +8,6 @@ export const quizzesRoutes: RouteRecordRaw[] = [
   {
     path: 'quizzes',
     name: quizzesRoutesNames.quizzes,
-    component: () => import('@/views/quizzes/Quizzes.vue')
+    component: () => import('@/views/admin/quizzes/Quizzes.vue')
   }
 ]

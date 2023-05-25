@@ -8,6 +8,6 @@ export const questionsRoutes: RouteRecordRaw[] = [
   {
     path: 'questions',
     name: questionsRoutesNames.questions,
-    component: () => import('@/views/questions/Questions.vue')
+    component: () => import('@/views/admin/questions/Questions.vue')
   }
 ]
