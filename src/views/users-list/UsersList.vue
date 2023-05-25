@@ -1,5 +1,5 @@
 <template>
-  <el-button class="block ml-auto" @click="isDialogVisible = true">
+  <!-- <el-button class="block ml-auto" @click="isDialogVisible = true">
     <template #icon>
       <IconPlus />
     </template>
@@ -31,11 +31,11 @@
         </el-button>
       </span>
     </template>
-  </el-dialog>
+  </el-dialog> -->
 
   <div v-loading="loading">
     <AppTable v-if="users" :data=" users" :headings="usersHeadings" class="text-black">
-      <template #actions="{row}">
+      <!-- <template #actions="{row}">
         <el-popconfirm
           width="220" title="Are you sure to delete this?"
           confirm-button-text="Yes"
@@ -48,8 +48,19 @@
             </el-button>
           </template>
         </el-popconfirm>
-      </template>
+      </template> -->
     </AppTable>
+
+    <el-pagination
+      v-if="totalCount"
+      v-model:current-page="currentPage"
+      v-model:page-size="pageSize"
+      :total="totalCount"
+      background
+      layout="prev, pager, next, jumper"
+      class="justify-center"
+      @current-change="handleCurrentChange"
+    />
   </div>
 </template>
 
@@ -57,53 +68,71 @@
 import type { ITableHeading } from '@/types'
 import { usersListService } from './users-list.service'
 
-const isDialogVisible = ref(false)
-const formRef = useElFormRef()
-const formModel = useElFormModel<TAddUserPayload>({
-  email: '',
-  role: 'user'
-})
-const formRules = useElFormRules({
-  email: [useRequiredRule(), useEmailRule()]
-})
+// const isDialogVisible = ref(false)
+// const formRef = useElFormRef()
+// const formModel = useElFormModel<TAddUserPayload>({
+//   email: '',
+//   role: 'user'
+// })
+// const formRules = useElFormRules({
+//   email: [useRequiredRule(), useEmailRule()]
+// })
+
+const currentPage = ref(1)
+const totalCount = ref<number>(1)
+const pageSize = ref(3)
+const from = computed(() => ((currentPage.value - 1) * (pageSize.value)))
+const to = computed(() => (from.value + pageSize.value - 1))
 
 const users = ref<IUserData[] | null>(null)
+
 const loading = ref(true)
 
 const usersHeadings: ITableHeading[] = [
   { label: 'Email', value: 'email' },
   // { label: 'Full name', value: 'full_name' },
-  { label: 'Role', value: 'role' },
-  { label: 'Actions', value: 'actions', align: 'right', minWidth: 30 }
+  { label: 'Role', value: 'role' }
+  // { label: 'Actions', value: 'actions', align: 'right', minWidth: 30 }
 ]
 
-const addUser = () => {
-  formRef.value.validate((isValid) => {
-    if (isValid) {
-      usersListService.addUser(formModel)
-        .then((data) => {
-          console.log(data)
-        })
-    }
-  })
+const handleCurrentChange = (page: number) => {
+  currentPage.value = page
 }
 
-const deleteUser = (row: IUserData) => {
-  usersListService.deleteUser(row.id)
-    .then(({ error }) => {
+watchEffect(() => {
+  return usersListService.getUsers(from.value, to.value)
+    .then(({ data, error, count }) => {
       if (error) {
+        loading.value = false
         return useErrorNotification(error.message)
       }
-      useSuccessNotification(`User with email: ${row.email} was deleted`)
+      users.value = data as IUserData[]
+      if (count) {
+        totalCount.value = count
+      }
+      loading.value = false
     })
-}
+})
 
-usersListService.getUsers()
-  .then(data => {
-    if (data.error) {
-      return useErrorNotification(data.error.message)
-    }
-    users.value = data.data as IUserData[]
-    loading.value = false
-  })
+// const addUser = () => {
+//   formRef.value.validate((isValid) => {
+//     if (isValid) {
+//       usersListService.addUser(formModel)
+//         .then((data) => {
+//           console.log(data)
+//         })
+//     }
+//   })
+// }
+
+// const deleteUser = (row: IUserData) => {
+//   usersListService.deleteUser(row.id)
+//     .then(({ error }) => {
+//       if (error) {
+//         return useErrorNotification(error.message)
+//       }
+//       useSuccessNotification(`User with email: ${row.email} was deleted`)
+//     })
+// }
+
 </script>

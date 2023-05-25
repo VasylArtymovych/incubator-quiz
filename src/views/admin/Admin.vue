@@ -1,8 +1,7 @@
 <template>
   <Header />
 
-  <DefaultContainer class="min-height-vh text-center">
-    ADMIN PAGE
+  <DefaultContainer class="flex flex-col overflow-hidden h-full">
     <RouterView />
   </DefaultContainer>
 </template>
