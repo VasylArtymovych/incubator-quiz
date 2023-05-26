@@ -1,8 +1,19 @@
 <template>
   <div class="min-w-[300px] md:min-w-[500px] mx-auto mt-12">
-    <el-card v-loading="loading">
+    <el-card v-loading="loading" class="md:py-5">
       <template #header>
-        <p class="font-semibold text-xl">Registration</p>
+        <div class="flex justify-center items-center">
+          <p class="font-semibold text-xl">
+            Register
+          </p>
+          <el-divider direction="vertical" />
+          <p
+            class="text-xl cursor-pointer"
+            @click="$router.push({name: $routeNames.login})"
+          >
+            Login
+          </p>
+        </div>
       </template>
 
       <el-form
@@ -10,10 +21,11 @@
         :model="regForm"
         :rules="regFormRules"
         label-position="top"
+        class="md:px-10"
         @submit.prevent="submit"
       >
         <el-form-item label="User email" prop="email">
-          <el-input v-model.trim="regForm.email" type="email" />
+          <el-input v-model.trim="regForm.email" type="email" clearable />
         </el-form-item>
 
         <el-form-item label="User password" prop="password">
@@ -24,14 +36,9 @@
           <el-input v-model.trim="regForm.confirmPassword" type="password" show-password />
         </el-form-item>
 
-        <div class="flex justify-between">
-          <el-button native-type="submit" :type="$elComponentType.primary">
-            SignUp
-          </el-button>
-          <el-button link :type="$elComponentType.primary" @click="$router.push({name: $routeNames.login})">
-            LogIn
-          </el-button>
-        </div>
+        <el-button native-type="submit" :type="$elComponentType.primary" class="w-full mt-3">
+          SignUp
+        </el-button>
       </el-form>
     </el-card>
   </div>

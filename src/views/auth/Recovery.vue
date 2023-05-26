@@ -2,7 +2,7 @@
   <div class="min-w-[300px] md:min-w-[500px] m-auto mt-12">
     <el-card v-loading="loading">
       <template #header>
-        <p class="font-semibold text-xl">Recover password</p>
+        <p class="font-semibold text-xl">Reset password</p>
       </template>
 
       <el-form
@@ -16,11 +16,9 @@
           <el-input v-model.trim="recoveryForm.email" type="email" />
         </el-form-item>
 
-        <div class="flex justify-between">
-          <el-button native-type="submit" :type="$elComponentType.primary">
-            Send
-          </el-button>
-        </div>
+        <el-button native-type="submit" :type="$elComponentType.primary" class="block ml-auto w-[30%]">
+          Send
+        </el-button>
       </el-form>
     </el-card>
   </div>

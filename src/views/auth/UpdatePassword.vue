@@ -2,7 +2,7 @@
   <div class="min-w-[300px] md:min-w-[500px] m-auto mt-12">
     <el-card v-loading="loading">
       <template #header>
-        <p class="font-semibold text-xl">Reset password</p>
+        <p class="font-semibold text-xl">Update password</p>
       </template>
 
       <el-form
@@ -20,7 +20,7 @@
           <el-input v-model.trim="updateForm.confirmPassword" type="password" show-password />
         </el-form-item>
 
-        <el-button native-type="submit" :type="$elComponentType.primary">
+        <el-button native-type="submit" :type="$elComponentType.primary" class="block ml-auto w-[30%]">
           Update
         </el-button>
       </el-form>
@@ -51,7 +51,6 @@ function submit () {
       if (updateForm.password !== updateForm.confirmPassword) {
         return useErrorNotification('Confirm password does not match the password')
       }
-
       loading.value = true
       authService.updatePassword({ password: updateForm.password })
         .then(({ data, error }) => {

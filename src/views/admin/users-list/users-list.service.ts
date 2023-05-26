@@ -3,7 +3,15 @@ class UsersLIstService {
     return supabase
       .from('users')
       .select('*', { count: 'exact' })
+      .eq('role', 'user')
       .range(from, to)
+  }
+
+  getUserByEmail (email: string) {
+    return supabase
+      .from('users')
+      .select()
+      .eq('email', email)
   }
 
   addUser (payload: TAddUserPayload) {
