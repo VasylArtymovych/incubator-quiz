@@ -31,7 +31,7 @@
         :rules="optionRules"
         class="options"
       >
-        <el-input v-model="opt.title" />
+        <el-input v-model="opt.title" clearable />
         <el-radio
           v-model="correctOpt"
           :label="index"
@@ -41,8 +41,9 @@
         </el-radio>
 
         <el-button
-          v-if="index>1"
-          type="danger" :size="$elComponentSize.small" circle
+          v-if="index > 1"
+          :size="$elComponentSize.small" circle
+          class="hover:text-red-300"
           @click="removeOption(index)"
         >
           <span class="w-3 h-3">X</span>
@@ -54,9 +55,16 @@
         label="Question time"
         class="timerItem"
       >
-        <el-input-number v-model="formModel.timer" :size="$elComponentSize.small" :min="5" :max="60" />
+        <el-input-number
+          v-model="formModel.timer"
+          :size="$elComponentSize.small"
+          :min="5" :max="60"
+        />
 
-        <el-button :size="$elComponentSize.small" @click="addOption">
+        <el-button
+          :size="$elComponentSize.small"
+          @click="addOption"
+        >
           <template #icon>
             <IconPlus />
           </template>
@@ -87,6 +95,7 @@
         </el-select>
       </el-form-item>
     </el-form>
+
     <template #footer>
       <span class="dialog-footer">
         <el-button @click="dialogVisible = false">Cancel</el-button>

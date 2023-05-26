@@ -81,12 +81,12 @@ import { usersListService } from './users-list.service'
 const currentPage = ref(1)
 const totalCount = ref<number>(1)
 const pageSize = ref(3)
-const from = computed(() => ((currentPage.value - 1) * (pageSize.value)))
-const to = computed(() => (from.value + pageSize.value - 1))
+
+const skip = computed(() => ((currentPage.value - 1) * (pageSize.value)))
+const limit = computed(() => (skip.value + pageSize.value - 1))
 
 const users = ref<IUserData[] | null>(null)
-
-const loading = ref(true)
+const loading = ref(false)
 
 const usersHeadings: ITableHeading[] = [
   { label: 'Email', value: 'email' },
@@ -97,22 +97,27 @@ const usersHeadings: ITableHeading[] = [
 
 const handleCurrentChange = (page: number) => {
   currentPage.value = page
+  getUsers()
 }
 
-watchEffect(() => {
-  return usersListService.getUsers(from.value, to.value)
-    .then(({ data, error, count }) => {
-      if (error) {
-        loading.value = false
-        return useErrorNotification(error.message)
-      }
+async function getUsers () {
+  try {
+    loading.value = true
+    const { data, error, count } = await usersListService.getUsers(skip.value, limit.value)
+    if (error) throw new Error(error.message)
+    if (data) {
       users.value = data as IUserData[]
-      if (count) {
-        totalCount.value = count
-      }
-      loading.value = false
-    })
-})
+    }
+    if (count) {
+      totalCount.value = count
+    }
+  } catch (error: any) {
+    return useErrorNotification(error.message)
+  } finally {
+    loading.value = false
+  }
+}
+getUsers()
 
 // const addUser = () => {
 //   formRef.value.validate((isValid) => {

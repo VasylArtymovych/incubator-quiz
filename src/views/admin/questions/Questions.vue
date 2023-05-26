@@ -1,5 +1,5 @@
 <template>
-  <div class="">
+  <div v-loading="quesLoading" class="">
     <UpsertQuestion
       ref="dialogRef"
       @updated="updatedQuestion"
@@ -91,7 +91,8 @@
         background
         :pageSize="3"
         :pageSizes="[3, 9, 12, 15]"
-        @changeCurrent="handleChangeCurrent"
+        class="justify-center"
+        @changeCurrent="handleChangeCurrentPage"
         @changeSize="handleChangeSize"
       />
     </div>
@@ -99,12 +100,10 @@
 </template>
 
 <script setup lang="ts">
-import type AppPaginationVue from '@/components/AppPagination.vue'
 import UpsertQuestion from './components/UpsertQuestion.vue'
 import type { ITableHeading } from '@/types'
 
 const dialogRef = ref<InstanceType<typeof UpsertQuestion> | null >(null)
-const paginationRef = ref <InstanceType<typeof AppPaginationVue> | null>(null)
 
 const totalCount = ref<number>()
 const currentPage = ref(1)
@@ -123,9 +122,11 @@ const headings: ITableHeading[] = [
   { label: 'Title', value: 'title', fixed: true, sortable: true, minWidth: 180 },
   { label: 'Options', value: 'options', minWidth: 150 },
   { label: 'Tags', value: 'tags' },
-  { label: 'Timer', value: 'timer', minWidth: 70 },
+  { label: 'Timer', value: 'timer', sortable: true, minWidth: 70 },
   { label: 'Actions', value: 'actions', align: 'right', fixed: 'right', minWidth: 150 }
 ]
+
+const quesLoading = ref(false)
 
 const handleEdit = (row: IQuestion) => {
   openUpsertDialog(row)
@@ -149,24 +150,25 @@ const updatedQuestion = () => {
   }
 }
 
-const handleDelete = (row: IQuestion) => {
-  return questionsService.deleteQuestion(row.id)
-    .then(data => {
-      if (data.status === 204) {
-        if (selectedTags.value.length) {
-          getQuestionsByTags()
-          getTags()
-        } else {
-          getData()
-        }
-        return useSuccessNotification('Question was successfully deleted')
-      } else if (data.error) {
-        return useErrorNotification(data.error.message)
+const handleDelete = async (row: IQuestion) => {
+  try {
+    const { status, error } = await questionsService.deleteQuestion(row.id)
+    if (error) throw new Error(error.message)
+
+    if (status === 204) {
+      if (selectedTags.value.length) {
+        getQuestionsByTags()
+        getTags()
+      } else {
+        getData()
       }
-    })
+    }
+  } catch (error: any) {
+    return useErrorNotification(error.message)
+  }
 }
 
-const handleChangeCurrent = (page: number) => {
+const handleChangeCurrentPage = (page: number) => {
   currentPage.value = page
   if (selectedTags.value.length) {
     getQuestionsByTags()
@@ -183,19 +185,20 @@ const handleChangeSize = (size: number) => {
   }
 }
 
+const handleChangeSelect = () => {
+  currentPage.value = 1
+  getQuestionsByTags()
+}
+
 const openUpsertDialog = (row?: IQuestion) => {
   if (dialogRef.value) {
     dialogRef.value.openQuestionDialog(row)
   }
 }
 
-const handleChangeSelect = () => {
-  currentPage.value = 1
-  getQuestionsByTags()
-}
-
-const getQuestions = async () => {
+async function getQuestions () {
   try {
+    quesLoading.value = true
     const { data, error, count } = await questionsService.getQuestions(skip.value, limit.value)
     if (error) throw new Error(error.message)
     if (data) {
@@ -206,10 +209,12 @@ const getQuestions = async () => {
     }
   } catch (error: any) {
     return useErrorNotification(error.message)
+  } finally {
+    quesLoading.value = false
   }
 }
 
-const getTags = async () => {
+async function getTags () {
   try {
     const { data, error } = await questionsService.getTags()
     if (error) throw new Error(error.message)
@@ -221,8 +226,9 @@ const getTags = async () => {
   }
 }
 
-const getQuestionsByTags = async () => {
+async function getQuestionsByTags () {
   try {
+    quesLoading.value = true
     const { data, error, count } = await questionsService
       .getQuestionsByTags(selectedTags.value, skip.value, limit.value)
 
@@ -235,10 +241,12 @@ const getQuestionsByTags = async () => {
     }
   } catch (error: any) {
     return useErrorNotification(error.message)
+  } finally {
+    quesLoading.value = false
   }
 }
 
-const getData = () => {
+async function getData () {
   getTags()
   getQuestions()
 }
