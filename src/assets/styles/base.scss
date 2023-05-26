@@ -8,8 +8,12 @@ html {
 }
 
 body {
-  @apply font-main text-base text-primary bg-gray-light h-full overflow-hidden;
+  @apply font-main text-base text-primary bg-bgDark1 h-screen overflow-hidden;
   -webkit-font-smoothing: antialiased;
+}
+
+#app {
+  @apply h-full overflow-hidden
 }
 
 a {

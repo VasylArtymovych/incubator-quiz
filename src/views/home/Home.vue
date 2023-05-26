@@ -2,6 +2,7 @@
   <Header />
   <DefaultContainer class="min-height-vh">
     Home
+    <div class="h-full">div</div>
   </DefaultContainer>
 </template>
 

@@ -26,6 +26,7 @@
 
     <el-pagination
       v-if="totalCount"
+      id="pagination"
       v-model:current-page="currentPage"
       v-model:page-size="pageSize"
       :total="totalCount"
@@ -118,3 +119,10 @@ async function getUsers () {
 }
 getUsers()
 </script>
+
+<style lang="scss" scoped>
+#pagination {
+  --el-text-color-regular: #6089e9;
+}
+
+</style>

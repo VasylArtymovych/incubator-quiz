@@ -79,11 +79,8 @@ const checkForDate = (heading: ITableHeading, row: any) => {
 </script>
 
 <style lang="scss" scoped>
-  .el-table {
-    &__body-wrapper, &__header-wrapper {
-      @apply overflow-visible #{!important}
-    }
-    @apply overflow-auto #{!important}
-  }
+.el-table .el-table__inner-wrapper .el-table__body-wrapper {
+  overflow: auto !important;
+}
 
 </style>
