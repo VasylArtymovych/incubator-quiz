@@ -7,7 +7,7 @@
         class="flex justify-center items-center cursor-pointer"
         @click="$router.push({name: $routeNames.rootPage})"
       >
-        <img :src="owlLogo" alt="logo" class="w-12 h-12">
+        <img :src="owlLogo" alt="logo" class="w-12 h-12 text-red-600">
         <p class="logo-text font-bold text-2xl">QUIZ</p>
       </div>
 

@@ -1,7 +1,7 @@
 <template>
   <Header />
 
-  <DefaultContainer class="flex flex-col overflow-hidden h-full">
+  <DefaultContainer class="flex flex-col h-full overflow-hidden ">
     <RouterView />
   </DefaultContainer>
 </template>

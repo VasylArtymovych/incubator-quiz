@@ -1,8 +1,7 @@
 <template>
   <Header />
-  <DefaultContainer class="min-height-vh">
-    Home
-    <div class="h-full">div</div>
+  <DefaultContainer class="flex flex-col h-full">
+    <div>Home</div>
   </DefaultContainer>
 </template>
 

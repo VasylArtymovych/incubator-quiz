@@ -1,6 +1,6 @@
 <template>
   <div class="min-w-[300px] md:min-w-[500px] m-auto mt-12">
-    <el-card v-loading="loading">
+    <el-card v-loading="loading" class="card md:py-5 text-titleText bg-secondBgr border border-primary">
       <template #header>
         <p class="font-semibold text-xl">Update password</p>
       </template>
@@ -42,7 +42,8 @@ const loading = ref(false)
 
 const formRules = useElFormRules({
   email: [useRequiredRule(), useEmailRule()],
-  password: [useRequiredRule(), useMinLenRule(6)]
+  password: [useRequiredRule(), useMinLenRule(6)],
+  confirmPassword: [useRequiredRule(), useMinLenRule(6)]
 })
 
 function submit () {
@@ -63,3 +64,11 @@ function submit () {
   })
 }
 </script>
+
+<style scoped lang="scss">
+  .card {
+    background-image: linear-gradient(to top right,  #234e77 0%, #080814 50%, #234e77 100%);
+    --el-card-border-color: #8269e7;
+    --el-border-color: #8269e7;
+  }
+</style>

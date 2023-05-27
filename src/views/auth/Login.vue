@@ -1,6 +1,6 @@
 <template>
-  <div class="min-w-[300px] md:min-w-[500px] m-auto mt-12">
-    <el-card v-loading="loading" class="md:py-5">
+  <div class="min-w-[300px] md:min-w-[500px] m-auto">
+    <el-card v-loading="loading" class="card md:py-5 text-titleText bg-secondBgr border border-primary">
       <template #header>
         <div class="flex justify-center items-center">
           <p class="font-semibold text-xl">
@@ -89,4 +89,14 @@ function submit () {
   .el-button.recovery {
     margin-left: 0;
   }
+
+  .card {
+    background-image: linear-gradient(to top right,  #234e77 0%, #080814 50%, #234e77 100%);
+    --el-card-border-color: #8269e7;
+    --el-border-color: #8269e7;
+    & .el-input__wrapper {
+      --el-input-bg-color: grey;
+    }
+  }
+
 </style>

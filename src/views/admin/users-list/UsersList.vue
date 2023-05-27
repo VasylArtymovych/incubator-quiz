@@ -1,5 +1,5 @@
 <template>
-  <div v-loading="loading">
+  <div v-loading="loading" class="flex flex-col h-full">
     <el-form
       ref="formRef"
       label-position="top"
@@ -14,7 +14,7 @@
           @input="handleClearInputData"
         >
           <template #append>
-            <el-button @click="handleSearchUser">
+            <el-button :type="$elComponentType.primary" @click="handleSearchUser">
               Find
             </el-button>
           </template>
@@ -22,7 +22,7 @@
       </el-form-item>
     </el-form>
 
-    <AppTable v-if="users" :data="users" :headings="usersHeadings" class="text-black" />
+    <AppTable v-if="users" :data="users" :headings="usersHeadings" class="text-black mb-2" />
 
     <el-pagination
       v-if="totalCount"
@@ -32,7 +32,7 @@
       :total="totalCount"
       background
       layout="total, prev, pager, next, jumper"
-      class="justify-center"
+      class="justify-center mt-auto mb-2"
       @current-change="handleCurrentChange"
     />
   </div>
@@ -43,7 +43,7 @@ import type { ITableHeading } from '@/types'
 import { usersListService } from './users-list.service'
 
 const currentPage = ref(1)
-const totalCount = ref<number>(1)
+const totalCount = ref<number>(0)
 const pageSize = ref(3)
 
 const skip = computed(() => ((currentPage.value - 1) * (pageSize.value)))
@@ -64,7 +64,7 @@ const formModel = useElFormModel({
 })
 
 const formRules = useElFormRules({
-  email: [useEmailRule()]
+  email: [useRequiredRule(), useEmailRule()]
 })
 const handleCurrentChange = (page: number) => {
   currentPage.value = page
@@ -88,10 +88,15 @@ const handleClearInputData = (val: string) => {
 async function getUserByEmail (email: string) {
   try {
     loading.value = true
-    const { data, error } = await usersListService.getUserByEmail(email)
+    const { data, error, count } = await usersListService.getUserByEmail(email)
     if (error) throw new Error(error.message)
     if (data) {
       users.value = data as IUserData[]
+    }
+    if (count) {
+      totalCount.value = count
+    } else {
+      totalCount.value = 0
     }
   } catch (error: any) {
     return useErrorNotification(error.message)

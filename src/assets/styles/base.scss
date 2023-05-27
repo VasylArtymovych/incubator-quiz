@@ -8,7 +8,7 @@ html {
 }
 
 body {
-  @apply font-main text-base text-primary bg-bgDark1 h-screen overflow-hidden;
+  @apply font-main text-base text-primary bg-mainBgr h-screen overflow-hidden;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -38,15 +38,16 @@ img, svg {
 *::-webkit-scrollbar {
   height: 6px;
   width:6px
+
 }
 
 *::-webkit-scrollbar-thumb {
-  background-color: #0f172a;
+  background-color: #8269e7;
 }
 
 *::-webkit-scrollbar-track {
   -webkit-box-shadow: inset 0 0 6px rgba(29, 28, 28, 0.3);
-  box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
+  box-shadow: inset 0 0 6px rgba(79, 60, 150, 0.3);
 }
 
 body:not(.user-is-tabbing) *:focus {

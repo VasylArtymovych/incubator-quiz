@@ -1,6 +1,6 @@
 <template>
   <Header />
-  <DefaultContainer class="min-height-vh">
+  <DefaultContainer class="flex flex-col h-full">
     User Page
   </DefaultContainer>
 </template>

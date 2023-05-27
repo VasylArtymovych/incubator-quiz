@@ -10,7 +10,7 @@ class UsersLIstService {
   getUserByEmail (email: string) {
     return supabase
       .from('users')
-      .select()
+      .select('*', { count: 'exact' })
       .eq('email', email)
   }
 

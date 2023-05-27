@@ -1,7 +1,7 @@
 <template>
   <ul
-    class="absolute z-50 top-[64px] w-full py-4 transition-[right] duration-300 ears-in md:static
-    md:flex justify-end gap-4 md:p-0 bg-bgLight md:bg-inherit"
+    class="absolute z-50 top-[74px] w-full py-4 transition-[right] duration-300 ears-in md:static
+    md:flex justify-end gap-4 md:p-0 bg-secondBgr md:bg-inherit"
     :class="[isActive ? 'right-0': 'right-[-100%]']"
   >
     <li

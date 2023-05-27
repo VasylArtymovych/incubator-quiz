@@ -7,8 +7,8 @@
     />
     <div class="flex justify-between my-3">
       <el-select
-        v-model="selectedTags"
         id="select"
+        v-model="selectedTags"
         multiple
         collapse-tags
         collapse-tags-tooltip
@@ -36,7 +36,7 @@
       v-if="questions && tags"
       :data="questions"
       :headings="headings"
-      class="bg-transparent"
+      class="mb-2 text-black"
     >
       <template #options="{row}">
         <p v-for="(opt,i) in row.options" :key="i" :class="{'font-bold': opt.is_correct }">
@@ -80,7 +80,7 @@
       :total="totalCount"
       background
       layout="total,sizes, prev, pager, next, jumper"
-      class="justify-center mt-auto mb-1"
+      class="justify-center mt-auto mb-2"
       @current-change="handleChangeCurrentPage"
       @size-change="handleChangeSize"
     />
@@ -106,7 +106,7 @@ import type { ITableHeading } from '@/types'
 
 const dialogRef = ref<InstanceType<typeof UpsertQuestion> | null >(null)
 
-const totalCount = ref<number>()
+const totalCount = ref<number>(0)
 const currentPage = ref(1)
 const pageSize = ref(9)
 
@@ -124,7 +124,7 @@ const headings: ITableHeading[] = [
   { label: 'Options', value: 'options', minWidth: 150 },
   { label: 'Tags', value: 'tags' },
   { label: 'Timer', value: 'timer', sortable: true, minWidth: 70 },
-  { label: 'Actions', value: 'actions', align: 'right', fixed: 'right', minWidth: 150 }
+  { label: 'Actions', value: 'actions', align: 'right', fixed: 'right', width: 150 }
 ]
 
 const handleEdit = (row: IQuestion) => {
@@ -176,6 +176,7 @@ const handleChangeCurrentPage = (page: number) => {
   }
 }
 const handleChangeSize = (size: number) => {
+  currentPage.value = 1
   pageSize.value = size
   if (selectedTags.value.length) {
     getQuestionsByTags()

@@ -2,6 +2,7 @@
   <el-dialog
     v-model="dialogVisible"
     title="Create question"
+    class="bg-bgDark1"
     @closed="onCloseDialog"
   >
     <el-form
@@ -10,6 +11,7 @@
       :model="formModel"
       :rules="formRules"
       label-position="top"
+      class="form"
     >
       <el-form-item
         prop="title"
@@ -31,7 +33,7 @@
         :rules="optionRules"
         class="options"
       >
-        <el-input v-model="opt.title" clearable />
+        <el-input v-model="opt.title" clearable placeholder="Answer" />
         <el-radio
           v-model="correctOpt"
           :label="index"
@@ -98,7 +100,7 @@
 
     <template #footer>
       <span class="dialog-footer">
-        <el-button @click="dialogVisible = false">Cancel</el-button>
+        <el-button :type="$elComponentType.danger" @click="dialogVisible = false">Cancel</el-button>
         <el-button type="primary" @click="submitForm">{{ updatingQuestionId ? "Update": 'Create' }}</el-button>
       </span>
     </template>
@@ -258,6 +260,24 @@ defineExpose({
 
 .timerItem .el-form-item__content {
   justify-content: space-between;
+}
+
+.el-dialog {
+  background-image: linear-gradient(to top right,  #234e77 0%, #080814 50%, #234e77 100%);
+  border: 1px solid #8269e7;
+
+  & .el-dialog__header {
+  --el-text-color-primary: #68c0e8;
+  }
+}
+
+.form {
+  --el-fill-color-blank: #234e77;
+  --el-text-color-regular:  #68c0e8;
+
+  & .el-form-item__content {
+    --el-text-color-regular:  white;
+  }
 }
 
 </style>

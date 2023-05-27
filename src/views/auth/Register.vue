@@ -1,6 +1,6 @@
 <template>
-  <div class="min-w-[300px] md:min-w-[500px] mx-auto mt-12">
-    <el-card v-loading="loading" class="md:py-5">
+  <div class="min-w-[300px] md:min-w-[500px] m-auto">
+    <el-card v-loading="loading" class="card md:py-5 text-titleText bg-secondBgr border border-primary">
       <template #header>
         <div class="flex justify-center items-center">
           <p class="font-semibold text-xl">
@@ -91,3 +91,11 @@ const submit = () => {
   })
 }
 </script>
+
+<style scoped lang="scss">
+  .card {
+    background-image: linear-gradient(to top right,  #234e77 0%, #080814 50%, #234e77 100%);
+    --el-card-border-color: #8269e7;
+    --el-border-color: #8269e7;
+  }
+</style>

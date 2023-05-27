@@ -9,9 +9,8 @@
   position: relative;
   background: url(./assets/images/Shape-1.png), url(./assets/images/Shape-2.png);
   background-repeat: no-repeat, no-repeat;
-  background-size: 550px 320px, 320px 320px;
-  background-position: left 5px top 159px, right 10px top 100px;
-  margin-bottom: 120px;
+  background-size: 200px 200px, 150px 150px;
+  background-position: left 5px top 80%, right 10px top 15%;
 
   &::before {
       content: "";
@@ -29,4 +28,34 @@
     }
 }
 
+@media (min-width: 768px) {
+  .app{
+    background-repeat: no-repeat, no-repeat;
+    background-size: 350px 320px, 320px 320px;
+    background-position: left 5px top 70%, right 10px top 100px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .app{
+    background-repeat: no-repeat, no-repeat;
+    background-size: 400px 420px, 420px 420px;
+    background-position: left 5px top 70%, right 10px top 100px;
+
+    &::before {
+      content: "";
+      position: absolute;
+      display: block;
+      right: 50%;
+      top: 15%;
+      transform: translateX(50%);
+      width: 600px;
+      height: 600px;
+      border-radius: 50%;
+      background-image: radial-gradient(circle, #234e77 0%, #5574ba 51.56%, #66ace9 100%);
+      filter: blur(200px);
+      z-index: -1;
+    }
+  }
+}
 </style>
