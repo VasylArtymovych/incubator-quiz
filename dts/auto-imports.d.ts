@@ -45,6 +45,7 @@ declare global {
   const onUpdated: typeof import('vue')['onUpdated']
   const provide: typeof import('vue')['provide']
   const questionsService: typeof import('../src/views/admin/questions/questions.service')['questionsService']
+  const quizzesService: typeof import('../src/views/admin/quizzes/quizzes.service')['quizzesService']
   const reactive: typeof import('vue')['reactive']
   const readonly: typeof import('vue')['readonly']
   const ref: typeof import('vue')['ref']

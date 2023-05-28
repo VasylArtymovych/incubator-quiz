@@ -44,6 +44,7 @@
     "onUpdated": true,
     "provide": true,
     "questionsService": true,
+    "quizzesService": true,
     "reactive": true,
     "readonly": true,
     "ref": true,

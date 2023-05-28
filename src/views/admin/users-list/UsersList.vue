@@ -124,10 +124,3 @@ async function getUsers () {
 }
 getUsers()
 </script>
-
-<style lang="scss" scoped>
-#pagination {
-  --el-text-color-regular: #6089e9;
-}
-
-</style>

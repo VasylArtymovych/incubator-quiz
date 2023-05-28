@@ -56,7 +56,7 @@ const authStore = useAuthStore()
 const isAdmin = computed(() => authStore.activeUserData?.email === 'admin@softonix.org')
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 @media (min-width: 768px) {
   .navText.router-link-active {
     background: linear-gradient(94deg, #ff4713 30%, #dab634 80%, #bab351 100%);

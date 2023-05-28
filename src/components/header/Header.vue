@@ -17,12 +17,12 @@
         <BurgerButton :isActive="isActive" class="md:hidden" @toggleActive="isActive = !isActive" />
 
         <el-dropdown trigger="click" @command="handleClick">
-          <el-avatar :src="userLogo" alt="user-logo" class="ml-6 shrink-0 text-base text-red-500">
+          <el-avatar :src="userLogo" alt="user-logo" class="ml-6 shrink-0 text-base">
             User
           </el-avatar>
           <template #dropdown>
             <el-dropdown-menu>
-              <el-dropdown-item class="text-red-500">Log out</el-dropdown-item>
+              <el-dropdown-item>Log out</el-dropdown-item>
             </el-dropdown-menu>
           </template>
         </el-dropdown>
@@ -47,9 +47,6 @@ const handleClick = () => {
 </script>
 
 <style lang="scss" scoped>
-.el-dropdown-menu__item {
-  color: #ff4713;
-}
 .logo-text {
   background-color: black;
   background-image: linear-gradient(

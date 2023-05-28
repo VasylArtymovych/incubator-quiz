@@ -10,6 +10,7 @@
         label-position="top"
         :rules="formRules"
         :model="updateForm"
+        class="form"
         @submit.prevent="submit"
       >
         <el-form-item label="Password" prop="password">
@@ -64,11 +65,3 @@ function submit () {
   })
 }
 </script>
-
-<style scoped lang="scss">
-  .card {
-    background-image: linear-gradient(to top right,  #234e77 0%, #080814 50%, #234e77 100%);
-    --el-card-border-color: #8269e7;
-    --el-border-color: #8269e7;
-  }
-</style>

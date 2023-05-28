@@ -259,9 +259,4 @@ getData()
   --el-input-bg-color: transparent,
   background-color: transparent;
 }
-
-#pagination {
-  --el-text-color-regular: #6089e9;
-}
-
 </style>

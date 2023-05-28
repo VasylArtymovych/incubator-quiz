@@ -10,13 +10,13 @@ module.exports = {
   theme: {
     colors: {
       ...colors,
-      mainBgr: '#080814;',
+      mainBgr: '#080814',
       secondBgr: '#153553',
       accent: '#ff4713',
       primary: '#8269e7',
       secondary: '#234e77',
       titleText: '#68c0e8',
-      bgDark1: '#080814;',
+      bgDark1: '#080814',
       bgLight: '#8489c2',
       bgDark: '#292a73',
       bgMedium: '#5e64ab',
