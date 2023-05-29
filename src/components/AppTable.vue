@@ -3,6 +3,7 @@
     ref="tableRef"
     :data="data"
     :class="[!withBorder && 'rounded-md shadow']"
+    class="text-black h-full bg-transparent"
     :border="withBorder"
     :row-key="rowKey"
     :row-class-name="rowClassName"
@@ -75,10 +76,6 @@ withDefaults(defineProps<{
 
 defineEmits(['selectionChange'])
 
-const toggleSelection = (row?: any) => {
-  tableRef.value!.toggleRowSelection(row, true)
-}
-
 const checkForDate = (heading: ITableHeading, row: any) => {
   if (heading.isDate) {
     return new Intl.DateTimeFormat('en-US').format(row[heading.value])
@@ -86,16 +83,4 @@ const checkForDate = (heading: ITableHeading, row: any) => {
     return row[heading.value]
   }
 }
-
-defineExpose({
-  toggleSelection
-})
-
 </script>
-
-<style lang="scss" scoped>
-.el-table .el-table__inner-wrapper .el-table__body-wrapper {
-  overflow: auto !important;
-}
-
-</style>

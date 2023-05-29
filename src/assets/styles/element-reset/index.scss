@@ -1,4 +1,4 @@
-@forward 'element-plus/theme-chalk/src/common/var.scss' with ($colors: ('primary': ('base': #8269e7, 'danger': #ff4713,
+@forward 'element-plus/theme-chalk/src/common/var.scss' with ($colors: ('primary': ('base': #ff4713, 'danger': #ff4713,
     ),
   ),
   $button-border-radius: ('default': 4px,
@@ -19,8 +19,10 @@
 @use "element-plus/theme-chalk/src/dropdown";
 @use "element-plus/theme-chalk/src/popper";
 @use "element-plus/theme-chalk/src/table";
+@use "element-plus/theme-chalk/src/scrollbar";
 @use "element-plus/theme-chalk/src/popconfirm";
 @use "element-plus/theme-chalk/src/overlay";
 @use "element-plus/theme-chalk/src/dialog";
 @use "element-plus/theme-chalk/src/pagination";
 @use "element-plus/theme-chalk/src/divider";
+@use "element-plus/theme-chalk/src/collapse";

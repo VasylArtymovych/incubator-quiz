@@ -39,7 +39,7 @@ import type { ITableHeading } from '@/types'
 import { quizzesService } from './quizzes.service'
 const totalCount = ref(0)
 const currentPage = ref(1)
-const pageSize = ref(9)
+const pageSize = ref(10)
 
 const skip = computed(() => ((currentPage.value - 1) * (pageSize.value)))
 const limit = computed(() => (skip.value + pageSize.value - 1))

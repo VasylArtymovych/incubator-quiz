@@ -1,5 +1,5 @@
 <template>
-  <div v-loading="quesLoading" class="flex flex-col h-full">
+  <div v-loading="quesLoading" class="flex flex-col h-full overflow-hidden">
     <UpsertQuestion
       ref="dialogRef"
       @updated="updatedQuestion"
@@ -7,7 +7,6 @@
     />
     <div class="flex justify-between my-3">
       <el-select
-        id="select"
         v-model="selectedTags"
         multiple
         collapse-tags
@@ -36,7 +35,8 @@
       v-if="questions && tags"
       :data="questions"
       :headings="headings"
-      class="mb-2 text-black"
+      :showCheckbox="showCheckbox"
+      @selection-change="(val)=> $emit('selectionChange', val)"
     >
       <template #options="{row}">
         <p v-for="(opt,i) in row.options" :key="i" :class="{'font-bold': opt.is_correct }">
@@ -73,36 +73,28 @@
 
     <el-pagination
       v-if="totalCount"
-      id="pagination"
       v-model:current-page="currentPage"
       v-model:page-size="pageSize"
       :page-sizes="[ 3, 9, 15, 20]"
       :total="totalCount"
       background
       layout="total,sizes, prev, pager, next, jumper"
-      class="justify-center mt-auto mb-2"
+      class="justify-center my-2"
       @current-change="handleChangeCurrentPage"
       @size-change="handleChangeSize"
     />
-
-    <!-- <AppPagination
-      v-if="totalCount"
-      ref="paginationRef"
-      :total="totalCount"
-      layout="total,sizes, prev, pager, next, jumper"
-      background
-      :pageSize="3"
-      :pageSizes="[3, 9, 12, 15]"
-      class="justify-center mt-auto mb-1"
-      @changeCurrent="handleChangeCurrentPage"
-      @changeSize="handleChangeSize"
-    /> -->
   </div>
 </template>
 
 <script setup lang="ts">
 import UpsertQuestion from './components/UpsertQuestion.vue'
 import type { ITableHeading } from '@/types'
+interface IProps {
+  showCheckbox?: boolean
+}
+
+defineProps<IProps>()
+defineEmits(['selectionChange'])
 
 const dialogRef = ref<InstanceType<typeof UpsertQuestion> | null >(null)
 
@@ -255,8 +247,4 @@ getData()
 
 <style lang="scss" scoped>
 
-#select .el-input__wrapper {
-  --el-input-bg-color: transparent,
-  background-color: transparent;
-}
 </style>

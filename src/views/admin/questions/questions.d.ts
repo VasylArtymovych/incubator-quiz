@@ -4,7 +4,7 @@ interface IOption {
 }
 
 interface IQuestion {
-  id: string
+  id: number
   title: string
   image?: string
   timer: number

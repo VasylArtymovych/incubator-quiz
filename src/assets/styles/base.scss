@@ -5,10 +5,11 @@
 
 html {
   font-size: 16px;
+  height: 100%
 }
 
 body {
-  @apply font-main text-base text-primary bg-mainBgr h-screen overflow-hidden;
+  @apply font-main text-base text-primary h-full overflow-hidden;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -38,7 +39,7 @@ svg {
 
 *::-webkit-scrollbar {
   height: 6px;
-  width: 6px
+  width: 4px
 }
 
 *::-webkit-scrollbar-thumb {
@@ -54,43 +55,7 @@ body:not(.user-is-tabbing) *:focus {
   outline: none !important;
 }
 
-
-.card {
-  background-image: linear-gradient(to top right, #234e77 0%, #080814 50%, #234e77 100%);
-  --el-border-color: #8269e7;
-
-  & .el-card__header {
-    --el-card-border-color: #8269e7;
-  }
-
-  & .form {
-    --el-fill-color-blank: #234e77;
-    --el-text-color-regular: #68c0e8;
-  }
-
-  & .el-input {
-    --el-input-text-color: white;
-    --el-input-bg-color: #153553;
-    --el-input-border-color: #8269e7;
-  }
+.el-collapse .el-collapse-item__header {
+  background-color: transparent;
+  --el-collapse-header-bg-color: transparent;
 }
-
-.el-input-group__append {
-  --el-fill-color-light: #234e77;
-  --el-color-info: white;
-
-  &:hover {
-    --el-fill-color-light: #8269e7;
-    --el-color-info: white;
-  }
-}
-
-.el-form-item__label {
-  --el-text-color-regular: #68c0e8;
-}
-
-#pagination {
-  --el-text-color-regular: #6089e9;
-}
-
-

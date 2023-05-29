@@ -10,19 +10,9 @@ module.exports = {
   theme: {
     colors: {
       ...colors,
-      mainBgr: '#080814',
-      secondBgr: '#153553',
       accent: '#ff4713',
-      primary: '#8269e7',
-      secondary: '#234e77',
-      titleText: '#68c0e8',
-      bgDark1: '#080814',
-      bgLight: '#8489c2',
-      bgDark: '#292a73',
-      bgMedium: '#5e64ab',
-      grd1: '#8269e7',
-      grd2: '#6089e9',
-      grd3: '#68c0e8',
+      primary: '#ffffff',
+      secondary: '',
       gray: '#6b7280',
       'gray-light': '#f3f4f6',
       'gray-ultra-light': '#e5e7eb',
@@ -32,7 +22,11 @@ module.exports = {
     fontFamily: {
       main: ['Inter', 'sans-serif']
     },
-    extend: {}
+    extend: {
+      backgroundImage: {
+        bgImgWhite: "url('/src/assets/images/background-white-abstract.jpeg')"
+      }
+    }
   },
   plugins: []
 }

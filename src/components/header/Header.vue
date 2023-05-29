@@ -1,6 +1,6 @@
 <template>
   <header
-    class="head relative py-4"
+    class="relative py-4 bg-black border-b border-accent"
   >
     <DefaultContainer class="flex justify-between items-center">
       <div

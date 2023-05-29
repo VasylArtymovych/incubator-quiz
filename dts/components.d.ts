@@ -18,7 +18,10 @@ declare module '@vue/runtime-core' {
     ElAvatar: typeof import('element-plus/es')['ElAvatar']
     ElButton: typeof import('element-plus/es')['ElButton']
     ElCard: typeof import('element-plus/es')['ElCard']
+    ElCcollapse: typeof import('element-plus/es')['ElCcollapse']
     ElCol: typeof import('element-plus/es')['ElCol']
+    ElCollapse: typeof import('element-plus/es')['ElCollapse']
+    ElCollapseItem: typeof import('element-plus/es')['ElCollapseItem']
     ElDialog: typeof import('element-plus/es')['ElDialog']
     ElDivider: typeof import('element-plus/es')['ElDivider']
     ElDropdown: typeof import('element-plus/es')['ElDropdown']
@@ -50,6 +53,7 @@ declare module '@vue/runtime-core' {
     RouterView: typeof import('vue-router')['RouterView']
     TestForm: typeof import('./../src/views/questions/components/TestForm.vue')['default']
     UpsertQuestion: typeof import('./../src/views/admin/questions/components/UpsertQuestion.vue')['default']
+    UpsertQuiz: typeof import('./../src/views/admin/quizzes/components/UpsertQuiz.vue')['default']
     UpsetQuestion: typeof import('./../src/views/questions/components/UpsetQuestion.vue')['default']
   }
   export interface ComponentCustomProperties {

@@ -100,8 +100,11 @@
 
     <template #footer>
       <span class="dialog-footer">
-        <el-button :type="$elComponentType.danger" @click="dialogVisible = false">Cancel</el-button>
-        <el-button type="primary" @click="submitForm">{{ updatingQuestionId ? "Update": 'Create' }}</el-button>
+        <el-button :type="$elComponentType.primary" @click="dialogVisible = false">Cancel</el-button>
+        <el-button
+          :type="$elComponentType.success"
+          @click="submitForm"
+        >{{ updatingQuestionId ? "Update": 'Create' }}</el-button>
       </span>
     </template>
   </el-dialog>
@@ -111,7 +114,7 @@
 const emit = defineEmits(['inserted', 'updated'])
 const dialogVisible = ref(false)
 const formRef = useElFormRef()
-const updatingQuestionId = ref('')
+const updatingQuestionId = ref()
 const loading = ref(false)
 
 const formModel = ref<TUpsetQuestion | IQuestion>({
@@ -247,94 +250,17 @@ defineExpose({
 </script>
 
 <style lang="scss">
-.options .el-form-item__content {
-  display: flex;
+.el-form .el-form-item .el-form-item__content {
   flex-wrap: nowrap;
   gap: 4px;
 }
-.el-radio__input{
+.options .el-radio__input{
   display: flex;
   align-items: center;
   gap: 2px;
-  color: aqua;
 }
 
 .timerItem .el-form-item__content {
   justify-content: space-between;
-}
-
-.el-dialog {
-  background-image: linear-gradient(to top right,  #234e77 0%, #080814 50%, #234e77 100%);
-  border: 1px solid #8269e7;
-
-  & .el-dialog__title {
-    --el-text-color-primary: #68c0e8;
-  }
-  & .el-dialog__headerbtn {
-    --el-color-info: white;
-  }
-}
-
-.form {
-  --el-fill-color-blank: #234e77;
-  --el-text-color-regular:  #68c0e8;
-  --el-input-text-color: white;
-  --el-border: #8269e7;
-  --el-border-color: #8269e7;
-
-  & .el-textarea__inner {
-    --el-input-text-color: white;
-  }
-}
-
-.el-input {
-  --el-input-border-color: #8269e7;
-  --el-input-bg-color: #153553;
-  --el-input-text-color: white;
-}
-
-.el-button.option {
-  --el-button-bg-color: #234e77;
-  --el-button-text-color: rgb(187, 186, 186);
-}
-.el-button.option:hover {
-  --el-button-hover-bg-color: #8269e7;
-  --el-button-hover-text-color: white;
-}
-
-.el-select .el-select__input {
-  --el-select-multiple-input-color: white;
-}
-
-.el-popper {
-  --el-bg-color-overlay: #8269e7;
-  --el-text-color-regular: white;
-  --el-fill-color-light: #234e77;
-  --el-color-primary:  #68c0e8;
-  --el-dropdown-menuItem-hover-fill: #234e77;
-}
-
-.el-tag {
-  --el-fill-color: #8269e7;
-  --el-color-info: white;
-}
-
-.el-tag__close:hover{
-  --el-tag-hover-color: #234e77;
-}
-
-.el-input-number {
-  --el-text-color-regular: white;
-  --el-fill-color-light:  #234e77;
-}
-
-.el-input-number__decrease:hover,
-.el-input-number__increase:hover {
-  --el-color-primary: white;
-  --el-fill-color-light: #8269e7;
-}
-
-.el-dialog__body {
-  --el-text-color-regular: #68c0e8;
 }
 </style>

@@ -22,7 +22,11 @@
       </el-form-item>
     </el-form>
 
-    <AppTable v-if="users" :data="users" :headings="usersHeadings" class="text-black mb-2" />
+    <AppTable
+      v-if="users" :data="users" :headings="usersHeadings" :showCheckbox="showCheckbox"
+      class="text-black"
+      @selection-change="(val) => $emit('selectionChange', val)"
+    />
 
     <el-pagination
       v-if="totalCount"
@@ -32,7 +36,7 @@
       :total="totalCount"
       background
       layout="total, prev, pager, next, jumper"
-      class="justify-center mt-auto mb-2"
+      class="justify-center mb-2"
       @current-change="handleCurrentChange"
     />
   </div>
@@ -41,6 +45,12 @@
 <script setup lang="ts">
 import type { ITableHeading } from '@/types'
 import { usersListService } from './users-list.service'
+interface IProps {
+  showCheckbox?: boolean
+}
+
+defineProps<IProps>()
+defineEmits(['selectionChange'])
 
 const currentPage = ref(1)
 const totalCount = ref<number>(0)
@@ -54,8 +64,7 @@ const users = ref<IUserData[] | null>(null)
 const loading = ref(false)
 
 const usersHeadings: ITableHeading[] = [
-  { label: 'Email', value: 'email' },
-  { label: 'Role', value: 'role' }
+  { label: 'Email', value: 'email' }
 ]
 
 const formRef = useElFormRef()
@@ -64,7 +73,7 @@ const formModel = useElFormModel({
 })
 
 const formRules = useElFormRules({
-  email: [useRequiredRule(), useEmailRule()]
+  email: [useEmailRule()]
 })
 const handleCurrentChange = (page: number) => {
   currentPage.value = page

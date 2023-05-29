@@ -27,7 +27,7 @@ class QuestionsService {
       .eq('id', payload.id)
   }
 
-  deleteQuestion (id: string) {
+  deleteQuestion (id: number) {
     return supabase
       .from('questions')
       .delete()

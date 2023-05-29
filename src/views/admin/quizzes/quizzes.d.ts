@@ -1,10 +1,10 @@
 interface IQuiz {
   id: number
-  questions: number[]
   title: string
+  questions: number[]
 }
 
 interface INewQuiz {
-  questions: number[]
   title: string
+  questions: number[]
 }
