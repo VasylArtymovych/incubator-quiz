@@ -1,6 +1,9 @@
 <template>
   <div class="flex flex-col h-full">
-    <el-button :type="$elComponentType.primary" class="flex items-center ml-auto" @click="()=>{}">
+    <el-button
+      :type="$elComponentType.primary" class="flex items-center ml-auto"
+      @click="$router.push({name: $routeNames.quiz, params: {quizId: 'new'}})"
+    >
       <template #icon>
         <IconPlus />
       </template>
@@ -34,7 +37,7 @@
 <script setup lang="ts">
 import type { ITableHeading } from '@/types'
 import { quizzesService } from './quizzes.service'
-const totalCount = ref<number>(0)
+const totalCount = ref(0)
 const currentPage = ref(1)
 const pageSize = ref(9)
 

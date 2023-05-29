@@ -1,10 +1,12 @@
 <template>
-  <el-table
+  <ElTable
+    ref="tableRef"
     :data="data"
     :class="[!withBorder && 'rounded-md shadow']"
     :border="withBorder"
     :row-key="rowKey"
     :row-class-name="rowClassName"
+    @selection-change="(val) => $emit('selectionChange', val)"
   >
     <el-table-column
       v-if="showCheckbox"
@@ -46,11 +48,14 @@
         </slot>
       </template>
     </el-table-column>
-  </el-table>
+  </ElTable>
 </template>
 
 <script setup lang="ts">
 import type { ITableHeading } from '@/types'
+import { ElTable } from 'element-plus'
+
+const tableRef = ref<InstanceType<typeof ElTable>>()
 
 withDefaults(defineProps<{
   data: any[]
@@ -68,6 +73,12 @@ withDefaults(defineProps<{
   showHeader: true
 })
 
+defineEmits(['selectionChange'])
+
+const toggleSelection = (row?: any) => {
+  tableRef.value!.toggleRowSelection(row, true)
+}
+
 const checkForDate = (heading: ITableHeading, row: any) => {
   if (heading.isDate) {
     return new Intl.DateTimeFormat('en-US').format(row[heading.value])
@@ -75,6 +86,10 @@ const checkForDate = (heading: ITableHeading, row: any) => {
     return row[heading.value]
   }
 }
+
+defineExpose({
+  toggleSelection
+})
 
 </script>
 
