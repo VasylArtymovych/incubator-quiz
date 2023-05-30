@@ -33,11 +33,13 @@
 
     <AppTable
       v-if="questions && tags"
-      :data="questions"
-      :headings="headings"
-      :showCheckbox="showCheckbox"
-      :selectedRows="selectedRows"
-      @selection-change="(val)=> $emit('selectionChange', val)"
+      v-model:selected="selectedRows"
+      :dataset="questions"
+      :headers="headers"
+      fixedLast
+      doNotChangeQuery
+      @sortBy="sortBy"
+      @update:selected="(val)=> $emit('selectionChange', val)"
     >
       <template #options="{row}">
         <p v-for="(opt,i) in row.options" :key="i" :class="{'font-bold': opt.is_correct }">
@@ -113,12 +115,12 @@ const tags = ref<Set<string> | null>(null)
 const questions = ref<IQuestion[] | null>(null)
 const quesLoading = ref(false)
 
-const headings: ITableHeading[] = [
-  { label: 'Title', value: 'title', fixed: true, sortable: true, minWidth: 180 },
-  { label: 'Options', value: 'options', minWidth: 150 },
-  { label: 'Tags', value: 'tags' },
-  { label: 'Timer', value: 'timer', sortable: true, minWidth: 70 },
-  { label: 'Actions', value: 'actions', align: 'right', fixed: 'right', width: 150 }
+const headers: any[] = [
+  { label: 'Title', prop: 'title', sortable: true, minWidth: 180 },
+  { label: 'Options', prop: 'options', minWidth: 150 },
+  { label: 'Tags', prop: 'tags' },
+  { label: 'Timer', prop: 'timer', sortable: true, minWidth: 70 },
+  { label: 'Actions', prop: 'actions', width: 150 }
 ]
 
 const handleEdit = (row: IQuestion) => {
@@ -132,6 +134,10 @@ const insertedQuestion = () => {
   } else {
     getData()
   }
+}
+
+const sortBy = (ee: any) => {
+  console.log('ee: ', ee)
 }
 
 const updatedQuestion = () => {

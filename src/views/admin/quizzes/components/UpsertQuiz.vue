@@ -15,13 +15,14 @@
     <el-collapse v-model="activeNames" accordion class="flex flex-col h-full overflow-hidden" @change="handleChange">
       <el-collapse-item title="Questions" name="1" class="border-t border-b border-accent">
         <Questions
-          :showCheckbox="true" :selectedRows="selectedQuestions"
+          :showCheckbox="true"
+          :selectedRows="selectedQuestions"
           @selectionChange="handleSelectionChangeQuestions"
         />
       </el-collapse-item>
 
       <el-collapse-item title="Users" name="2" class="border-b border-accent">
-        <UsersList :showCheckbox="true" @selectionChange="handleSelectionChangeUsers" />
+        <UsersList v-if="false" :showCheckbox="true" @selectionChange="handleSelectionChangeUsers" />
       </el-collapse-item>
     </el-collapse>
 
@@ -45,7 +46,7 @@ const router = useRouter()
 const { $routeNames } = useGlobalProperties()
 
 const activeNames = ref([])
-const selectedQuestions = ref<number[]>([])
+const selectedQuestions = ref<IQuestion[]>([])
 const selectedUsers = ref<string[]>([])
 const loading = ref(false)
 
@@ -62,7 +63,8 @@ const handleChange = <T, >(val: T) => {
 }
 
 const handleSelectionChangeQuestions = (val: IQuestion[]) => {
-  selectedQuestions.value = val.map(item => item.id)
+  console.log('val: ', val)
+  selectedQuestions.value = val
 }
 const handleSelectionChangeUsers = (val: IUser[]) => {
   selectedUsers.value = val.map(item => item.id)
@@ -83,7 +85,7 @@ const getQuizById = async (id: number) => {
     if (error) throw new Error(error.message)
     if (data) {
       formModel.title = data.title
-      selectedQuestions.value = data.questions
+      selectedQuestions.value = data.questions.map(e => e.id)
       // localStorage.setItem('iq-selectedQuizzes', JSON.stringify(data.questions))
     }
   } catch (error: any) {

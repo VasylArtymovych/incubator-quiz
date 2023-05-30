@@ -3,7 +3,7 @@ import App from '@/App.vue'
 
 import { router } from '@/router'
 import { store } from '@/store/create-store'
-import { VueGlobalPropertiesPlugin } from '@/plugins'
+import { VueGlobalPropertiesPlugin, MQPlugin } from '@/plugins'
 
 import '@/assets/styles/main.scss'
 
@@ -13,6 +13,7 @@ app
   .use(router)
   .use(store)
   .use(VueGlobalPropertiesPlugin)
+  .use(MQPlugin)
   .mount('#app')
 
 export {

@@ -17,11 +17,12 @@ export default defineConfig((config) => ({
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),
-      colors: fileURLToPath(new URL('./tailwind/tailwind.colors.cjs', import.meta.url))
+      colors: fileURLToPath(new URL('./tailwind/tailwind.colors.cjs', import.meta.url)),
+      'tailwind-config': fileURLToPath(new URL('./tailwind/tailwind.config.cjs', import.meta.url))
     }
   },
 
   optimizeDeps: {
-    include: ['colors']
+    include: ['colors', 'tailwind-config']
   }
 }))

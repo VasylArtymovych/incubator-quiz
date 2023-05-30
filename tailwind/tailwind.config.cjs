@@ -19,6 +19,12 @@ module.exports = {
       'gray-medium': '#9ca3af',
       'gray-dark': '#374151'
     },
+    screens: {
+      sm: '640px',
+      md: '768px',
+      lg: '1024px',
+      xl: '1280px'
+    },
     fontFamily: {
       main: ['Inter', 'sans-serif']
     },

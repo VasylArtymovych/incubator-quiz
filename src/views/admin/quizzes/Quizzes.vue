@@ -142,6 +142,9 @@ async function getQuizzes () {
   try {
     loading.value = true
     const { data, error, count } = await quizzesService.getQuizzes(skip.value, limit.value)
+    console.log('count: ', count)
+    console.log('data: ', data)
+    console.log('error: ', error)
     if (error) throw new Error(error.message)
     if (data) {
       quizzes.value = data as IQuiz[]

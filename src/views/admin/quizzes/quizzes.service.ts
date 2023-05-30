@@ -1,16 +1,13 @@
 class QuizzesService {
   getQuizzes (skip: number, limit: number) {
     return supabase
-      .from('quizzes')
-      .select('*', { count: 'exact' })
+      .rpc('get_quizzes', {}, { count: 'exact' })
       .range(skip, limit)
   }
 
-  getQuizById (id: number) {
+  getQuizById (quiz_id: number) {
     return supabase
-      .from('quizzes')
-      .select('*')
-      .eq('id', id)
+      .rpc('get_quiz_by_id', { quiz_id })
       .single()
   }
 

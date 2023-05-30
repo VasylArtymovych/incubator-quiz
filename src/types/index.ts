@@ -12,3 +12,5 @@ export interface ITableHeading {
   showOverflowTooltip?: boolean
   headingClasses?: string
 }
+
+export type TIndexedObject<T = any> = { [key: string | number]: T }
