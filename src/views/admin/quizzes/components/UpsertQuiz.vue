@@ -85,8 +85,12 @@ const getQuizById = async (id: number) => {
     if (error) throw new Error(error.message)
     if (data) {
       formModel.title = data.title
+<<<<<<< Updated upstream
       selectedQuestions.value = data.questions.map(e => e.id)
       // localStorage.setItem('iq-selectedQuizzes', JSON.stringify(data.questions))
+=======
+      selectedQuestions.value = data.questions
+>>>>>>> Stashed changes
     }
   } catch (error: any) {
     return useErrorNotification(error.message)
