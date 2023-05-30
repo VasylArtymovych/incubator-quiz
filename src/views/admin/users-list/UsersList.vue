@@ -9,12 +9,16 @@
       <el-form-item label="Find user by email" prop="email" class="max-w-[300px]">
         <el-input
           v-model.trim="formModel.email"
-          type="email" placeholder="Search" clearable
-          @clear="getUsers()"
+          type="email"
+          placeholder="Search"
+          clearable
           @input="handleClearInputData"
         >
           <template #append>
-            <el-button :type="$elComponentType.primary" @click="handleSearchUser">
+            <el-button
+              :type="$elComponentType.primary"
+              @click="handleSearchUser"
+            >
               Find
             </el-button>
           </template>
@@ -23,9 +27,11 @@
     </el-form>
 
     <AppTable
-      v-if="users" :data="users" :headings="usersHeadings" :showCheckbox="showCheckbox"
-      class="text-black"
-      @selection-change="(val) => $emit('selectionChange', val)"
+      v-if="users"
+      :dataset="users"
+      :headers="headings"
+      doNotChangeQuery
+      @selection-change="(val: number[]) => $emit('selectionChange', val)"
     />
 
     <el-pagination
@@ -43,7 +49,7 @@
 </template>
 
 <script setup lang="ts">
-import type { ITableHeading } from '@/types'
+// import type { ITableHeading } from '@/types'
 import { usersListService } from './users-list.service'
 interface IProps {
   showCheckbox?: boolean
@@ -63,8 +69,8 @@ const users = ref<IUserData[] | null>(null)
 
 const loading = ref(false)
 
-const usersHeadings: ITableHeading[] = [
-  { label: 'Email', value: 'email' }
+const headings: any[] = [
+  { label: 'Email', prop: 'email' }
 ]
 
 const formRef = useElFormRef()
@@ -90,11 +96,13 @@ const handleSearchUser = () => {
 
 const handleClearInputData = (val: string) => {
   if (val === '') {
+    currentPage.value = 1
     getUsers()
   }
 }
 
 async function getUserByEmail (email: string) {
+  if (!email) return
   try {
     loading.value = true
     const { data, error, count } = await usersListService.getUserByEmail(email)

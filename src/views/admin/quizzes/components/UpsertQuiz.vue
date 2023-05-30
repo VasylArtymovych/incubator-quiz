@@ -46,7 +46,7 @@ const router = useRouter()
 const { $routeNames } = useGlobalProperties()
 
 const activeNames = ref([])
-const selectedQuestions = ref<IQuestion[]>([])
+const selectedQuestions = ref<number[]>([])
 const selectedUsers = ref<string[]>([])
 const loading = ref(false)
 
@@ -62,8 +62,8 @@ const handleChange = <T, >(val: T) => {
   console.log('active', val)
 }
 
-const handleSelectionChangeQuestions = (val: IQuestion[]) => {
-  console.log('val: ', val)
+const handleSelectionChangeQuestions = (val: number[]) => {
+  console.log('valChange: ', val)
   selectedQuestions.value = val
 }
 const handleSelectionChangeUsers = (val: IUser[]) => {
@@ -81,16 +81,11 @@ const onUpsertQuiz = () => {
 // todo for users property
 const getQuizById = async (id: number) => {
   try {
-    const { data, error } = await quizzesService.getQuizById(id)
+    const { error, data } = await quizzesService.getQuizById(id)
     if (error) throw new Error(error.message)
     if (data) {
       formModel.title = data.title
-<<<<<<< Updated upstream
-      selectedQuestions.value = data.questions.map(e => e.id)
-      // localStorage.setItem('iq-selectedQuizzes', JSON.stringify(data.questions))
-=======
       selectedQuestions.value = data.questions
->>>>>>> Stashed changes
     }
   } catch (error: any) {
     return useErrorNotification(error.message)

@@ -39,7 +39,7 @@
       fixedLast
       doNotChangeQuery
       @sortBy="sortBy"
-      @update:selected="(val)=> $emit('selectionChange', val)"
+      @update:selected="(val: any)=> $emit('selectionChange', val)"
     >
       <template #options="{row}">
         <p v-for="(opt,i) in row.options" :key="i" :class="{'font-bold': opt.is_correct }">

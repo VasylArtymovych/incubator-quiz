@@ -3,13 +3,16 @@
     <div class="flex ">
       <el-input
         v-model="searchedQuiz"
-        placeholder="Search" clearable
+        placeholder="Search"
+        clearable
         class="w-[300px]"
-        @clear="getQuizzes()"
-        @input="handleEmptyInputData"
+        @input="handleClearInputData"
       >
         <template #append>
-          <el-button :type="$elComponentType.primary" @click="handleSearchQuiz">
+          <el-button
+            :type="$elComponentType.primary"
+            @click="handleSearchQuiz"
+          >
             Find
           </el-button>
         </template>
@@ -26,7 +29,13 @@
       </el-button>
     </div>
 
-    <AppTable v-if="quizzes" :data="quizzes" :headings="headings">
+    <AppTable
+      v-if="quizzes"
+      :dataset="quizzes"
+      :headers="headings"
+      fixedLast
+      doNotChangeQuery
+    >
       <template #questions="{row}">
         <p>
           {{ row.questions.length }}
@@ -34,18 +43,25 @@
       </template>
 
       <template #actions="{row}">
-        <el-button size="small" @click.stop="handleEdit(row)">
+        <el-button
+          size="small"
+          @click.stop="handleEdit(row)"
+        >
           Edit
         </el-button>
 
         <el-popconfirm
-          width="220" title="Are you sure to delete this?"
+          width="220"
+          title="Are you sure to delete this?"
           confirm-button-text="Yes"
           cancel-button-text="No"
           @confirm="handleDelete(row)"
         >
           <template #reference>
-            <el-button size="small" :type="$elComponentType.danger">
+            <el-button
+              size="small"
+              :type="$elComponentType.danger"
+            >
               Delete
             </el-button>
           </template>
@@ -70,7 +86,7 @@
 </template>
 
 <script setup lang="ts">
-import type { ITableHeading } from '@/types'
+// import type { ITableHeading } from '@/types'
 import { quizzesService } from './quizzes.service'
 
 const router = useRouter()
@@ -87,18 +103,21 @@ const searchedQuiz = ref('')
 const quizzes = ref<IQuiz[] | null>(null)
 const loading = ref(false)
 
-const headings: ITableHeading[] = [
-  { label: 'Quiz title', value: 'title', fixed: true, sortable: true },
-  { label: 'Questions amount', value: 'questions' },
-  { label: 'Actions', value: 'actions', align: 'right', fixed: 'right', width: 150 }
+const headings: any[] = [
+  { label: 'Quiz title', prop: 'title', sortable: true },
+  { label: 'Questions amount', prop: 'questions' },
+  { label: 'Actions', prop: 'actions', width: 150 }
 ]
 
 const handleSearchQuiz = () => {
   getQuizByTitle()
 }
 
-const handleEmptyInputData = () => {
-  return ''
+const handleClearInputData = (val: string) => {
+  if (val === '') {
+    currentPage.value = 1
+    getQuizzes()
+  }
 }
 
 const handleEdit = (quiz: IQuiz) => {
@@ -119,18 +138,17 @@ const handleChangeSize = (size: number) => {
 }
 
 async function getQuizByTitle () {
+  if (!searchedQuiz.value) return
   try {
     loading.value = true
-    console.log(searchedQuiz.value)
-    const res = await quizzesService.getQuizByTitle(searchedQuiz.value)
-    console.log(res)
-    // if (error) throw new Error(error.message)
-    // if (data) {
-    //   quizzes.value = data as IQuiz[]
-    // }
-    // if (count) {
-    //   totalCount.value = count
-    // }
+    const { data, error, count } = await quizzesService.getQuizByTitle(searchedQuiz.value)
+    if (error) throw new Error(error.message)
+    if (data) {
+      quizzes.value = data as IQuiz[]
+    }
+    if (count) {
+      totalCount.value = count
+    }
   } catch (error: any) {
     return useErrorNotification(error.message)
   } finally {
@@ -142,9 +160,6 @@ async function getQuizzes () {
   try {
     loading.value = true
     const { data, error, count } = await quizzesService.getQuizzes(skip.value, limit.value)
-    console.log('count: ', count)
-    console.log('data: ', data)
-    console.log('error: ', error)
     if (error) throw new Error(error.message)
     if (data) {
       quizzes.value = data as IQuiz[]

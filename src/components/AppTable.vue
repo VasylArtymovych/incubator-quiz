@@ -2,7 +2,7 @@
   <div
     class="app-table"
     :style="{'--row-height': rowHeight,
-             '--table-padding-left': $mq.smaller('md').value ? '16px' : tablePaddingLeft}"
+            '--table-padding-left': $mq.smaller('md').value ? '16px' : tablePaddingLeft}"
   >
     <div
       v-if="allOnPageSelected && !$mq.smaller('md').value && selected.length < total"
@@ -92,8 +92,8 @@
             <tr
               :id="row[unique]"
               :class="[rowClassChecker(row), rowClass,
-                       { 'cursor-pointer': clickable },
-                       { 'mb-[15px] border border-snuff p-[15px] shadow-card2 block': $mq.smaller('md').value }]"
+                      { 'cursor-pointer': clickable },
+                      { 'mb-[15px] border border-snuff p-[15px] shadow-card2 block': $mq.smaller('md').value }]"
               @click="$emit('rowClick', row)"
             >
               <td v-if="selected" class="md:inline min-w-[40px] w-[40px]">
