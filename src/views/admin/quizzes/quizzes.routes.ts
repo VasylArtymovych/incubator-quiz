@@ -14,6 +14,7 @@ export const quizzesRoutes: RouteRecordRaw[] = [
   {
     path: 'quizzes/:quizId',
     name: quizzesRoutesNames.quiz,
-    component: () => import('@/views/admin/quizzes/components/UpsertQuiz.vue')
+    component: () => import('@/views/admin/quizzes/components/UpsertQuiz.vue'),
+    props: (route) => ({ quizId: route.params.quizId === 'new' ? null : Number(route.params.quizId) })
   }
 ]

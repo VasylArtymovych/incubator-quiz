@@ -36,6 +36,7 @@
       :data="questions"
       :headings="headings"
       :showCheckbox="showCheckbox"
+      :selectedRows="selectedRows"
       @selection-change="(val)=> $emit('selectionChange', val)"
     >
       <template #options="{row}">
@@ -91,6 +92,7 @@ import UpsertQuestion from './components/UpsertQuestion.vue'
 import type { ITableHeading } from '@/types'
 interface IProps {
   showCheckbox?: boolean
+  selectedRows?: any[]
 }
 
 defineProps<IProps>()

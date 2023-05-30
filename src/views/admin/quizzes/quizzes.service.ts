@@ -6,10 +6,40 @@ class QuizzesService {
       .range(skip, limit)
   }
 
+  getQuizById (id: number) {
+    return supabase
+      .from('quizzes')
+      .select('*')
+      .eq('id', id)
+      .single()
+  }
+
+  getQuizByTitle (titleText: string) {
+    return supabase
+      .from('quizzes')
+      .select('*', { count: 'exact' })
+      .eq('title', titleText)
+      // .ilike('title', titleText)
+  }
+
   addQuiz (payload: INewQuiz) {
     return supabase
       .from('quizzes')
       .insert([payload])
+  }
+
+  updateQuiz (payload: INewQuiz, id: number) {
+    return supabase
+      .from('quizzes')
+      .update(payload)
+      .eq('id', id)
+  }
+
+  deleteQuiz (id: number) {
+    return supabase
+      .from('quizzes')
+      .delete()
+      .eq('id', id)
   }
 }
 

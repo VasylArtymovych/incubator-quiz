@@ -2,15 +2,16 @@
   <ElTable
     ref="tableRef"
     :data="data"
-    :class="[!withBorder && 'rounded-md shadow']"
-    class="text-black h-full bg-transparent"
     :border="withBorder"
     :row-key="rowKey"
+    :class="[!withBorder && 'rounded-md shadow']"
+    class="text-black h-full bg-transparent"
     :row-class-name="rowClassName"
-    @selection-change="(val) => $emit('selectionChange', val)"
+    @selection-change="handleSelectionChange"
   >
     <el-table-column
       v-if="showCheckbox"
+      v-model="selectedRows"
       type="selection"
       width="55"
       header-align="center"
@@ -58,7 +59,7 @@ import { ElTable } from 'element-plus'
 
 const tableRef = ref<InstanceType<typeof ElTable>>()
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   data: any[]
   headings: ITableHeading[]
   withBorder?: boolean
@@ -66,6 +67,7 @@ withDefaults(defineProps<{
   showHeader?: boolean
   rowKey?: string
   customTableWidth?: string
+  selectedRows?: any[]
   rowClassName?: () => any
 }>(), {
   data: () => ([]),
@@ -74,7 +76,29 @@ withDefaults(defineProps<{
   showHeader: true
 })
 
-defineEmits(['selectionChange'])
+const emit = defineEmits(['selectionChange'])
+
+const initSelectedRows = computed(() => {
+  if (props.selectedRows) {
+    return props.data.filter(row => (props.selectedRows?.includes(row.id)))
+  } else {
+    return []
+  }
+})
+const selectedRows = ref<any[]>(initSelectedRows.value)
+
+const handleSelectionChange = <T, >(val: T[]) => {
+  selectedRows.value = val
+  emit('selectionChange', val)
+}
+
+onMounted(() => {
+  if (selectedRows.value.length) {
+    selectedRows.value.forEach((row) => {
+      tableRef.value!.toggleRowSelection(row, true)
+    })
+  }
+})
 
 const checkForDate = (heading: ITableHeading, row: any) => {
   if (heading.isDate) {

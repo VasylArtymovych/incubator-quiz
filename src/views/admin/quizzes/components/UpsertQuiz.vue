@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col h-full overflow-hidden pt-3">
+  <div v-loading="loading" class="flex flex-col h-full overflow-hidden pt-3">
     <el-form
       ref="formRef"
       label-position="top"
@@ -12,12 +12,15 @@
       </el-form-item>
     </el-form>
 
-    <el-collapse v-model="activeNames" class="flex flex-col h-full overflow-hidden" @change="handleChange">
-      <el-collapse-item title="Questions" name="1" class="">
-        <Questions :showCheckbox="true" @selectionChange="handleSelectionChangeQuestions" />
+    <el-collapse v-model="activeNames" accordion class="flex flex-col h-full overflow-hidden" @change="handleChange">
+      <el-collapse-item title="Questions" name="1" class="border-t border-b border-accent">
+        <Questions
+          :showCheckbox="true" :selectedRows="selectedQuestions"
+          @selectionChange="handleSelectionChangeQuestions"
+        />
       </el-collapse-item>
 
-      <el-collapse-item title="Users" name="2">
+      <el-collapse-item title="Users" name="2" class="border-b border-accent">
         <UsersList :showCheckbox="true" @selectionChange="handleSelectionChangeUsers" />
       </el-collapse-item>
     </el-collapse>
@@ -37,9 +40,14 @@
 import Questions from '../../questions/Questions.vue'
 import UsersList from '../../users-list/UsersList.vue'
 
+const props = defineProps<{quizId: number | null}>()
+const router = useRouter()
+const { $routeNames } = useGlobalProperties()
+
 const activeNames = ref([])
 const selectedQuestions = ref<number[]>([])
 const selectedUsers = ref<string[]>([])
+const loading = ref(false)
 
 const formRef = useElFormRef()
 const formModel = useElFormModel<{title: string}>({
@@ -68,13 +76,36 @@ const onUpsertQuiz = () => {
   })
 }
 
-const createQuiz = async () => {
+// todo for users property
+const getQuizById = async (id: number) => {
   try {
-    const payload = { title: formModel.title, questions: selectedQuestions.value }
-    const res = await quizzesService.addQuiz(payload)
-    console.log(res)
+    const { data, error } = await quizzesService.getQuizById(id)
+    if (error) throw new Error(error.message)
+    if (data) {
+      formModel.title = data.title
+      selectedQuestions.value = data.questions
+      // localStorage.setItem('iq-selectedQuizzes', JSON.stringify(data.questions))
+    }
   } catch (error: any) {
     return useErrorNotification(error.message)
+  }
+}
+props.quizId && getQuizById(props.quizId)
+
+// todo for users property
+const createQuiz = async () => {
+  try {
+    loading.value = true
+    const payload = { title: formModel.title, questions: selectedQuestions.value }
+    const { error, status } = await quizzesService.addQuiz(payload)
+    if (error) throw new Error(error.message)
+    if (status === 201) {
+      return router.push({ name: $routeNames.quizzes })
+    }
+  } catch (error: any) {
+    return useErrorNotification(error.message)
+  } finally {
+    loading.value = false
   }
 }
 </script>
