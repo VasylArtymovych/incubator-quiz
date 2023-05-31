@@ -11,7 +11,7 @@
         <p class="logo-text font-bold text-2xl">QUIZ</p>
       </div>
 
-      <NavBar :isActive="isActive" />
+      <NavBar v-if="isAdmin" :isActive="isActive" />
 
       <div class="flex">
         <BurgerButton :isActive="isActive" class="md:hidden" @toggleActive="isActive = !isActive" />
@@ -37,6 +37,8 @@ import owlLogo from '@/assets/images/owl_logo.png'
 import DefaultContainer from '@/layouts/DefaultContainer.vue'
 
 const authStore = useAuthStore()
+
+const isAdmin = computed(() => authStore.activeUserData?.email === 'admin@softonix.org')
 
 const isActive = ref(false)
 

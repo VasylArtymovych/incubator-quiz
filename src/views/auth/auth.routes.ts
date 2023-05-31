@@ -1,5 +1,5 @@
 import type { RouteRecordRaw } from 'vue-router'
-
+import { routeNames } from '@/router/route-names'
 export const authRoutesNames = {
   login: 'login',
   register: 'register',
@@ -11,7 +11,7 @@ const closeRouteForActiveUser = () => {
   const { activeUserData } = useAuthStore()
 
   if (activeUserData) {
-    return false
+    return { name: routeNames.rootPage }
   }
   return true
 }

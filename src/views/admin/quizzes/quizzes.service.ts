@@ -33,11 +33,11 @@ class QuizzesService {
       .insert([payload])
   }
 
-  updateQuiz (payload: INewQuiz, id: number) {
+  updateQuiz (payload: INewQuiz, quizId: number) {
     return supabase
       .from('quizzes')
       .update(payload)
-      .eq('id', id)
+      .eq('id', quizId)
   }
 
   deleteQuiz (id: number) {

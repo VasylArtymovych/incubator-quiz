@@ -8,6 +8,7 @@ class AuthService {
   }
 
   logOut () {
+    localStorage.removeItem('iq-user')
     return supabase.auth.signOut()
   }
 

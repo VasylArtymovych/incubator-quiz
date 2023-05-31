@@ -1,10 +1,10 @@
 class UsersLIstService {
-  getUsers (from: number, to: number) {
+  getUsers () {
     return supabase
-      .from('users')
-      .select('*', { count: 'exact' })
-      .eq('role', 'user')
-      .range(from, to)
+      .auth.admin.listUsers()
+      // .select('*', { count: 'exact' })
+      // .eq('role', 'user')
+      // .range(from, to)
   }
 
   getUserByEmail (email: string) {

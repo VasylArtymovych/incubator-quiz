@@ -1,6 +1,12 @@
 <template>
-  <label class="el-checkbox h-auto w-[14px]" :class="{'is-checked': isChecked, 'is-disabled': disabled }">
-    <span class="el-checkbox__input" :class="{'is-checked': isChecked, 'is-disabled': disabled }">
+  <label
+    class="el-checkbox h-auto w-[14px] cursor-pointer"
+    :class="{'is-checked': isChecked, 'is-disabled': disabled }"
+  >
+    <span
+      class="el-checkbox__input"
+      :class="{'is-checked': isChecked, 'is-disabled': disabled }"
+    >
       <span class="el-checkbox__inner" />
       <input
         v-model="selected"

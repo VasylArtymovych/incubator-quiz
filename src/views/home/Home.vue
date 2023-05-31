@@ -1,10 +1,12 @@
 <template>
   <Header />
   <DefaultContainer class="flex flex-col h-full">
-    <div>Home</div>
+    <h1 class="text-black text-center">Home</h1>
   </DefaultContainer>
 </template>
 
 <script setup lang="ts">
 import DefaultContainer from '@/layouts/DefaultContainer.vue'
+
+console.log('home pa');
 </script>

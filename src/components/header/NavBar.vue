@@ -5,7 +5,7 @@
     :class="[isActive ? 'right-0': 'right-[-100%]']"
   >
     <li
-      v-show="$route.path !== '/'"
+      v-show="$route.name !== $routeNames.rootPage"
       class="flex justify-center items-center"
     >
       <RouterLink
@@ -15,30 +15,30 @@
         Home
       </RouterLink>
     </li>
+
     <li
-      v-show="$route.path === '/'"
+      v-show="$route.name === $routeNames.admin"
       class="flex justify-center items-center"
     >
       <RouterLink
-        :to="isAdmin ? $routeNames.admin : $routeNames.user"
+        :to="$routeNames.admin"
         class="link relative w-full text-center p-4 md:p-0 hover:text-accent"
       >
         Dashboard
       </RouterLink>
     </li>
-    <template v-if="isAdmin">
-      <li
-        v-for="item in items" :key="item"
-        class="flex justify-center items-center"
+
+    <li
+      v-for="item in items" :key="item"
+      class="flex justify-center items-center"
+    >
+      <RouterLink
+        :to="`/admin/${item}`"
+        class="link relative w-full text-center p-4 md:p-0 hover:text-accent capitalize"
       >
-        <RouterLink
-          :to="`/admin/${item}`"
-          class="link relative w-full text-center p-4 md:p-0 hover:text-accent capitalize"
-        >
-          {{ item }}
-        </RouterLink>
-      </li>
-    </template>
+        {{ item }}
+      </RouterLink>
+    </li>
   </ul>
 </template>
 
@@ -48,9 +48,6 @@ defineProps<{
 }>()
 
 const items = ['quizzes', 'questions', 'users']
-const authStore = useAuthStore()
-
-const isAdmin = computed(() => authStore.activeUserData?.email === 'admin@softonix.org')
 </script>
 
 <style lang="scss" scoped>

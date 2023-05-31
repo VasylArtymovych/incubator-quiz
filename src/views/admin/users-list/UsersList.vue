@@ -42,7 +42,7 @@
       :total="totalCount"
       background
       layout="total, prev, pager, next, jumper"
-      class="justify-center mb-2"
+      class="justify-center my-2"
       @current-change="handleCurrentChange"
     />
   </div>
@@ -62,8 +62,8 @@ const currentPage = ref(1)
 const totalCount = ref<number>(0)
 const pageSize = ref(3)
 
-const skip = computed(() => ((currentPage.value - 1) * (pageSize.value)))
-const limit = computed(() => (skip.value + pageSize.value - 1))
+// const skip = computed(() => ((currentPage.value - 1) * (pageSize.value)))
+// const limit = computed(() => (skip.value + pageSize.value - 1))
 
 const users = ref<IUserData[] | null>(null)
 
@@ -125,13 +125,13 @@ async function getUserByEmail (email: string) {
 async function getUsers () {
   try {
     loading.value = true
-    const { data, error, count } = await usersListService.getUsers(skip.value, limit.value)
+    const { data, error } = await usersListService.getUsers()
     if (error) throw new Error(error.message)
-    if (data) {
-      users.value = data as IUserData[]
+    if (data.users) {
+      users.value = data.users as IUserData[]
     }
-    if (count) {
-      totalCount.value = count
+    if (data.total) {
+      totalCount.value = data.total
     }
   } catch (error: any) {
     return useErrorNotification(error.message)

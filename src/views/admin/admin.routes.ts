@@ -25,6 +25,7 @@ export const adminRoutes: RouteRecordRaw[] = [
     beforeEnter: (to) => {
       const { activeUserData } = useAuthStore()
 
+      // if (to.meta.isProtected && activeUserData?.role !== to.meta.role) {
       if (to.meta.isProtected && activeUserData?.email !== to.meta.role) {
         return { name: authRoutesNames.login }
       }

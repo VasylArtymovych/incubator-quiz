@@ -25,4 +25,7 @@
 @use "element-plus/theme-chalk/src/dialog";
 @use "element-plus/theme-chalk/src/pagination";
 @use "element-plus/theme-chalk/src/divider";
-@use "element-plus/theme-chalk/src/collapse";
+
+
+@import './collapse';
+@import './_popconfirm';

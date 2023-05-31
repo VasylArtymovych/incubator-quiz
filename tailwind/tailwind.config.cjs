@@ -30,7 +30,7 @@ module.exports = {
     },
     extend: {
       backgroundImage: {
-        bgImgWhite: "url('/src/assets/images/background-white-abstract.jpeg')"
+        bgImgWhite: "url('/src/assets/images/4K-White-Wallpaper.jpeg')"
       }
     }
   },

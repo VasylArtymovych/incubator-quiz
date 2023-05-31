@@ -1,11 +1,11 @@
 <template>
-  <div v-loading="quesLoading" class="flex flex-col h-full overflow-hidden">
+  <div v-loading="quesLoading" class="flex flex-col h-full overflow-hidden bg-transparent">
     <UpsertQuestion
       ref="dialogRef"
       @updated="updatedQuestion"
       @inserted="insertedQuestion"
     />
-    <div class="flex justify-between my-3">
+    <div class="flex justify-between my-3 bg-transparent">
       <el-select
         v-model="selectedTags"
         multiple
@@ -91,7 +91,7 @@
 
 <script setup lang="ts">
 import UpsertQuestion from './components/UpsertQuestion.vue'
-import type { ITableHeading } from '@/types'
+// import type { ITableHeading } from '@/types'
 interface IProps {
   showCheckbox?: boolean
   selectedRows?: any[]

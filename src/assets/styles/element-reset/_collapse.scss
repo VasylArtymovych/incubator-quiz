@@ -1,0 +1,15 @@
+@use "element-plus/theme-chalk/src/collapse";
+
+.quiz-collapse.el-collapse {
+  --el-collapse-content-bg-color: transparent;
+  
+  & .el-collapse-item__header {
+    background-color: transparent;
+    --el-collapse-header-bg-color: transparent;
+  }
+
+  & .el-collapse-item__content {
+    padding-bottom: 0;
+    background-color: transparent;
+  }
+}

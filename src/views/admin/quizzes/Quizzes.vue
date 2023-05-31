@@ -1,6 +1,9 @@
 <template>
-  <div v-loading="loading" class="flex flex-col h-full mt-3">
-    <div class="flex ">
+  <div
+    v-loading="loading"
+    class="flex flex-col h-full overflow-hidden"
+  >
+    <div class="flex my-3">
       <el-input
         v-model="searchedQuiz"
         placeholder="Search"
@@ -19,7 +22,8 @@
       </el-input>
 
       <el-button
-        :type="$elComponentType.primary" class="flex items-center ml-auto"
+        :type="$elComponentType.primary"
+        class="flex items-center ml-auto"
         @click="$router.push({name: $routeNames.quiz, params: {quizId: 'new'}})"
       >
         <template #icon>
@@ -35,6 +39,7 @@
       :headers="headings"
       fixedLast
       doNotChangeQuery
+      class="h-full"
     >
       <template #questions="{row}">
         <p>
@@ -71,7 +76,6 @@
 
     <el-pagination
       v-if="totalCount"
-      id="pagination"
       v-model:current-page="currentPage"
       v-model:page-size="pageSize"
       :page-sizes="[ 5, 10, 15, 20]"
@@ -100,7 +104,12 @@ const skip = computed(() => ((currentPage.value - 1) * (pageSize.value)))
 const limit = computed(() => (skip.value + pageSize.value - 1))
 
 const searchedQuiz = ref('')
-const quizzes = ref<IQuiz[] | null>(null)
+const quizzes = ref<IQuiz[] | null>([
+  { id: 1, title: 'Quiz 1', questions: [1, 3, 4, 5, 7, 9] },
+  { id: 2, title: 'Quiz 2', questions: [1, 3, 4, 5, 7, 9] },
+  { id: 3, title: 'Quiz 3', questions: [1, 3, 4, 5, 7, 9] },
+  { id: 4, title: 'Quiz 4', questions: [1, 3, 4, 5, 7, 9] }
+])
 const loading = ref(false)
 
 const headings: any[] = [
@@ -160,6 +169,7 @@ async function getQuizzes () {
   try {
     loading.value = true
     const { data, error, count } = await quizzesService.getQuizzes(skip.value, limit.value)
+    console.log(error)
     if (error) throw new Error(error.message)
     if (data) {
       quizzes.value = data as IQuiz[]
@@ -179,9 +189,9 @@ async function deleteQuiz (id: number) {
   try {
     loading.value = true
     const { error, status } = await quizzesService.deleteQuiz(id)
-
     if (error) throw new Error(error.message)
     if (status === 204) {
+      useSuccessNotification('Quiz was deleted')
       getQuizzes()
     }
   } catch (error: any) {
