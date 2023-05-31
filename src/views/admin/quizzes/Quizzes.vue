@@ -75,7 +75,7 @@
     </AppTable>
 
     <el-pagination
-      v-if="totalCount"
+      v-if="quizzes && totalCount"
       v-model:current-page="currentPage"
       v-model:page-size="pageSize"
       :page-sizes="[ 5, 10, 15, 20]"
@@ -104,12 +104,7 @@ const skip = computed(() => ((currentPage.value - 1) * (pageSize.value)))
 const limit = computed(() => (skip.value + pageSize.value - 1))
 
 const searchedQuiz = ref('')
-const quizzes = ref<IQuiz[] | null>([
-  { id: 1, title: 'Quiz 1', questions: [1, 3, 4, 5, 7, 9] },
-  { id: 2, title: 'Quiz 2', questions: [1, 3, 4, 5, 7, 9] },
-  { id: 3, title: 'Quiz 3', questions: [1, 3, 4, 5, 7, 9] },
-  { id: 4, title: 'Quiz 4', questions: [1, 3, 4, 5, 7, 9] }
-])
+const quizzes = ref<IQuiz[] | null>(null)
 const loading = ref(false)
 
 const headings: any[] = [

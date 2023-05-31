@@ -20,7 +20,7 @@
 @use "element-plus/theme-chalk/src/scrollbar";
 @use "element-plus/theme-chalk/src/popconfirm";
 @use "element-plus/theme-chalk/src/overlay";
-@use "element-plus/theme-chalk/src/pagination";
+// @use "element-plus/theme-chalk/src/pagination";
 @use "element-plus/theme-chalk/src/divider";
 
 
@@ -29,3 +29,4 @@
 @import './form';
 @import './input';
 @import './dialog';
+@import './pagination';

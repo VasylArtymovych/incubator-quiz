@@ -5,6 +5,7 @@
       label-position="top"
       :model="formModel"
       :rules="formRules"
+      class="pt-1"
     >
       <el-form-item label="Find user by email" prop="email" class="max-w-[300px]">
         <el-input
@@ -36,10 +37,9 @@
     />
 
     <el-pagination
-      v-if="totalCount"
+      v-if="users && totalCount"
       id="pagination"
       v-model:current-page="currentPage"
-      v-model:page-size="pageSize"
       :total="totalCount"
       background
       layout="total, prev, pager, next, jumper"
@@ -61,7 +61,7 @@ defineEmits(['selectionChange'])
 
 const currentPage = ref(1)
 const totalCount = ref<number>(0)
-const pageSize = ref(3)
+// const pageSize = ref(3)
 
 // const skip = computed(() => ((currentPage.value - 1) * (pageSize.value)))
 // const limit = computed(() => (skip.value + pageSize.value - 1))
@@ -82,8 +82,8 @@ const formModel = useElFormModel({
 const formRules = useElFormRules({
   email: [useEmailRule()]
 })
-const handleCurrentChange = (page: number) => {
-  currentPage.value = page
+const handleCurrentChange = () => {
+  // currentPage.value = page
   getUsers()
 }
 
@@ -97,7 +97,7 @@ const handleSearchUser = () => {
 
 const handleClearInputData = (val: string) => {
   if (val === '') {
-    currentPage.value = 1
+    // currentPage.value = 1
     getUsers()
   }
 }

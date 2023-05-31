@@ -36,6 +36,7 @@
       v-model:selected="selectedRows"
       :dataset="questions"
       :headers="headers"
+      rowHeight="50px"
       fixedLast
       doNotChangeQuery
       class="h-full"
@@ -76,7 +77,7 @@
     </AppTable>
 
     <el-pagination
-      v-if="totalCount"
+      v-if="questions && tags && totalCount"
       v-model:current-page="currentPage"
       v-model:page-size="pageSize"
       :page-sizes="[ 3, 9, 15, 20]"

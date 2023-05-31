@@ -32,7 +32,7 @@
 </template>
 
 <script setup lang="ts">
-import userLogo from '@/assets/images/person-icon.png'
+import userLogo from '@/assets/images/person-icon.jpeg'
 import owlLogo from '@/assets/images/owl_logo.png'
 import DefaultContainer from '@/layouts/DefaultContainer.vue'
 
