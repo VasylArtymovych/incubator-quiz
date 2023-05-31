@@ -14,7 +14,7 @@
       <NavBar v-if="isAdmin" :isActive="isActive" />
 
       <div class="flex">
-        <BurgerButton :isActive="isActive" class="md:hidden" @toggleActive="isActive = !isActive" />
+        <BurgerButton v-if="isAdmin" :isActive="isActive" class="md:hidden" @toggleActive="isActive = !isActive" />
 
         <el-dropdown trigger="click" @command="handleClick">
           <el-avatar :src="userLogo" alt="user-logo" class="ml-6 shrink-0 text-base">

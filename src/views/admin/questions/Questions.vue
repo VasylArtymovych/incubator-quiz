@@ -38,6 +38,7 @@
       :headers="headers"
       fixedLast
       doNotChangeQuery
+      class="h-full"
       @sortBy="sortBy"
       @update:selected="(val: any)=> $emit('selectionChange', val)"
     >

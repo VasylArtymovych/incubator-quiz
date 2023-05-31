@@ -8,5 +8,4 @@
 <script setup lang="ts">
 import DefaultContainer from '@/layouts/DefaultContainer.vue'
 
-console.log('home pa');
 </script>

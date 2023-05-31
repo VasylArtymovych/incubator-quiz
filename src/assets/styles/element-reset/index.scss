@@ -6,8 +6,6 @@
 
 @use "element-plus/theme-chalk/src/base";
 @use "element-plus/theme-chalk/src/button";
-@use "element-plus/theme-chalk/src/form";
-@use "element-plus/theme-chalk/src/input";
 @use "element-plus/theme-chalk/src/input-number";
 @use "element-plus/theme-chalk/src/select";
 @use "element-plus/theme-chalk/src/option";
@@ -22,10 +20,12 @@
 @use "element-plus/theme-chalk/src/scrollbar";
 @use "element-plus/theme-chalk/src/popconfirm";
 @use "element-plus/theme-chalk/src/overlay";
-@use "element-plus/theme-chalk/src/dialog";
 @use "element-plus/theme-chalk/src/pagination";
 @use "element-plus/theme-chalk/src/divider";
 
 
 @import './collapse';
 @import './_popconfirm';
+@import './form';
+@import './input';
+@import './dialog';

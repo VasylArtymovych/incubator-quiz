@@ -1,0 +1,14 @@
+@use "element-plus/theme-chalk/src/form";
+
+.upsert-question-form.el-form {
+  & .el-form-item {
+    & .el-form-item__content {
+      flex-wrap: nowrap;
+      gap: 4px;
+    }
+
+    &.timer-option-item .el-form-item__content {
+        justify-content: space-between;
+      }
+  }
+}

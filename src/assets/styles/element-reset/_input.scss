@@ -1,0 +1,7 @@
+@use "element-plus/theme-chalk/src/input";
+
+.upsert-question-form .el-radio__input{
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}

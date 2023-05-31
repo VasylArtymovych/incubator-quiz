@@ -1,7 +1,7 @@
 <template>
   <el-dialog
     v-model="dialogVisible"
-    title="Create question"
+    :title="updatingQuestionId ? 'Update question' : 'Create question'"
     @closed="onCloseDialog"
   >
     <el-form
@@ -10,7 +10,7 @@
       :model="formModel"
       :rules="formRules"
       label-position="top"
-      class="form"
+      class="upsert-question-form"
     >
       <el-form-item
         prop="title"
@@ -30,7 +30,6 @@
         :label="'Option' + (index+1)"
         :prop="'options.' + index + '.title'"
         :rules="optionRules"
-        class="options"
       >
         <el-input v-model="opt.title" clearable placeholder="Answer" />
         <el-radio
@@ -54,7 +53,7 @@
       <el-form-item
         prop="timer"
         label="Question time"
-        class="timerItem"
+        class="timer-option-item"
       >
         <el-input-number
           v-model="formModel.timer"
@@ -249,18 +248,3 @@ defineExpose({
 })
 </script>
 
-<style lang="scss">
-.el-form .el-form-item .el-form-item__content {
-  flex-wrap: nowrap;
-  gap: 4px;
-}
-.options .el-radio__input{
-  display: flex;
-  align-items: center;
-  gap: 2px;
-}
-
-.timerItem .el-form-item__content {
-  justify-content: space-between;
-}
-</style>

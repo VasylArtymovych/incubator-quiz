@@ -17,7 +17,7 @@
     </li>
 
     <li
-      v-show="$route.name === $routeNames.admin"
+      v-show="$route.name === $routeNames.rootPage"
       class="flex justify-center items-center"
     >
       <RouterLink

@@ -1,0 +1,9 @@
+@use "element-plus/theme-chalk/src/dialog";
+
+.el-dialog {
+  & .el-dialog__header {
+    & .el-dialog__title {
+      @apply font-semibold text-accent 
+    }
+  }
+}

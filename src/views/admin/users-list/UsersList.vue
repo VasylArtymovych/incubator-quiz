@@ -31,6 +31,7 @@
       :dataset="users"
       :headers="headings"
       doNotChangeQuery
+      class="h-full"
       @selection-change="(val: number[]) => $emit('selectionChange', val)"
     />
 
