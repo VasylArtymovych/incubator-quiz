@@ -1,5 +1,5 @@
 <template>
-  <div class="w-8 h-8 relative cursor-pointer" @click="$emit('toggleActive')">
+  <div class="w-8 h-8 relative cursor-pointer">
     <span
       class="absolute top-[50%] left-0 block w-full h-1 rounded-xl transition-all ease-in-out
         before:block before:w-full before:h-1 before:bg-accent before:rounded-xl before:translate-y-[-10px]
@@ -17,6 +17,4 @@
 defineProps<{
   isActive: boolean
 }>()
-
-defineEmits(['toggleActive'])
 </script>

@@ -14,9 +14,9 @@
       <NavBar v-if="isAdmin" :isActive="isActive" />
 
       <div class="flex">
-        <BurgerButton v-if="isAdmin" :isActive="isActive" class="md:hidden" @toggleActive="isActive = !isActive" />
+        <BurgerButton v-if="isAdmin" :isActive="isActive" class="md:hidden" @click="isActive = !isActive" />
 
-        <el-dropdown trigger="click" @command="handleClick">
+        <el-dropdown trigger="click" @command="onDropdown">
           <el-avatar :src="userLogo" alt="user-logo" class="ml-6 shrink-0 text-base">
             User
           </el-avatar>
@@ -42,8 +42,7 @@ const isAdmin = computed(() => authStore.activeUserData?.email === 'admin@softon
 
 const isActive = ref(false)
 
-const handleClick = () => {
-  localStorage.removeItem('iq-user')
+const onDropdown = () => {
   authStore.logOut()
 }
 </script>

@@ -33,7 +33,7 @@
 
     <AppTable
       v-if="questions && tags"
-      v-model:selected="selectedRows"
+      :selected="selectedRows"
       :dataset="questions"
       :headers="headers"
       rowHeight="50px"
@@ -41,7 +41,7 @@
       doNotChangeQuery
       class="h-full"
       @sortBy="sortBy"
-      @update:selected="(val: any)=> $emit('selectionChange', val)"
+      @update:selected="(val: number[])=> $emit('selectionChange', val)"
     >
       <template #options="{row}">
         <p v-for="(opt,i) in row.options" :key="i" :class="{'font-bold': opt.is_correct }">
@@ -95,7 +95,6 @@
 import UpsertQuestion from './components/UpsertQuestion.vue'
 // import type { ITableHeading } from '@/types'
 interface IProps {
-  showCheckbox?: boolean
   selectedRows?: any[]
 }
 

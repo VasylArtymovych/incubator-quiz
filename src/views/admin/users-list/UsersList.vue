@@ -29,11 +29,12 @@
 
     <AppTable
       v-if="users"
+      :selected="selectedRows"
       :dataset="users"
       :headers="headings"
       doNotChangeQuery
       class="h-full"
-      @selection-change="(val: number[]) => $emit('selectionChange', val)"
+      @update:selected="(val: string[]) => $emit('selectionChange', val)"
     />
 
     <el-pagination
@@ -53,7 +54,7 @@
 // import type { ITableHeading } from '@/types'
 import { usersListService } from './users-list.service'
 interface IProps {
-  showCheckbox?: boolean
+  selectedRows?: any[]
 }
 
 defineProps<IProps>()

@@ -43,7 +43,7 @@ svg {
 }
 
 *::-webkit-scrollbar-thumb {
-  background-color: #8269e7;
+  @apply bg-accent
 }
 
 *::-webkit-scrollbar-track {
@@ -54,4 +54,3 @@ svg {
 body:not(.user-is-tabbing) *:focus {
   outline: none !important;
 }
-

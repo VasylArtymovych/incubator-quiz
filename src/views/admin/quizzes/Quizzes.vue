@@ -47,6 +47,12 @@
         </p>
       </template>
 
+      <template #users="{row}">
+        <p>
+          {{ row.users.length }}
+        </p>
+      </template>
+
       <template #actions="{row}">
         <el-button
           size="small"
@@ -109,7 +115,8 @@ const loading = ref(false)
 
 const headings: any[] = [
   { label: 'Quiz title', prop: 'title', sortable: true },
-  { label: 'Questions amount', prop: 'questions' },
+  { label: 'Questions', prop: 'questions' },
+  { label: 'Users', prop: 'users' },
   { label: 'Actions', prop: 'actions', width: 150 }
 ]
 

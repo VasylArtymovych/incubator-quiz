@@ -31,7 +31,6 @@
         class="border-t border-b border-accent"
       >
         <Questions
-          :showCheckbox="true"
           :selectedRows="selectedQuestions"
           @selectionChange="handleQuestionsSelectionChange"
         />
@@ -43,7 +42,7 @@
         class="border-b border-accent"
       >
         <UsersList
-          :showCheckbox="true"
+          :selectedRows="selectedUsers"
           @selectionChange="handleUsersSelectionChange"
         />
       </el-collapse-item>
@@ -88,11 +87,10 @@ const formRules = useElFormRules({
 })
 
 const handleQuestionsSelectionChange = (val: number[]) => {
-  console.log('valChange: ', val)
   selectedQuestions.value = val
 }
-const handleUsersSelectionChange = (val: IUser[]) => {
-  selectedUsers.value = val.map(item => item.id)
+const handleUsersSelectionChange = (val: string[]) => {
+  selectedUsers.value = val
 }
 
 const onUpsertQuiz = () => {
@@ -107,7 +105,6 @@ const onUpsertQuiz = () => {
   })
 }
 
-// todo for users property
 const getQuizById = async (id: number) => {
   try {
     const { error, data } = await quizzesService.getQuizById(id)
@@ -115,6 +112,7 @@ const getQuizById = async (id: number) => {
     if (data) {
       formModel.title = data.title
       selectedQuestions.value = data.questions
+      selectedUsers.value = data.users
     }
   } catch (error: any) {
     return useErrorNotification(error.message)
@@ -122,11 +120,10 @@ const getQuizById = async (id: number) => {
 }
 props.quizId && getQuizById(props.quizId)
 
-// todo for users property
 const createQuiz = async () => {
   try {
     loading.value = true
-    const payload = { title: formModel.title, questions: selectedQuestions.value }
+    const payload = { title: formModel.title, questions: selectedQuestions.value, users: selectedUsers.value }
     const { error, status } = await quizzesService.addQuiz(payload)
     if (error) throw new Error(error.message)
     if (status === 201) {
@@ -139,13 +136,13 @@ const createQuiz = async () => {
     loading.value = false
   }
 }
-// todo for users property
+
 const updateQuiz = async () => {
   if (!props.quizId) return useErrorNotification('Quiz id is missing')
 
   try {
     loading.value = true
-    const payload = { title: formModel.title, questions: selectedQuestions.value }
+    const payload = { title: formModel.title, questions: selectedQuestions.value, users: selectedUsers.value }
     const { error, status } = await quizzesService.updateQuiz(payload, props.quizId)
     if (error) throw new Error(error.message)
     if (status === 204) {
@@ -159,10 +156,3 @@ const updateQuiz = async () => {
   }
 }
 </script>
-
-<style lang="scss" scoped>
-// .el-collapse .el-collapse-item__header {
-//   background-color: transparent;
-//   --el-collapse-header-bg-color: transparent;
-// }
-</style>
