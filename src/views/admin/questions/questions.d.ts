@@ -13,3 +13,10 @@ interface IQuestion {
 }
 
 type TUpsetQuestion = Omit<IQuestion, 'id'>
+
+type TPropQues = keyof IQuestion
+
+interface ISortPropOrderQues {
+  prop: TPropQues
+  order: TOrder
+}

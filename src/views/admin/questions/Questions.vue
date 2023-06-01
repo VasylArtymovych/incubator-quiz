@@ -34,7 +34,7 @@
     <AppTable
       v-if="questions && tags"
       :selected="selectedRows"
-      :dataset="questions"
+      :dataset="sortedQuestions"
       :headers="headers"
       rowHeight="50px"
       fixedLast
@@ -44,7 +44,11 @@
       @update:selected="(val: number[])=> $emit('selectionChange', val)"
     >
       <template #options="{row}">
-        <p v-for="(opt,i) in row.options" :key="i" :class="{'font-bold': opt.is_correct }">
+        <p
+          v-for="(opt,i) in row.options" :key="i"
+          :class="{'font-bold': opt.is_correct }"
+          class="truncate"
+        >
           <span>{{ i+1 }}</span>: {{ opt.title }}
         </p>
       </template>
@@ -75,7 +79,6 @@
         </el-popconfirm>
       </template>
     </AppTable>
-
     <el-pagination
       v-if="questions && tags && totalCount"
       v-model:current-page="currentPage"
@@ -113,8 +116,32 @@ const limit = computed(() => (skip.value + pageSize.value - 1))
 const selectedTags = ref<string[]>([])
 const tags = ref<Set<string> | null>(null)
 
-const questions = ref<IQuestion[] | null>(null)
 const quesLoading = ref(false)
+const sortingPropOrder = ref<ISortPropOrderQues | null>(null)
+
+const questions = ref<IQuestion[] | null>(null)
+
+const sortedQuestions = computed(() => {
+  if (sortingPropOrder.value && questions.value) {
+    const { prop, order } = sortingPropOrder.value
+
+    return [...questions.value].sort((prev, next) => {
+      if (order === 'ASC') {
+        return (typeof prev[prop] === 'string')
+          ? (prev[prop] as string).localeCompare(next[prop] as string)
+          : (prev[prop] as number) - (next[prop] as number)
+      } else if (order === 'DESC') {
+        return (typeof prev[prop] === 'string')
+          ? (next[prop] as string).localeCompare(prev[prop] as string)
+          : (next[prop] as number) - (prev[prop] as number)
+      } else {
+        return 0
+      }
+    })
+  } else {
+    return questions.value
+  }
+})
 
 const headers: any[] = [
   { label: 'Title', prop: 'title', sortable: true, minWidth: 180 },
@@ -126,28 +153,6 @@ const headers: any[] = [
 
 const handleEdit = (row: IQuestion) => {
   openUpsertDialog(row)
-}
-
-const insertedQuestion = () => {
-  if (selectedTags.value.length) {
-    getQuestionsByTags()
-    getTags()
-  } else {
-    getData()
-  }
-}
-
-const sortBy = (ee: any) => {
-  console.log('ee: ', ee)
-}
-
-const updatedQuestion = () => {
-  if (selectedTags.value.length) {
-    getQuestionsByTags()
-    getTags()
-  } else {
-    getData()
-  }
 }
 
 const handleDelete = async (row: IQuestion) => {
@@ -165,6 +170,33 @@ const handleDelete = async (row: IQuestion) => {
     }
   } catch (error: any) {
     return useErrorNotification(error.message)
+  }
+}
+
+const insertedQuestion = () => {
+  if (selectedTags.value.length) {
+    getQuestionsByTags()
+    getTags()
+  } else {
+    getData()
+  }
+}
+
+const updatedQuestion = () => {
+  if (selectedTags.value.length) {
+    getQuestionsByTags()
+    getTags()
+  } else {
+    getData()
+  }
+}
+
+const sortBy = (val: string) => {
+  if (val) {
+    const sortData = val.split(',') as [TPropQues, TOrder]
+    sortingPropOrder.value = { prop: sortData[0], order: sortData[1] }
+  } else {
+    sortingPropOrder.value = null
   }
 }
 
@@ -253,7 +285,3 @@ async function getData () {
 }
 getData()
 </script>
-
-<style lang="scss" scoped>
-
-</style>

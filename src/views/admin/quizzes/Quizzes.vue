@@ -35,11 +35,12 @@
 
     <AppTable
       v-if="quizzes"
-      :dataset="quizzes"
+      :dataset="sortedQuizzes"
       :headers="headings"
       fixedLast
       doNotChangeQuery
       class="h-full"
+      @sortBy="sortBy"
     >
       <template #questions="{row}">
         <p>
@@ -110,8 +111,28 @@ const skip = computed(() => ((currentPage.value - 1) * (pageSize.value)))
 const limit = computed(() => (skip.value + pageSize.value - 1))
 
 const searchedQuiz = ref('')
-const quizzes = ref<IQuiz[] | null>(null)
+const sortingPropOrder = ref<ISortPropOrderQuiz | null>(null)
 const loading = ref(false)
+
+const quizzes = ref<IQuiz[] | null>(null)
+
+const sortedQuizzes = computed(() => {
+  if (sortingPropOrder.value && quizzes.value) {
+    const { prop, order } = sortingPropOrder.value
+
+    return [...quizzes.value].sort((prev, next) => {
+      if (order === 'ASC') {
+        return (prev[prop] as string).localeCompare(next[prop] as string)
+      } else if (order === 'DESC') {
+        return (next[prop] as string).localeCompare(prev[prop] as string)
+      } else {
+        return 0
+      }
+    })
+  } else {
+    return quizzes.value
+  }
+})
 
 const headings: any[] = [
   { label: 'Quiz title', prop: 'title', sortable: true },
@@ -119,6 +140,15 @@ const headings: any[] = [
   { label: 'Users', prop: 'users' },
   { label: 'Actions', prop: 'actions', width: 150 }
 ]
+
+const sortBy = (val: string) => {
+  if (val) {
+    const sortData = val.split(',') as [TPropQuiz, TOrder]
+    sortingPropOrder.value = { prop: sortData[0], order: sortData[1] }
+  } else {
+    sortingPropOrder.value = null
+  }
+}
 
 const handleSearchQuiz = () => {
   getQuizByTitle()

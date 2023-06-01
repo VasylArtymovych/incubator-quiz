@@ -10,3 +10,11 @@ interface INewQuiz {
   questions: number[]
   users: string[]
 }
+
+
+type TPropQuiz = keyof IQuiz
+
+interface ISortPropOrderQuiz {
+  prop: TPropQuiz
+  order: TOrder
+}

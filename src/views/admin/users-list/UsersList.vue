@@ -66,10 +66,9 @@ const totalCount = ref<number>(0)
 
 // const skip = computed(() => ((currentPage.value - 1) * (pageSize.value)))
 // const limit = computed(() => (skip.value + pageSize.value - 1))
+const loading = ref(false)
 
 const users = ref<IUserData[] | null>(null)
-
-const loading = ref(false)
 
 const headings: any[] = [
   { label: 'Email', prop: 'email' }
@@ -83,6 +82,7 @@ const formModel = useElFormModel({
 const formRules = useElFormRules({
   email: [useEmailRule()]
 })
+
 const handleCurrentChange = () => {
   // currentPage.value = page
   getUsers()

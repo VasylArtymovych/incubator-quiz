@@ -1,0 +1,1 @@
+type TOrder = 'ASC' | 'DESC'

@@ -72,7 +72,7 @@
                   <template v-if="header.sortable">
                     <div class="flex flex-col ml-[10px] relative w-[10px] h-[10px] text-silver">
                       <span
-                        class="text-xs4 absolute left-0 top-[-4px]"
+                        class="text-xs4 absolute left-0 top-[-10px]"
                         :class="{ 'text-primary': sortBy === header.prop && sortDirection === -1 }"
                       >▲</span>
                       <span

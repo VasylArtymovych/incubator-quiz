@@ -1,6 +1,6 @@
 <template>
   <label
-    class="el-checkbox h-auto w-[14px] cursor-pointer"
+    class="el-checkbox h-auto w-[14px]"
     :class="{'is-checked': isChecked, 'is-disabled': disabled }"
   >
     <span
@@ -13,7 +13,7 @@
         :disabled="disabled"
         :value="label"
         type="checkbox"
-        class="el-checkbox__original"
+        class="el-checkbox__original cursor-pointer"
         @change="$emit('change', $event.target.checked)"
       >
     </span>
