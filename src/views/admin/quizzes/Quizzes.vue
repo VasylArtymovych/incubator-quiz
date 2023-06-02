@@ -50,7 +50,7 @@
 
       <template #users="{row}">
         <p>
-          {{ row.users.length }}
+          {{ row.users && row.users.length }}
         </p>
       </template>
 

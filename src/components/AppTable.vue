@@ -16,7 +16,7 @@
       />
     </div>
 
-    <div class=" h-full" :style="`padding-right: ${tableScrollPadding}`">
+    <div class=" h-full overflow-auto" :style="`padding-right: ${tableScrollPadding}`">
       <table class="min-w-full">
         <thead>
           <tr>
@@ -94,11 +94,13 @@
               :class="[rowClassChecker(row), rowClass,
                        { 'cursor-pointer': clickable },
                        { 'mb-[15px] border border-snuff p-[15px] shadow-card2 block': $mq.smaller('md').value }]"
+              class="'mb-[15px] border border-snuff p-[15px] shadow-card2 flex'"
               @click="$emit('rowClick', row)"
             >
               <td v-if="selected" class="md:inline min-w-[40px] w-[40px]">
                 <div
                   :class="{'cell text-center sticky left-0 shadow-fixed-column': !$mq.smaller('md').value}"
+                  class="flex items-center"
                   @click.stop
                 >
                   <AppCheckbox :modelValue="selected.includes(row.id)" @update:modelValue="toggleSelection(row)" />
@@ -140,12 +142,14 @@
                       { 'flex justify-between mb-[10px] items-center': $mq.smaller('md').value },
                       {'cell truncate': !$mq.smaller('md').value}
                     ]"
+                    class="flex items-center"
                   >
                     <slot v-if="$mq.smaller('md').value" :name="`header_${h.prop}`" :header="h">
                       <p class="text-kimberly uppercase font-semibold">{{ h.label || '' }}</p>
                     </slot>
 
-                    <span :style="`max-width: ${h.minWidth}px`">
+                    <!-- <span :style="`max-width: ${h.minWidth}px`"> -->
+                    <span class="w-full py-1 max-h-full">
                       <slot
                         v-if="!($mq.smaller('md').value && (fixedLast && hIndex === visibleColumns.length - 1))"
                         :name="h.prop"

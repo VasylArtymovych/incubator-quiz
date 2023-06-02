@@ -2,13 +2,57 @@
 
 .upsert-question-form.el-form {
   & .el-form-item {
+    & .el-form-item__label {
+      color: white;
+    }
+
     & .el-form-item__content {
       flex-wrap: nowrap;
       gap: 4px;
+
+      & .el-textarea__inner {
+        &::placeholder {
+          @apply text-warmGray-600
+        }
+        @apply bg-slate-400 text-black
+      }
+
+      & .el-input {
+        & .el-input__wrapper {
+          & .el-input__inner {
+            &::placeholder {
+              @apply text-warmGray-600
+            }
+            @apply text-black
+          }
+
+          @apply bg-slate-400
+        }
+      }
+
+      & .el-radio {
+        .el-radio__label {
+          color: white
+        }
+      }
+
+      & .el-input-number {
+        span {
+          @apply bg-slate-700 hover:bg-[#ff7e5a] text-white
+        }
+      }
+
+      & .el-select__input {
+        @apply text-black
+      }
+
+      // & .el-button {
+      //   @apply bg-accent
+      // }
     }
 
     &.timer-option-item .el-form-item__content {
-        justify-content: space-between;
-      }
+      justify-content: space-between;
+    }
   }
 }

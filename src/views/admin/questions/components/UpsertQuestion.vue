@@ -42,7 +42,9 @@
 
         <el-button
           v-if="index > 1"
-          :size="$elComponentSize.small" circle
+          :type="$elComponentType.primary"
+          :size="$elComponentSize.small"
+          circle
           class="hover:text-red-300"
           @click="removeOption(index)"
         >
@@ -63,6 +65,7 @@
 
         <el-button
           :size="$elComponentSize.small"
+          :type="$elComponentType.success"
           class="option"
           @click="addOption"
         >
@@ -84,6 +87,7 @@
           allow-create
           default-first-option
           :reserve-keyword="false"
+          :tag-type="$elComponentType.primary"
           placeholder="Choose/create tags"
           class="w-full"
         >

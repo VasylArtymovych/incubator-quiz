@@ -55,9 +55,19 @@
 
       <template #tags="{row}">
         <template v-if="row.tags.length > 0">
-          <span v-for="tag in row.tags" :key="tag">{{ tag }}; </span>
+          <el-tag
+            v-for="tag in row.tags" :key="tag"
+            class="mr-1"
+          >
+            {{ tag }}
+          </el-tag>
         </template>
-        <p v-else />
+      </template>
+
+      <template #timer="{row}">
+        <el-tag round>
+          {{ row.timer }}
+        </el-tag>
       </template>
 
       <template #actions="{row}">
@@ -146,7 +156,7 @@ const sortedQuestions = computed(() => {
 const headers: any[] = [
   { label: 'Title', prop: 'title', sortable: true, minWidth: 180 },
   { label: 'Options', prop: 'options', minWidth: 150 },
-  { label: 'Tags', prop: 'tags' },
+  { label: 'Tags', prop: 'tags', minWidth: 100 },
   { label: 'Timer', prop: 'timer', sortable: true, minWidth: 70 },
   { label: 'Actions', prop: 'actions', width: 150 }
 ]
