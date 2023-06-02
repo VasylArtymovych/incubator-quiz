@@ -1,6 +1,6 @@
 <template>
   <div class="min-w-[300px] md:min-w-[500px] m-auto mt-12">
-    <el-card v-loading="loading" class="card md:py-5 text-titleText bg-secondBgr border border-primary">
+    <el-card v-loading="loading" class="auth-card md:py-5 text-black">
       <template #header>
         <p class="font-semibold text-xl">Update password</p>
       </template>

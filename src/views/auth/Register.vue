@@ -1,6 +1,6 @@
 <template>
   <div class="min-w-[300px] md:min-w-[500px] m-auto">
-    <el-card v-loading="loading" class="card md:pb-5 text-titleText bg-secondBgr border border-primary">
+    <el-card v-loading="loading" class="auth-card md:pb-5 text-black">
       <template #header>
         <div class="flex justify-center items-center">
           <p class="font-semibold text-xl">
@@ -24,19 +24,44 @@
         class="form md:px-10"
         @submit.prevent="submit"
       >
-        <el-form-item label="User email" prop="email">
-          <el-input v-model.trim="regForm.email" type="email" clearable />
+        <el-form-item
+          label="Email"
+          prop="email"
+        >
+          <el-input
+            v-model.trim="regForm.email"
+            type="email"
+            clearable
+          />
         </el-form-item>
 
-        <el-form-item label="User password" prop="password">
-          <el-input v-model.trim="regForm.password" type="password" show-password />
+        <el-form-item
+          label="Password"
+          prop="password"
+        >
+          <el-input
+            v-model.trim="regForm.password"
+            type="password"
+            show-password
+          />
         </el-form-item>
 
-        <el-form-item label="Confirm password" prop="confirmPassword">
-          <el-input v-model.trim="regForm.confirmPassword" type="password" show-password />
+        <el-form-item
+          label="Confirm password"
+          prop="confirmPassword"
+        >
+          <el-input
+            v-model.trim="regForm.confirmPassword"
+            type="password"
+            show-password
+          />
         </el-form-item>
 
-        <el-button native-type="submit" :type="$elComponentType.primary" class="w-full mt-3">
+        <el-button
+          native-type="submit"
+          :type="$elComponentType.primary"
+          class="w-full mt-3"
+        >
           SignUp
         </el-button>
       </el-form>
@@ -82,7 +107,7 @@ const submit = () => {
 
           if (data.user) {
             setUserData(data.user)
-            navigateToAdminOrUserPage(data.user.email)
+            navigateToAdminOrUserPage(data.user)
           }
         })
         .catch(error => (useErrorNotification(error.message)))
