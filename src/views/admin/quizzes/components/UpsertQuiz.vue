@@ -8,7 +8,7 @@
       label-position="top"
       :rules="formRules"
       :model="formModel"
-      class="form"
+      class="upsert-quiz-form mb-4"
     >
       <el-form-item
         label="Quiz title"

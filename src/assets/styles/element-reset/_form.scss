@@ -14,6 +14,7 @@
         &::placeholder {
           @apply text-warmGray-600
         }
+
         @apply bg-slate-400 text-black
       }
 
@@ -23,7 +24,14 @@
             &::placeholder {
               @apply text-warmGray-600
             }
+
             @apply text-black
+          }
+
+          & .el-input__suffix {
+            & .el-icon {
+              @apply text-accent
+            }
           }
 
           @apply bg-slate-400
@@ -38,7 +46,10 @@
 
       & .el-input-number {
         span {
-          @apply bg-slate-700 hover:bg-[#ff7e5a] text-white
+          @apply bg-accentLight1 hover:bg-accentLight2 text-white
+        }
+        span.is-disabled {
+          @apply bg-accentLight2
         }
       }
 
@@ -52,3 +63,16 @@
     }
   }
 }
+
+.upsert-quiz-form.el-form,
+.users-form.el-form {
+  & .el-form-item {
+    margin-bottom: 0;
+
+    & .el-form-item__label {
+      @apply pl-1 text-accent text-sm font-semibold
+    }
+  }
+}
+
+

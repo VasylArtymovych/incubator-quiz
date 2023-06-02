@@ -1,31 +1,37 @@
 <template>
-  <div v-loading="loading" class="flex flex-col h-full">
-    <el-form
-      ref="formRef"
-      label-position="top"
-      :model="formModel"
-      :rules="formRules"
-      class="pt-1"
-    >
-      <el-form-item label="Find user by email" prop="email" class="max-w-[300px]">
-        <el-input
-          v-model.trim="formModel.email"
-          type="email"
-          placeholder="Search"
-          clearable
-          @input="handleClearInputData"
-        >
-          <template #append>
-            <el-button
-              :type="$elComponentType.primary"
-              @click="handleSearchUser"
-            >
-              Find
-            </el-button>
-          </template>
-        </el-input>
-      </el-form-item>
-    </el-form>
+  <div v-loading="loading" class="users flex flex-col h-full">
+    <div class="flex justify-between my-4 bg-transparent">
+      <el-form
+        ref="formRef"
+        label-position="top"
+        :model="formModel"
+        :rules="formRules"
+        class="users-form"
+      >
+        <el-form-item label="Find User" prop="email" class="w-[300px]">
+          <el-input
+            v-model.trim="formModel.email"
+            type="email"
+            placeholder="User email"
+            clearable
+            @input="handleClearInputData"
+          >
+            <template #append>
+              <el-button
+                :type="$elComponentType.primary"
+                @click="handleSearchUser"
+              >
+                <IconSearch />
+              </el-button>
+            </template>
+          </el-input>
+        </el-form-item>
+      </el-form>
+
+      <el-tag v-if="users && selectedRows" class="self-end">
+        Checked: {{ selectedRows.length }} of {{ totalCount }} users
+      </el-tag>
+    </div>
 
     <AppTable
       v-if="users"

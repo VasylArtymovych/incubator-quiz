@@ -1,7 +1,7 @@
 <template>
   <el-dialog
     v-model="dialogVisible"
-    :title="updatingQuestionId ? 'Update question' : 'Create question'"
+    :title="updatingQuestionId ? 'Update Question' : 'Create Question'"
     class="text-xl"
     @closed="onCloseDialog"
   >

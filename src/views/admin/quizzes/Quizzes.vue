@@ -1,7 +1,7 @@
 <template>
   <div
     v-loading="loading"
-    class="flex flex-col h-full overflow-hidden"
+    class="quizzes flex flex-col h-full overflow-hidden"
   >
     <div class="flex my-3">
       <el-input
@@ -16,13 +16,14 @@
             :type="$elComponentType.primary"
             @click="handleSearchQuiz"
           >
-            Find
+            <IconSearch />
           </el-button>
         </template>
       </el-input>
 
       <el-button
         :type="$elComponentType.primary"
+        plain
         class="flex items-center ml-auto"
         @click="$router.push({name: $routeNames.quiz, params: {quizId: 'new'}})"
       >

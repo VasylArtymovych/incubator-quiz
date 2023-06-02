@@ -1,5 +1,5 @@
 <template>
-  <div v-loading="quesLoading" class="flex flex-col h-full overflow-hidden bg-transparent">
+  <div v-loading="quesLoading" class="questions flex flex-col h-full overflow-hidden bg-transparent">
     <UpsertQuestion
       ref="dialogRef"
       @updated="updatedQuestion"
@@ -13,6 +13,7 @@
         collapse-tags-tooltip
         placeholder="Select tags"
         clearable
+        :tag-type="$elComponentType.primary"
         @change="handleChangeSelect"
       >
         <el-option
@@ -23,7 +24,27 @@
         />
       </el-select>
 
-      <el-button :type="$elComponentType.primary" class="flex items-center ml-auto" @click="openUpsertDialog()">
+      <el-tag
+        v-if="questions && selectedRows"
+        class="self-end"
+      >
+        Checked: {{ selectedRows.length }} of {{ totalCount }} questions
+      </el-tag>
+
+      <!-- <el-statistic v-if="questions && selectedRows" :value="selectedRows.length">
+        <template #title>
+          <div style="display: inline-flex; align-items: center">
+            Checked:
+          </div>
+        </template>
+        <template #suffix>of {{ totalCount }}</template>
+      </el-statistic> -->
+
+      <el-button
+        :type="$elComponentType.primary"
+        plain
+        class="flex items-center" @click="openUpsertDialog()"
+      >
         <template #icon>
           <IconPlus />
         </template>
@@ -210,7 +231,7 @@ const headers: any[] = [
   { label: 'Title', prop: 'title', sortable: true, minWidth: 180 },
   { label: 'Options', prop: 'options', minWidth: 150 },
   { label: 'Tags', prop: 'tags', minWidth: 100 },
-  { label: 'Timer', prop: 'timer', sortable: true, minWidth: 70 },
+  { label: 'Timer', prop: 'timer', sortable: true, width: 100 },
   { label: 'Actions', prop: 'actions', width: 150 }
 ]
 
