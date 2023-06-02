@@ -43,23 +43,25 @@
       @sortBy="sortBy"
     >
       <template #questions="{row}">
-        <p>
+        <el-tag v-if="row.questions" round>
           {{ row.questions.length }}
-        </p>
+        </el-tag>
       </template>
 
       <template #users="{row}">
-        <p>
-          {{ row.users && row.users.length }}
-        </p>
+        <el-tag v-if="row.users" round>
+          {{ row.users.length }}
+        </el-tag>
       </template>
 
       <template #actions="{row}">
         <el-button
           size="small"
+          :type="$elComponentType.warning"
+          plain
           @click.stop="handleEdit(row)"
         >
-          Edit
+          <IconEdit />
         </el-button>
 
         <el-popconfirm
@@ -74,7 +76,7 @@
               size="small"
               :type="$elComponentType.danger"
             >
-              Delete
+              <IconDelete />
             </el-button>
           </template>
         </el-popconfirm>

@@ -2,6 +2,7 @@
   <el-dialog
     v-model="dialogVisible"
     :title="updatingQuestionId ? 'Update question' : 'Create question'"
+    class="text-xl"
     @closed="onCloseDialog"
   >
     <el-form
@@ -42,13 +43,12 @@
 
         <el-button
           v-if="index > 1"
-          :type="$elComponentType.primary"
+          :type="$elComponentType.danger"
           :size="$elComponentSize.small"
           circle
-          class="hover:text-red-300"
           @click="removeOption(index)"
         >
-          <span class="w-3 h-3">X</span>
+          <IconDelete />
         </el-button>
       </el-form-item>
 

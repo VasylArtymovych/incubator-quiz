@@ -52,6 +52,7 @@ declare module '@vue/runtime-core' {
     Form: typeof import('./../src/views/questions/components/Form.vue')['default']
     Header: typeof import('./../src/components/header/Header.vue')['default']
     IconDelete: typeof import('./../src/components/icons/IconDelete.vue')['default']
+    IconEdit: typeof import('./../src/components/icons/IconEdit.vue')['default']
     IconEnvelope: typeof import('./../src/components/icons/IconEnvelope.vue')['default']
     IconPhone: typeof import('./../src/components/icons/IconPhone.vue')['default']
     IconPlus: typeof import('./../src/components/icons/IconPlus.vue')['default']

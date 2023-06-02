@@ -27,7 +27,7 @@
         <template #icon>
           <IconPlus />
         </template>
-        ADD
+        Add
       </el-button>
     </div>
 
@@ -44,17 +44,61 @@
       @update:selected="(val: number[])=> $emit('selectionChange', val)"
     >
       <template #options="{row}">
-        <p
-          v-for="(opt,i) in row.options" :key="i"
-          :class="{'font-bold': opt.is_correct }"
-          class="truncate"
+        <el-popover
+          placement="top"
+          trigger="hover"
+          effect="dark"
+          :show-after="200"
+          :width="400"
         >
-          <span>{{ i+1 }}</span>: {{ opt.title }}
-        </p>
+          <template #reference>
+            <div>
+              <p class="truncate">{{ row.options[0].title }}</p>
+              <p class="truncate">{{ row.options[1].title }}</p>
+            </div>
+          </template>
+          <div>
+            <p
+              v-for="(opt,i) in row.options" :key="i"
+              :class="{'font-bold': opt.is_correct }"
+            >
+              <span>{{ i+1 }}</span>: {{ opt.title }}
+            </p>
+          </div>
+        </el-popover>
       </template>
 
       <template #tags="{row}">
-        <template v-if="row.tags.length > 0">
+        <template v-if="row.tags.length && row.tags.length > 2">
+          <el-popover
+            placement="top"
+            trigger="hover"
+            effect="dark"
+            :show-after="200"
+            :width="400"
+          >
+            <template #reference>
+              <div class="text-accent">
+                <el-tag class="mr-1">
+                  {{ row.tags[0] }}
+                </el-tag>
+                <el-tag class="mr-1">
+                  {{ row.tags[1] }}
+                </el-tag>
+                ...
+              </div>
+            </template>
+            <div>
+              <el-tag
+                v-for="tag in row.tags" :key="tag"
+                class="mr-1"
+              >
+                {{ tag }}
+              </el-tag>
+            </div>
+          </el-popover>
+        </template>
+        <template v-else>
           <el-tag
             v-for="tag in row.tags" :key="tag"
             class="mr-1"
@@ -71,19 +115,28 @@
       </template>
 
       <template #actions="{row}">
-        <el-button size="small" @click.stop="handleEdit(row)">
-          Edit
+        <el-button
+          size="small"
+          :type="$elComponentType.warning"
+          plain
+          @click.stop="handleEdit(row)"
+        >
+          <IconEdit />
         </el-button>
 
         <el-popconfirm
-          width="220" title="Are you sure to delete this?"
+          width="220"
+          title="Are you sure to delete this?"
           confirm-button-text="Yes"
           cancel-button-text="No"
           @confirm="handleDelete(row)"
         >
           <template #reference>
-            <el-button size="small" :type="$elComponentType.danger">
-              Delete
+            <el-button
+              size="small"
+              :type="$elComponentType.danger"
+            >
+              <IconDelete />
             </el-button>
           </template>
         </el-popconfirm>

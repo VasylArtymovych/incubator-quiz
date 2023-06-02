@@ -10,6 +10,7 @@
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore"
   },
   "dependencies": {
+    "@element-plus/icons-vue": "^2.1.0",
     "@supabase/supabase-js": "^2.22.0",
     "@vueuse/core": "^10.1.2",
     "axios": "^1.1.3",

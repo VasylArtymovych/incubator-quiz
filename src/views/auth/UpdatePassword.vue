@@ -57,6 +57,7 @@ function submit () {
       authService.updatePassword({ password: updateForm.password })
         .then(({ data, error }) => {
           if (error) throw new Error(error.message)
+          useSuccessNotification('Password has been updated')
           data.user && router.push({ name: $routeNames.login, replace: true })
         })
         .catch(error => (useErrorNotification(error.message)))
