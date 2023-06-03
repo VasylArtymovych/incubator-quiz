@@ -138,10 +138,10 @@ const sortedQuizzes = computed(() => {
 })
 
 const headings: any[] = [
-  { label: 'Quiz title', prop: 'title', sortable: true },
-  { label: 'Questions', prop: 'questions' },
-  { label: 'Users', prop: 'users' },
-  { label: 'Actions', prop: 'actions', width: 150 }
+  { label: 'Quiz title', prop: 'title', sortable: true, minWidth: 120 },
+  { label: 'Questions', prop: 'questions', minWidth: 60 },
+  { label: 'Users', prop: 'users', minWidth: 60 },
+  { label: 'Actions', prop: 'actions', width: 120 }
 ]
 
 const sortBy = (val: string) => {

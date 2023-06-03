@@ -28,7 +28,7 @@
         v-if="questions && selectedRows"
         class="self-end"
       >
-        Checked: {{ selectedRows.length }} of {{ totalCount }} questions
+        Checked: {{ selectedRows.length }} of {{ totalCount }}
       </el-tag>
 
       <!-- <el-statistic v-if="questions && selectedRows" :value="selectedRows.length">
@@ -81,7 +81,7 @@
           <div>
             <p
               v-for="(opt,i) in row.options" :key="i"
-              :class="{'font-bold': opt.is_correct }"
+              :class="{'font-bold text-accent': opt.is_correct }"
             >
               <span>{{ i+1 }}</span>: {{ opt.title }}
             </p>
@@ -228,11 +228,11 @@ const sortedQuestions = computed(() => {
 })
 
 const headers: any[] = [
-  { label: 'Title', prop: 'title', sortable: true, minWidth: 180 },
-  { label: 'Options', prop: 'options', minWidth: 150 },
+  { label: 'Title', prop: 'title', sortable: true, minWidth: 240 },
+  { label: 'Options', prop: 'options', minWidth: 160 },
   { label: 'Tags', prop: 'tags', minWidth: 100 },
   { label: 'Timer', prop: 'timer', sortable: true, width: 100 },
-  { label: 'Actions', prop: 'actions', width: 150 }
+  { label: 'Actions', prop: 'actions', width: 120 }
 ]
 
 const handleEdit = (row: IQuestion) => {

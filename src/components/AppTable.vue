@@ -94,13 +94,13 @@
               :class="[rowClassChecker(row), rowClass,
                        { 'cursor-pointer': clickable },
                        { 'mb-[15px] border border-snuff p-[15px] shadow-card2 block': $mq.smaller('md').value }]"
-              class="'mb-[15px] border border-snuff p-[15px] shadow-card2 flex'"
+              class="'flex'"
               @click="$emit('rowClick', row)"
             >
-              <td v-if="selected" class="md:inline min-w-[40px] w-[40px]">
+              <td v-if="selected" class="md:inline min-w-[40px] w-[40px] h-full">
                 <div
-                  :class="{'cell text-center sticky left-0 shadow-fixed-column': !$mq.smaller('md').value}"
-                  class="flex items-center"
+                  :class="{'cell text-center sticky left-0': !$mq.smaller('md').value}"
+                  class="flex items-center justify-center"
                   @click.stop
                 >
                   <AppCheckbox :modelValue="selected.includes(row.id)" @update:modelValue="toggleSelection(row)" />
@@ -136,7 +136,7 @@
                   <div
                     :class="[
                       fixedLast && visibleColumns.length - 1 === hIndex && !$mq.smaller('md').value
-                        ? 'sticky right-0 shadow-fixed-column'
+                        ? 'sticky right-0'
                         : '',
                       { 'cell--tr-default': detailsIndex === i && !$mq.smaller('md').value },
                       { 'flex justify-between mb-[10px] items-center': $mq.smaller('md').value },
@@ -381,8 +381,8 @@ export default {
   }
 
   th {
-    @apply md:h-[50px] h-[40px] sticky top-0 text-lavender-purple
-    font-normal bg-selago md:border-b border-snuff #{!important};
+    @apply md:h-[50px] h-[40px] sticky top-0 text-white
+    font-normal bg-gray md:border-b border-snuff #{!important};
     @apply z-[10];
   }
 
@@ -406,12 +406,13 @@ export default {
     height: var(--row-height);
     line-height: var(--row-height);
     white-space: unset;
-    @apply border-b border-snuff bg-white text-sm;
+    @apply border border-snuff bg-white text-sm;
+    // @apply border-b border-snuff bg-white text-sm;
   }
 
   th > .cell {
     word-break: break-word;
-    @apply flex items-center leading-snug text-left text-kimberly uppercase font-bold #{!important};
+    @apply flex items-center leading-snug text-left uppercase font-bold #{!important};
   }
 
   tbody {
@@ -427,3 +428,6 @@ export default {
   }
 }
 </style>
+
+
+//:class="{'cell text-center sticky left-0 shadow-fixed-column': !$mq.smaller('md').value}"
