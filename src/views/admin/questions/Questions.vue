@@ -60,7 +60,7 @@
       rowHeight="50px"
       fixedLast
       doNotChangeQuery
-      class="h-full"
+      class="h-full overflow-hidden"
       @sortBy="sortBy"
       @update:selected="(val: number[])=> $emit('selectionChange', val)"
     >

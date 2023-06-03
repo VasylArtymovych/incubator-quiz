@@ -1,14 +1,14 @@
 <template>
   <div
     v-loading="loading"
-    class="flex flex-col h-full overflow-hidden pt-3"
+    class="upsert-quiz flex flex-col h-full overflow-hidden pt-3"
   >
     <el-form
       ref="formRef"
       label-position="top"
       :rules="formRules"
       :model="formModel"
-      class="upsert-quiz-form mb-4"
+      class="mb-4"
     >
       <el-form-item
         label="Quiz title"
@@ -17,18 +17,18 @@
         <el-input
           v-model="formModel.title"
           clearable
+          placeholder="Quiz title"
         />
       </el-form-item>
     </el-form>
 
     <el-collapse
       accordion
-      class="quiz-collapse flex flex-col h-full overflow-hidden"
+      class="flex flex-col h-full overflow-hidden border-b-0 border-t border-accentLight1"
     >
       <el-collapse-item
         title="Questions"
         name="1"
-        class="border-t border-b border-accent"
       >
         <Questions
           :selectedRows="selectedQuestions"
@@ -39,7 +39,6 @@
       <el-collapse-item
         title="Users"
         name="2"
-        class="border-b border-accent"
       >
         <UsersList
           :selectedRows="selectedUsers"

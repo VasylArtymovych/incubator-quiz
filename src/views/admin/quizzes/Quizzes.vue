@@ -40,7 +40,7 @@
       :headers="headings"
       fixedLast
       doNotChangeQuery
-      class="h-full"
+      class="h-full overflow-hidden"
       @sortBy="sortBy"
     >
       <template #questions="{row}">

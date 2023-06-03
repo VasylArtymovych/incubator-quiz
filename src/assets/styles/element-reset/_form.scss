@@ -48,6 +48,7 @@
         span {
           @apply bg-accentLight1 hover:bg-accentLight2 text-white
         }
+
         span.is-disabled {
           @apply bg-accentLight2
         }
@@ -64,7 +65,7 @@
   }
 }
 
-.upsert-quiz-form.el-form,
+.upsert-quiz .el-form,
 .users-form.el-form {
   & .el-form-item {
     margin-bottom: 0;
@@ -74,5 +75,4 @@
     }
   }
 }
-
 

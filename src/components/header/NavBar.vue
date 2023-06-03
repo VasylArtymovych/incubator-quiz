@@ -1,6 +1,6 @@
 <template>
   <ul
-    class="absolute z-50 top-[74px] md:static w-full py-4 md:p-0 transition-[right] duration-300 ears-in
+    class="absolute z-50 top-[81px] md:static w-full py-4 md:p-0 transition-[right] duration-300 ears-in
     md:flex justify-end gap-4 lg:gap-8  bg-black md:bg-inherit font-bold text-white md:text-lg xl:text-2xl"
     :class="[isActive ? 'right-0': 'right-[-100%]']"
   >

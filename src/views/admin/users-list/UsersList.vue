@@ -1,6 +1,6 @@
 <template>
   <div v-loading="loading" class="users flex flex-col h-full">
-    <div class="flex justify-between my-4 bg-transparent">
+    <div class="flex justify-between my-3 bg-transparent">
       <el-form
         ref="formRef"
         label-position="top"

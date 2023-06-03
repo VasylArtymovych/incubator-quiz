@@ -17,9 +17,12 @@
         <BurgerButton v-if="isAdmin" :isActive="isActive" class="md:hidden" @click="isActive = !isActive" />
 
         <el-dropdown trigger="click" @command="onDropdown">
-          <el-avatar :src="userLogo" alt="user-logo" class="ml-6 shrink-0 text-base">
-            User
-          </el-avatar>
+          <div
+            class="w-10 h-10 flex justify-center items-center bg-white rounded-full border-4 border-double border-black
+            ml-4 hover:bg-accent"
+          >
+            <IconAvatar />
+          </div>
           <template #dropdown>
             <el-dropdown-menu>
               <el-dropdown-item>Log out</el-dropdown-item>
@@ -32,7 +35,6 @@
 </template>
 
 <script setup lang="ts">
-import userLogo from '@/assets/images/person-icon.jpeg'
 import owlLogo from '@/assets/images/owl_logo.png'
 import DefaultContainer from '@/layouts/DefaultContainer.vue'
 
