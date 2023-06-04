@@ -82,6 +82,7 @@
     "useRouter": true,
     "useSlots": true,
     "useSuccessNotification": true,
+    "useWindowWidth": true,
     "usersListService": true,
     "watch": true,
     "watchEffect": true,

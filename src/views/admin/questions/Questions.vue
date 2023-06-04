@@ -74,8 +74,8 @@
         >
           <template #reference>
             <div>
-              <p class="truncate">{{ row.options[0].title }}</p>
-              <p class="truncate">{{ row.options[1].title }}</p>
+              <p class="truncate">1: {{ row.options[0].title }}</p>
+              <p class="truncate">2: {{ row.options[1].title }}</p>
             </div>
           </template>
           <div>
@@ -100,12 +100,26 @@
           >
             <template #reference>
               <div class="text-accent">
-                <el-tag class="mr-1">
-                  {{ row.tags[0] }}
-                </el-tag>
-                <el-tag class="mr-1">
-                  {{ row.tags[1] }}
-                </el-tag>
+                <template v-if="type === 'xl'">
+                  <el-tag class="mr-1">
+                    {{ row.tags[0] }}
+                  </el-tag>
+                  <el-tag class="mr-1">
+                    {{ row.tags[1] }}
+                  </el-tag>
+                  <el-tag class="mr-1">
+                    {{ row.tags[2] }}
+                  </el-tag>
+                </template>
+
+                <template v-else>
+                  <el-tag class="mr-1">
+                    {{ row.tags[0] }}
+                  </el-tag>
+                  <el-tag class="mr-1">
+                    {{ row.tags[1] }}
+                  </el-tag>
+                </template>
                 ...
               </div>
             </template>
@@ -180,7 +194,7 @@
 
 <script setup lang="ts">
 import UpsertQuestion from './components/UpsertQuestion.vue'
-// import type { ITableHeading } from '@/types'
+const { windowWidth, type } = useWindowWidth()
 interface IProps {
   selectedRows?: any[]
 }
@@ -228,11 +242,11 @@ const sortedQuestions = computed(() => {
 })
 
 const headers: any[] = [
-  { label: 'Title', prop: 'title', sortable: true, minWidth: 240 },
+  { label: 'Title', prop: 'title', sortable: true, minWidth: 240, contentClass: 'font-semibold xl:!text-lg' },
   { label: 'Options', prop: 'options', minWidth: 160 },
-  { label: 'Tags', prop: 'tags', minWidth: 100 },
+  { label: 'Tags', prop: 'tags', minWidth: 130, maxWidth: 200 },
   { label: 'Timer', prop: 'timer', sortable: true, width: 100 },
-  { label: 'Actions', prop: 'actions', width: 120 }
+  { label: 'Actions', prop: 'actions', width: 120, contentCenter: true }
 ]
 
 const handleEdit = (row: IQuestion) => {

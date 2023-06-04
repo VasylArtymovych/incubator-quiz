@@ -29,7 +29,7 @@
       </el-form>
 
       <el-tag v-if="users && selectedRows" class="self-end">
-        Checked: {{ selectedRows.length }} of {{ totalCount }} users
+        Checked: {{ selectedRows.length }} of {{ totalCount }}
       </el-tag>
     </div>
 

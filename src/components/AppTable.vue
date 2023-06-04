@@ -58,12 +58,13 @@
               <th
                 v-if="!$mq.smaller('md').value"
                 :class="{ 'right-0 shadow-fixed-column': fixedLast && visibleColumns.length - 1 === index }"
-                :style="`min-width: ${header.minWidth}px; width: ${header.width}px;`"
+                :style="`min-width: ${header.minWidth}px; width: ${header.width}px; max-width: ${header.maxWidth}px;`"
+                class=""
               >
                 <div
                   class="cell"
                   :style="`width: ${header.width}px;`"
-                  :class="{ 'cursor-pointer': header.sortable }"
+                  :class="[{ 'cursor-pointer': header.sortable }, {'justify-center': header.contentCenter}]"
                   @click="header.sortable && setSorting(header.prop)"
                 >
                   <slot :name="`header_${header.prop}`" :header="header">
@@ -94,12 +95,11 @@
               :class="[rowClassChecker(row), rowClass,
                        { 'cursor-pointer': clickable },
                        { 'mb-[15px] border border-snuff p-[15px] shadow-card2 block': $mq.smaller('md').value }]"
-              class="'flex'"
               @click="$emit('rowClick', row)"
             >
-              <td v-if="selected" class="md:inline min-w-[40px] w-[40px] h-full">
+              <td v-if="selected" class="md:inline-block w-[40px] sticky left-0 ">
                 <div
-                  :class="{'cell text-center sticky left-0': !$mq.smaller('md').value}"
+                  :class="{'cell text-center': !$mq.smaller('md').value}"
                   class="flex items-center justify-center"
                   @click.stop
                 >
@@ -128,28 +128,31 @@
                     { 'inline': fixedLast && visibleColumns.length - 1 === hIndex && !$mq.smaller('md').value },
                     {'table-truncate': !!h.minWidth && !$mq.smaller('md').value},
                     {'flex flex-col': $mq.smaller('md').value},
-
                     h.cellClasses && !$mq.smaller('md').value
                   ]"
                 >
                   <!-- TODO: remove shadow when block is fully visible -->
                   <div
+                    class="flex items-center"
                     :class="[
                       fixedLast && visibleColumns.length - 1 === hIndex && !$mq.smaller('md').value
                         ? 'sticky right-0'
                         : '',
                       { 'cell--tr-default': detailsIndex === i && !$mq.smaller('md').value },
                       { 'flex justify-between mb-[10px] items-center': $mq.smaller('md').value },
-                      {'cell truncate': !$mq.smaller('md').value}
+                      {'cell truncate': !$mq.smaller('md').value},
+                      h.contentClass
                     ]"
-                    class="flex items-center"
                   >
                     <slot v-if="$mq.smaller('md').value" :name="`header_${h.prop}`" :header="h">
                       <p class="text-kimberly uppercase font-semibold">{{ h.label || '' }}</p>
                     </slot>
 
                     <!-- <span :style="`max-width: ${h.minWidth}px`"> -->
-                    <span class="w-full py-1 max-h-full">
+                    <span
+                      class="w-full py-1 max-h-full"
+                      :class="{'text-center': h.contentCenter}"
+                    >
                       <slot
                         v-if="!($mq.smaller('md').value && (fixedLast && hIndex === visibleColumns.length - 1))"
                         :name="h.prop"
@@ -159,6 +162,7 @@
                         <span v-if="h.isDate">
                           {{ falsyFilter(row[h.prop]) ? $filters.dateFilter(row[h.prop]) : '-' }}
                         </span>
+
                         <TruncatedTooltip v-else :copyAvailable="h.copy" :contentProp="generateValue(row, h.prop)" />
                       </slot>
                     </span>
@@ -381,8 +385,8 @@ export default {
   }
 
   th {
-    @apply md:h-[50px] h-[40px] sticky top-0 text-white
-    font-normal bg-gray md:border-b border-snuff #{!important};
+    @apply md:h-[50px] h-[40px] sticky top-0 text-white border border-snuff
+    bg-gray #{!important};
     @apply z-[10];
   }
 
@@ -428,6 +432,5 @@ export default {
   }
 }
 </style>
-
 
 //:class="{'cell text-center sticky left-0 shadow-fixed-column': !$mq.smaller('md').value}"
