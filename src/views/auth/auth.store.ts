@@ -9,6 +9,7 @@ export const useAuthStore = defineStore('authStore', () => {
   }
 
   const logOut = () => {
+    localStorage.removeItem('iq-user')
     return authService.logOut()
       .then(() => {
         window.location.href = router.resolve(routeNames.login).href

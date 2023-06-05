@@ -2,6 +2,7 @@
 export {}
 declare global {
   const EffectScope: typeof import('vue')['EffectScope']
+  const QuizService: typeof import('../src/views/quiz/quiz.service')['QuizService']
   const acceptHMRUpdate: typeof import('pinia')['acceptHMRUpdate']
   const authService: typeof import('../src/views/auth/auth.service')['authService']
   const computed: typeof import('vue')['computed']
@@ -45,6 +46,7 @@ declare global {
   const onUpdated: typeof import('vue')['onUpdated']
   const provide: typeof import('vue')['provide']
   const questionsService: typeof import('../src/views/admin/questions/questions.service')['questionsService']
+  const quizService: typeof import('../src/views/quiz/quiz.service')['quizService']
   const quizzesService: typeof import('../src/views/admin/quizzes/quizzes.service')['quizzesService']
   const reactive: typeof import('vue')['reactive']
   const readonly: typeof import('vue')['readonly']

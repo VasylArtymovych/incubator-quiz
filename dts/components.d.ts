@@ -13,6 +13,7 @@ declare module '@vue/runtime-core' {
     AppModal: typeof import('./../src/components/AppModal.vue')['default']
     AppPagination: typeof import('./../src/components/AppPagination.vue')['default']
     AppTable: typeof import('./../src/components/AppTable.vue')['default']
+    AppTimer: typeof import('./../src/components/AppTimer.vue')['default']
     BurgerButton: typeof import('./../src/components/header/BurgerButton.vue')['default']
     Card: typeof import('./../src/components/Card.vue')['default']
     Computed: typeof import('./../src/components/hoc/Computed.vue')['default']

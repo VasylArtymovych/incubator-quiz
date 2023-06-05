@@ -194,7 +194,7 @@
 
 <script setup lang="ts">
 import UpsertQuestion from './components/UpsertQuestion.vue'
-const { windowWidth, type } = useWindowWidth()
+const { type } = useWindowWidth()
 interface IProps {
   selectedRows?: any[]
 }

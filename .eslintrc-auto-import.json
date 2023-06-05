@@ -1,6 +1,7 @@
 {
   "globals": {
     "EffectScope": true,
+    "QuizService": true,
     "acceptHMRUpdate": true,
     "authService": true,
     "computed": true,
@@ -44,6 +45,7 @@
     "onUpdated": true,
     "provide": true,
     "questionsService": true,
+    "quizService": true,
     "quizzesService": true,
     "reactive": true,
     "readonly": true,

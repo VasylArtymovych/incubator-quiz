@@ -29,3 +29,7 @@ export const getNestedProp = (obj: TIndexedObject, key: string) => {
   }
   return obj
 }
+
+export const addLeadingZero = (value: number, pad: number) => {
+  return String(value).padStart(pad, '0')
+}

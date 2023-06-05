@@ -5,6 +5,13 @@ interface IQuiz {
   users: string[]
 }
 
+interface IQuizPopulated {
+  id: number
+  title: string
+  questions: IQuestion[]
+  users: string[]
+}
+
 interface INewQuiz {
   title: string
   questions: number[]
