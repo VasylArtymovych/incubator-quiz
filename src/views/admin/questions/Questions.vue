@@ -101,26 +101,18 @@
             <template #reference>
               <div class="text-accent">
                 <template v-if="type === 'xl'">
-                  <el-tag class="mr-1">
-                    {{ row.tags[0] }}
+                  <el-tag v-for="i of 3" :key="i" class="mr-1">
+                    {{ row.tags[i-1] }}
                   </el-tag>
-                  <el-tag class="mr-1">
-                    {{ row.tags[1] }}
-                  </el-tag>
-                  <el-tag class="mr-1">
-                    {{ row.tags[2] }}
-                  </el-tag>
+                  <span v-if="row.tags.length > 3" class="ml-2">...</span>
                 </template>
 
                 <template v-else>
-                  <el-tag class="mr-1">
-                    {{ row.tags[0] }}
+                  <el-tag v-for="i of 2" :key="i" class="mr-1">
+                    {{ row.tags[i-1] }}
                   </el-tag>
-                  <el-tag class="mr-1">
-                    {{ row.tags[1] }}
-                  </el-tag>
+                  <span v-if="row.tags.length > 2">...</span>
                 </template>
-                ...
               </div>
             </template>
             <div>

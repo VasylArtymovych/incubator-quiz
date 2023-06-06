@@ -10,9 +10,9 @@
       :time="10"
     />
 
-    <div class="flex flex-col h-full overflow-auto p-4">
+    <div class="flex flex-col h-full overflow-auto p-4 lg:px-8">
       <div class="relative  p-2 mb-8 rounded-lg bg-borderGradient shadow-lg shadow-gray-medium">
-        <h2 class="p-2 font-semibold bg-catskill-white rounded-sm select-none md:text-lg">
+        <h2 class="p-2 md:p-6 font-semibold bg-catskill-white rounded-sm select-none md:text-lg">
           {{ question?.title }}
         </h2>
       </div>
@@ -72,6 +72,25 @@ const question = ref<IQuestion | null>({
     'middle',
     'senior'
   ]
+})
+
+const confirmReload = (event: BeforeUnloadEvent) => {
+  console.log(event)
+  event.preventDefault()
+  // event.returnValue = '' // Required for Chrome and Edge
+
+  // const shouldReload = confirm('Are you sure you want to reload the page?')
+  // if (shouldReload) {
+  //   window.removeEventListener('beforeunload', confirmReload)
+  // }
+}
+
+onMounted(() => {
+  window.addEventListener('beforeunload', confirmReload)
+})
+
+onBeforeUnmount(() => {
+  window.removeEventListener('beforeunload', confirmReload)
 })
 
 </script>
