@@ -1,26 +1,25 @@
 <template>
-  <div class="max-w-[500px] m-auto mt-12">
-    <el-card v-loading="loading">
+  <div class="min-w-[300px] md:min-w-[500px] m-auto mt-12">
+    <el-card v-loading="loading" class="auth-card md:py-5 text-black">
       <template #header>
-        <p class="font-semibold text-xl">Recover password</p>
+        <p class="font-semibold text-xl">Reset password</p>
       </template>
 
       <el-form
         ref="formRef"
         label-position="top"
         :rules="formRules"
-        :model="formModel"
+        :model="recoveryForm"
+        class="form"
         @submit.prevent="submit"
       >
         <el-form-item label="Email" prop="email">
-          <el-input v-model="formModel.email" type="email" />
+          <el-input v-model.trim="recoveryForm.email" type="email" />
         </el-form-item>
 
-        <div class="flex justify-between">
-          <el-button native-type="submit" :type="$elComponentType.primary">
-            Send
-          </el-button>
-        </div>
+        <el-button native-type="submit" :type="$elComponentType.primary" class="block ml-auto w-[30%]">
+          Send
+        </el-button>
       </el-form>
     </el-card>
   </div>
@@ -29,7 +28,7 @@
 <script lang="ts" setup>
 const formRef = useElFormRef()
 
-const formModel = useElFormModel({
+const recoveryForm = useElFormModel({
   email: ''
 })
 const loading = ref(false)
@@ -42,12 +41,13 @@ function submit () {
   formRef.value?.validate(isValid => {
     if (isValid) {
       loading.value = true
-      authService.recovery(formModel.email)
+      authService.recovery(recoveryForm.email)
         .then(() => {
-          useSuccessNotification(`Recovery link sent to ${formModel.email}`)
-          loading.value = false
+          useSuccessNotification(`Recovery link was sent to your mail: ${recoveryForm.email}`)
           formRef.value.resetFields()
         })
+        .catch(error => (useErrorNotification(error.message)))
+        .finally(() => (loading.value = false))
     }
   })
 }

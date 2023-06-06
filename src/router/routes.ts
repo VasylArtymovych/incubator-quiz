@@ -1,17 +1,19 @@
 import type { RouteRecordRaw } from 'vue-router'
-
-import { routeNames } from './route-names'
+import { routeNames } from '@/router/route-names'
 import { authRoutes } from '@/views/auth/auth.routes'
 import { adminRoutes } from '@/views/admin/admin.routes'
-import { userRoutes } from '@/views/user/user.routes'
+import { quizRoutes } from '@/views/quiz/quiz.routes'
+
+import HomePage from '@/views/home/Home.vue'
 
 export const routes: RouteRecordRaw[] = [
   {
     path: '/',
     name: routeNames.rootPage,
-    component: () => import('@/views/home/Home.vue'),
+    component: () => HomePage,
     meta: { isProtected: true }
   },
+
   {
     path: '/:pathMatch(.*)*',
     redirect: '/'
@@ -19,6 +21,5 @@ export const routes: RouteRecordRaw[] = [
 
   ...authRoutes,
   ...adminRoutes,
-  ...userRoutes
-
+  ...quizRoutes
 ]

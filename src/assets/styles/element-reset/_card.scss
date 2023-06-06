@@ -1,0 +1,11 @@
+@use "element-plus/theme-chalk/src/card";
+
+.auth-card.el-card {
+  & .el-card__header {
+    & .el-divider { 
+      @apply border-l border-accent
+    }
+  }
+
+  @apply bg-gradientX shadow-2xl shadow-accentLight2
+}

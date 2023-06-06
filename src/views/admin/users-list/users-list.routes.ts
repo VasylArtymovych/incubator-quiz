@@ -8,6 +8,6 @@ export const usersRoutes: RouteRecordRaw[] = [
   {
     path: 'users',
     name: usersRoutesNames.users,
-    component: () => import('@/views/users-list/UsersList.vue')
+    component: () => import('@/views/admin/users-list/UsersList.vue')
   }
 ]

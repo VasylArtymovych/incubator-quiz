@@ -1,0 +1,12 @@
+@use "element-plus/theme-chalk/src/pagination";
+
+
+.el-pagination {
+
+  & .el-pagination__total,
+  & .el-pagination__jump {
+    --el-text-color-regular: #ff4713;
+    @apply font-semibold
+  }
+
+}

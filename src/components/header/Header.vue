@@ -1,23 +1,28 @@
 <template>
-  <header class="relative py-2  bg-slate-200">
+  <header
+    class="relative py-4 bg-black border-b border-accent"
+  >
     <DefaultContainer class="flex justify-between items-center">
       <div
         class="flex justify-center items-center cursor-pointer"
         @click="$router.push({name: $routeNames.rootPage})"
       >
-        <img :src="owlLogo" alt="logo" class="w-12 h-12">
+        <img :src="owlLogo" alt="logo" class="w-12 h-12 text-red-600">
         <p class="logo-text font-bold text-2xl">QUIZ</p>
       </div>
 
-      <NavBar :isActive="isActive" />
+      <NavBar v-if="isAdmin" :isActive="isActive" />
 
       <div class="flex">
-        <BurgerButton :isActive="isActive" class="md:hidden" @toggleActive="isActive = !isActive" />
+        <BurgerButton v-if="isAdmin" :isActive="isActive" class="md:hidden" @click="isActive = !isActive" />
 
-        <el-dropdown trigger="click" @command="handleClick">
-          <el-avatar :src="userLogo" alt="user-logo" class="ml-6 shrink-0 text-base">
-            User
-          </el-avatar>
+        <el-dropdown trigger="click" @command="onDropdown">
+          <div
+            class="w-10 h-10 flex justify-center items-center bg-white rounded-full border-4 border-double border-black
+            ml-4 hover:bg-accent"
+          >
+            <IconAvatar />
+          </div>
           <template #dropdown>
             <el-dropdown-menu>
               <el-dropdown-item>Log out</el-dropdown-item>
@@ -30,16 +35,16 @@
 </template>
 
 <script setup lang="ts">
-import userLogo from '@/assets/images/person-icon.png'
 import owlLogo from '@/assets/images/owl_logo.png'
 import DefaultContainer from '@/layouts/DefaultContainer.vue'
 
 const authStore = useAuthStore()
 
+const isAdmin = computed(() => authStore.activeUserData?.email === 'admin@softonix.org')
+
 const isActive = ref(false)
 
-const handleClick = () => {
-  localStorage.removeItem('iq-user')
+const onDropdown = () => {
   authStore.logOut()
 }
 </script>

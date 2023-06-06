@@ -1,41 +1,70 @@
 <template>
-  <div class="max-w-[500px] m-auto mt-12">
-    <el-card v-loading="loading">
+  <div class="min-w-[300px] md:min-w-[500px] m-auto">
+    <el-card
+      v-loading="loading"
+      class="auth-card md:pb-5 text-black"
+    >
       <template #header>
-        <p class="font-semibold text-xl">Login</p>
+        <div class="flex justify-center items-center">
+          <p class="font-semibold text-xl">
+            Login
+          </p>
+          <el-divider direction="vertical" />
+          <p
+            class="text-xl cursor-pointer"
+            @click="$router.push({name: $routeNames.register})"
+          >
+            Register
+          </p>
+        </div>
       </template>
 
       <el-form
         ref="formRef"
         label-position="top"
         :rules="formRules"
-        :model="formModel"
+        :model="loginForm"
+        class="form md:px-10"
         @submit.prevent="submit"
       >
-        <el-form-item label="Email" prop="email">
-          <el-input v-model="formModel.email" type="email" />
+        <el-form-item
+          label="Email"
+          prop="email"
+        >
+          <el-input
+            v-model.trim="loginForm.email"
+            type="email"
+            clearable
+          />
         </el-form-item>
 
-        <el-form-item label="Password" prop="password">
-          <el-input v-model="formModel.password" type="password" show-password />
+        <el-form-item
+          label="Password"
+          prop="password"
+          class="mb-1"
+        >
+          <el-input
+            v-model.trim="loginForm.password"
+            type="password"
+            show-password
+          />
         </el-form-item>
 
-        <div class="flex justify-between">
-          <el-button native-type="submit" :type="$elComponentType.primary">
-            LogIn
-          </el-button>
-          <el-button
-            link :type="$elComponentType.primary"
-            @click="$router.push({name: $routeNames.register})"
-          >
-            SignUp
-          </el-button>
-        </div>
         <el-button
-          :type="$elComponentType.primary" link class="recovery"
+          :type="$elComponentType.primary"
+          link
+          class="block ml-auto mb-4 text-xs"
           @click="$router.push({name: $routeNames.recovery})"
         >
-          Reset password
+          Forgot password?
+        </el-button>
+
+        <el-button
+          native-type="submit"
+          :type="$elComponentType.primary"
+          class="login-btn w-full"
+        >
+          LogIn
         </el-button>
       </el-form>
     </el-card>
@@ -47,7 +76,7 @@ import { navigateToAdminOrUserPage } from '@/views/auth/auth.helpers'
 
 const formRef = useElFormRef()
 
-const formModel = useElFormModel({
+const loginForm = useElFormModel({
   email: '',
   password: ''
 })
@@ -62,13 +91,16 @@ const formRules = useElFormRules({
 function submit () {
   formRef.value?.validate(isValid => {
     if (isValid) {
-      authService.login(formModel)
+      authService.login(loginForm)
+        .then(data => {
+          console.log(data)
+          return data
+        })
         .then(({ data, error }) => {
           if (error) throw new Error(error.message)
-
           if (data.user) {
             setUserData(data.user)
-            navigateToAdminOrUserPage(data.user.email)
+            navigateToAdminOrUserPage(data.user)
           }
         })
         .catch(error => {
@@ -81,7 +113,8 @@ function submit () {
 </script>
 
 <style scoped lang="scss">
-  .el-button.recovery {
+  .el-button.login-btn {
     margin-left: 0;
   }
+
 </style>

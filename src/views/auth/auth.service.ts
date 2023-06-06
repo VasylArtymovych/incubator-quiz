@@ -12,7 +12,9 @@ class AuthService {
   }
 
   recovery (email: string) {
-    return supabase.auth.resetPasswordForEmail(email)
+    return supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: 'http://localhost:5173/updatePassword'
+    })
   }
 
   updatePassword (newData: {password: string}) {

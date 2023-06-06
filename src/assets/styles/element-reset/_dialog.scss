@@ -1,0 +1,11 @@
+@use "element-plus/theme-chalk/src/dialog";
+
+.el-dialog {
+  & .el-dialog__header {
+    & .el-dialog__title {
+      @apply text-2xl font-semibold text-accent 
+    }
+  }
+  @apply shadow-lg shadow-accentLight2 bg-[url('@/assets/images/Shape-1.png')]  bg-slate-700
+
+}

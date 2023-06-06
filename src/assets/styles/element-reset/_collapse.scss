@@ -1,0 +1,24 @@
+@use "element-plus/theme-chalk/src/collapse";
+
+.upsert-quiz {
+  .el-collapse {
+    --el-collapse-content-bg-color: transparent;
+
+    & .el-collapse-item {
+      & .el-collapse-item__header {
+        @apply bg-transparent text-accent pl-1 md:text-base border-accentLight1
+      }
+
+      & .el-collapse-item__wrap {
+        & .el-collapse-item__content {
+
+          @apply h-full overflow-hidden pb-0 border-b border-accentLight1
+        }
+        
+        @apply h-full overflow-hidden border-b-0
+      }
+
+      @apply flex flex-col overflow-hidden
+    }
+  }
+}

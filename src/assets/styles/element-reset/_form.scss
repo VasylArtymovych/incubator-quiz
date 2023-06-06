@@ -1,0 +1,82 @@
+@use "element-plus/theme-chalk/src/form";
+
+.upsert-question-form.el-form {
+  & .el-form-item {
+    & .el-form-item__label {
+      color: white;
+    }
+
+    & .el-form-item__content {
+      flex-wrap: nowrap;
+      gap: 4px;
+
+      & .el-textarea__inner {
+        &::placeholder {
+          @apply text-warmGray-600
+        }
+
+        @apply bg-slate-400 text-black
+      }
+
+      & .el-input {
+        & .el-input__wrapper {
+          & .el-input__inner {
+            &::placeholder {
+              @apply text-warmGray-600
+            }
+
+            @apply text-black
+          }
+
+          & .el-input__suffix {
+            & .el-icon {
+              @apply text-accent
+            }
+          }
+
+          @apply bg-slate-400
+        }
+      }
+
+      & .el-radio {
+        .el-radio__label {
+          color: white
+        }
+      }
+
+      & .el-input-number {
+        span {
+          @apply bg-accentLight1 hover:bg-accentLight2 text-white
+        }
+
+        span.is-disabled {
+          @apply bg-accentLight2
+        }
+      }
+
+      & .el-select__input {
+        @apply text-black
+      }
+
+      & .el-form-item__error {
+        @apply text-[10px] pt-1
+      }
+    }
+
+    &.timer-option-item .el-form-item__content {
+      justify-content: space-between;
+    }
+  }
+}
+
+.upsert-quiz > .el-form,
+.users-form.el-form {
+  & .el-form-item {
+    margin-bottom: 0;
+
+    & .el-form-item__label {
+      @apply pl-1 text-accent text-sm font-semibold
+    }
+  }
+}
+
