@@ -25,7 +25,7 @@
         :type="$elComponentType.primary"
         plain
         class="flex items-center ml-auto"
-        @click="$router.push({name: $routeNames.quiz, params: {quizId: 'new'}})"
+        @click="$router.push({name: $routeNames.upsertQuiz, params: {quizId: 'new'}})"
       >
         <template #icon>
           <IconPlus />
@@ -165,7 +165,7 @@ const handleClearInputData = (val: string) => {
 }
 
 const handleEdit = (quiz: IQuiz) => {
-  router.push({ name: $routeNames.quiz, params: { quizId: quiz.id } })
+  router.push({ name: $routeNames.upsertQuiz, params: { quizId: quiz.id } })
 }
 const handleDelete = (quiz: IQuiz) => {
   deleteQuiz(quiz.id)

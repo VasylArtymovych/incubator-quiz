@@ -2,7 +2,7 @@ import type { RouteRecordRaw } from 'vue-router'
 
 export const quizzesRoutesNames = {
   quizzes: 'quizzes',
-  quiz: 'quiz'
+  upsertQuiz: 'upsertQuiz'
 }
 
 export const quizzesRoutes: RouteRecordRaw[] = [
@@ -13,7 +13,7 @@ export const quizzesRoutes: RouteRecordRaw[] = [
   },
   {
     path: 'quizzes/:quizId',
-    name: quizzesRoutesNames.quiz,
+    name: quizzesRoutesNames.upsertQuiz,
     component: () => import('@/views/admin/quizzes/components/UpsertQuiz.vue'),
     props: (route) => ({ quizId: route.params.quizId === 'new' ? null : Number(route.params.quizId) })
   }

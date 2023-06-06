@@ -1,11 +1,11 @@
 <template>
   <div
-    class="circle relative flex justify-center items-center"
-    :style="`width: ${width}px;  height: ${width}px; --strokeDasharray: ${dasharray}`"
+    class="relative flex justify-center items-center"
+    :style="`width: ${width}px;  height: ${width}px; --strokeDasharray: ${strokeDasharray}`"
   >
     <div
-      class="dots absolute w-full h-full rounded-full flex justify-center items-start
-    before:bg-accent"
+      class="circles-wrap absolute w-full h-full rounded-full flex justify-center items-start
+      before:bg-accent"
     />
     <svg class="relative w-full h-full rotate-[270deg]">
       <circle
@@ -19,7 +19,7 @@
         :style="`stroke-width: ${strokeWidth}px; animation-duration: ${time}s; stroke: ${strokeColor}`"
       />
     </svg>
-    <div id="minutes" class="absolute text-sm text-black font-semibold">
+    <div class="absolute text-sm text-black font-semibold">
       {{ addLeadingZero(mins, 2) }}:{{ addLeadingZero(secs, 2) }}
     </div>
   </div>
@@ -39,22 +39,20 @@ const props = withDefaults(defineProps<{
   strokeWidth: 2,
   strokeColor: '#ff4713'
 })
+const timer = ref()
 const endTime = ref(0)
 const mins = ref(0)
 const secs = ref(0)
-const radius = computed(() => (props.width / 2 - 5))
-const dasharray = computed(() => (Math.ceil(2 * Math.PI * radius.value)))
-const strokeOffset = ref(0)
 
-const timer = ref()
+const radius = computed(() => (props.width / 2 - 5))
+const strokeDasharray = computed(() => (Math.ceil(2 * Math.PI * radius.value)))
 
 onMounted(() => {
-  endTime.value = Date.now() + (props.time * 1000)
+  endTime.value = Date.now() + ((props.time + 1) * 1000)
+
   timer.value = setInterval(function () {
     const diff = endTime.value - Date.now()
     if (diff <= 0) return clearInterval(timer.value)
-
-    strokeOffset.value += dasharray.value / props.time
 
     const second = 1000
     const minute = second * 60
@@ -72,12 +70,12 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 .second-circle {
-  stroke-dasharray: 157px;  //2*PI*r
-  stroke-dashoffset: 0;
+  stroke-dasharray: var(--strokeDasharray);  //2*PI*r
   animation: timer linear forwards;
+  // stroke-dashoffset: 0;
 }
 
-.dots::before {
+.circles-wrap::before {
   content: "";
   position: absolute;
   top: 3px;
@@ -93,7 +91,7 @@ onMounted(() => {
     stroke-dashoffset: 0px;
   }
   to {
-    stroke-dashoffset: 157px;
+    stroke-dashoffset: var(--strokeDasharray);
   }
 }
 </style>

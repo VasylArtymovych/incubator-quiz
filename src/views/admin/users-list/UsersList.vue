@@ -8,7 +8,11 @@
         :rules="formRules"
         class="users-form"
       >
-        <el-form-item label="Find User" prop="email" class="w-[300px]">
+        <el-form-item
+          label="Find User"
+          prop="email"
+          class="w-[300px]"
+        >
           <el-input
             v-model.trim="formModel.email"
             type="email"

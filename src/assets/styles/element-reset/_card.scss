@@ -1,13 +1,11 @@
 @use "element-plus/theme-chalk/src/card";
 
 .auth-card.el-card {
-  // background: linear-gradient(45deg, grey 5%, white 30%,  white 35%, #ef3c0b8f 45%,white 55%, white 60%, grey 90%);
-  background: linear-gradient(40deg, rgba(128, 128, 128, 0.385) 10%, rgba(255, 255, 255, 0.92) 38%, white 45%, rgba(255, 255, 255, 0.921) 57%,  rgba(128, 128, 128, 0.385) 90%), 
-  linear-gradient(145deg, grey 45%, #ef3c0bb9 50%,  #ef3c0bb9 60%, grey 65%, grey 90%);
-
   & .el-card__header {
     & .el-divider { 
       @apply border-l border-accent
     }
   }
+
+  @apply bg-gradientX shadow-2xl shadow-accentLight2
 }
