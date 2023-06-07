@@ -7,7 +7,7 @@
       class="ml-auto my-4"
       :width="60"
       :strokeWidth="3"
-      :time="10"
+      :time="question.timer"
     />
 
     <div class="flex flex-col h-full overflow-auto p-4 lg:px-8">

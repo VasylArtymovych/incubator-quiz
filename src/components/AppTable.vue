@@ -1,6 +1,6 @@
 <template>
   <div
-    class="app-table"
+    class="app-table overflow-hidden"
     :style="{'--row-height': rowHeight,
              '--table-padding-left': $mq.smaller('md').value ? '16px' : tablePaddingLeft}"
   >
@@ -83,7 +83,7 @@
 
               <td
                 v-if="$mq.smaller('md').value && fixedLast"
-                class="text-right flex justify-end mb-3 relative actions-td "
+                class="text-right flex justify-end mb-3 mr-2 relative actions-td "
               >
                 <Computed #default="{ lastColumn }" :lastColumn="visibleColumns[visibleColumns.length - 1]">
                   <slot :name="lastColumn.prop" :row="row" :rowIndex="i">
