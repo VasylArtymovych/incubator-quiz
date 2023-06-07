@@ -66,7 +66,7 @@
             <tr
               :id="row[unique]"
               :class="[rowClassChecker(row), rowClass, { 'cursor-pointer': clickable },
-                       { 'mb-[15px] border border-accentLight2 p-[15px] block w-full rounded-md card-tr':
+                       { 'mb-[15px] border border-accentLight2 p-[15px] block w-full rounded-md bg-gradientTableCard':
                          $mq.smaller('md').value }]"
               @click="$emit('rowClick', row)"
             >
@@ -113,13 +113,13 @@
                         ? 'sticky right-0'
                         : '',
                       { 'cell--tr-default': detailsIndex === i && !$mq.smaller('md').value },
-                      { 'flex justify-between items-center': $mq.smaller('md').value },
+                      { 'flex items-center': $mq.smaller('md').value },
                       {'cell truncate': !$mq.smaller('md').value},
                       h.contentClass
                     ]"
                   >
                     <slot v-if="$mq.smaller('md').value" :name="`header_${h.prop}`" :header="h">
-                      <p class="text-white uppercase font-semibold mr-3" :class="{'mr-9': h.prop !== 'options'}">
+                      <p class="w-[33%] text-white uppercase font-semibold pr-2">
                         {{ h.label || '' }}:
                       </p>
                     </slot>
@@ -405,10 +405,6 @@ export default {
       }
     }
   }
-}
-
-.card-tr {
-  background: linear-gradient(130deg, #515660 10%, white 53%,  transparent 55%, white 60%);
 }
 
 .actions-td {

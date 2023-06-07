@@ -31,11 +31,11 @@ svg {
   display: initial;
 }
 
-@media (hover: none) and (pointer: coarse) and (max-width: 767px) {
-  input {
-    @apply text-base #{!important}
-  }
-}
+// @media (hover: none) and (pointer: coarse) and (max-width: 767px) {
+//   input {
+//     @apply text-base #{!important}
+//   }
+// }
 
 *::-webkit-scrollbar {
   height: 6px;

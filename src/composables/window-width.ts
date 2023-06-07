@@ -14,9 +14,7 @@ export const useWindowWidth = () => {
   })
 
   const type = computed(() => {
-    if (windowWidth.value < 640) {
-      return 'xs'
-    } else if (windowWidth.value >= 640 && windowWidth.value < 768) {
+    if (windowWidth.value < 768) {
       return 'sm'
     } else if (windowWidth.value >= 768 && windowWidth.value < 1024) {
       return 'md'

@@ -8,6 +8,7 @@
     <div class="flex justify-between my-3 bg-transparent">
       <el-select
         v-model="selectedTags"
+        :size="type === 'sm' ? $elComponentSize.small : $elComponentSize.default"
         multiple
         collapse-tags
         collapse-tags-tooltip
@@ -28,7 +29,7 @@
         v-if="questions && selectedRows"
         class="self-end"
       >
-        Checked: {{ selectedRows.length }} of {{ totalCount }}
+        {{ type==='sm'? '': ' Selected:' }} {{ selectedRows.length }} of {{ totalCount }}
       </el-tag>
 
       <!-- <el-statistic v-if="questions && selectedRows" :value="selectedRows.length">
@@ -43,6 +44,7 @@
       <el-button
         :type="$elComponentType.primary"
         plain
+        :size="type === 'sm' ? $elComponentSize.small : $elComponentSize.default"
         class="flex items-center" @click="openUpsertDialog()"
       >
         <template #icon>
@@ -177,7 +179,8 @@
       :page-sizes="[ 3, 9, 15, 20]"
       :total="totalCount"
       background
-      layout="total,sizes, prev, pager, next, jumper"
+      :small="type==='sm'"
+      :layout="`total,sizes, prev, pager, next, ${type==='sm' ? '': 'jumper'}`"
       class="justify-center my-2"
       @current-change="handleChangeCurrentPage"
       @size-change="handleChangeSize"
@@ -187,10 +190,11 @@
 
 <script setup lang="ts">
 import UpsertQuestion from './components/UpsertQuestion.vue'
-const { type } = useWindowWidth()
 interface IProps {
   selectedRows?: any[]
 }
+
+const { type } = useWindowWidth()
 
 defineProps<IProps>()
 defineEmits(['selectionChange'])

@@ -6,12 +6,13 @@
         label-position="top"
         :model="formModel"
         :rules="formRules"
+        :size="type === 'sm' ? 'small' : 'default'"
         class="users-form"
       >
         <el-form-item
           label="Find User"
           prop="email"
-          class="w-[300px]"
+          class="w-52 md:w-[300px]"
         >
           <el-input
             v-model.trim="formModel.email"
@@ -33,7 +34,7 @@
       </el-form>
 
       <el-tag v-if="users && selectedRows" class="self-end">
-        Checked: {{ selectedRows.length }} of {{ totalCount }}
+        Selected: {{ selectedRows.length }} of {{ totalCount }}
       </el-tag>
     </div>
 
@@ -54,7 +55,8 @@
       v-model:current-page="currentPage"
       :total="totalCount"
       background
-      layout="total, prev, pager, next, jumper"
+      :small="type==='sm'"
+      :layout="`total, prev, pager, next, ${type==='sm' ? '': 'jumper'}`"
       class="justify-center my-2"
       @current-change="handleCurrentChange"
     />
@@ -67,6 +69,8 @@ import { usersListService } from './users-list.service'
 interface IProps {
   selectedRows?: any[]
 }
+
+const { type } = useWindowWidth()
 
 defineProps<IProps>()
 defineEmits(['selectionChange'])

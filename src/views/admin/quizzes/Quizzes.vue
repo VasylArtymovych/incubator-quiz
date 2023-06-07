@@ -8,6 +8,7 @@
         v-model="searchedQuiz"
         placeholder="Search"
         clearable
+        :size="type === 'sm' ? $elComponentSize.small : $elComponentSize.default"
         class="w-[300px]"
         @input="handleClearInputData"
       >
@@ -92,7 +93,8 @@
       :page-sizes="[ 5, 10, 15, 20]"
       :total="totalCount"
       background
-      layout="total,sizes, prev, pager, next, jumper"
+      :small="type ==='sm'"
+      :layout="`total,sizes, prev, pager, next, ${type==='sm' ? '': 'jumper'}`"
       class="justify-center my-2"
       @current-change="handleChangeCurrentPage"
       @size-change="handleChangeSize"
@@ -104,6 +106,7 @@
 // import type { ITableHeading } from '@/types'
 import { quizzesService } from './quizzes.service'
 
+const { type } = useWindowWidth()
 const router = useRouter()
 const { $routeNames } = useGlobalProperties()
 
@@ -139,7 +142,7 @@ const sortedQuizzes = computed(() => {
 })
 
 const headings: any[] = [
-  { label: 'Quiz title', prop: 'title', sortable: true, minWidth: 120 },
+  { label: 'Quiz title', prop: 'title', sortable: true, minWidth: 120, contentClass: 'font-semibold xl:!text-lg' },
   { label: 'Questions', prop: 'questions', minWidth: 60 },
   { label: 'Users', prop: 'users', minWidth: 60 },
   { label: 'Actions', prop: 'actions', width: 120 }

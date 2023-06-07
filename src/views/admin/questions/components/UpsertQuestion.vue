@@ -10,6 +10,7 @@
       v-loading="loading"
       :model="formModel"
       :rules="formRules"
+      :size="type === 'sm' ? $elComponentSize.small : $elComponentSize.default"
       label-position="top"
       class="upsert-question-form"
     >
@@ -115,6 +116,8 @@
 
 <script setup lang="ts">
 const emit = defineEmits(['inserted', 'updated'])
+const { type } = useWindowWidth()
+
 const dialogVisible = ref(false)
 const formRef = useElFormRef()
 const updatingQuestionId = ref()
