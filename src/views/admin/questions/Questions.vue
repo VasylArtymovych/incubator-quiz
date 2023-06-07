@@ -60,6 +60,7 @@
       rowHeight="50px"
       fixedLast
       doNotChangeQuery
+      tableScrollPadding="2px"
       class="h-full overflow-hidden"
       @sortBy="sortBy"
       @update:selected="(val: number[])=> $emit('selectionChange', val)"

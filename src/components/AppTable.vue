@@ -4,52 +4,25 @@
     :style="{'--row-height': rowHeight,
              '--table-padding-left': $mq.smaller('md').value ? '16px' : tablePaddingLeft}"
   >
-    <div
-      v-if="allOnPageSelected && !$mq.smaller('md').value && selected.length < total"
-      class="sticky left-0 w-full text-center bg-selago border-none mb-[5px] rounded-[10px] p-[15px]"
-    >
-      <span v-if="hasSelectedAllQuery" v-html="`All <b>${total}</b> items selected`" />
-      <span
-        v-else
-        class="link"
-        v-html="`Select all <b>${total}</b> items`"
-      />
-    </div>
-
     <div class=" h-full overflow-auto" :style="`padding-right: ${tableScrollPadding}`">
-      <table class="min-w-full">
+      <table
+        class="min-w-full"
+        :class="{'block w-full': $mq.smaller('md').value}"
+      >
         <thead>
           <tr>
             <!-- checkbox to select all -->
-            <th v-if="selected" class="!z-[11] left-0 shadow-fixed-column min-w-[40px] w-[40px]">
+            <th
+              v-if="selected && !$mq.smaller('md').value"
+              class="!z-[11] left-0 shadow-fixed-column min-w-[40px] w-[40px]"
+            >
               <div class="cell flex justify-center">
-                <span
-                  v-if="hasSelectedAllQuery && !allOnPageSelected || ($mq.smaller('md').value
-                    && selected.length === total) && dataset.length"
-                  v-html="`All <b>${dataset.length}</b> items selected`"
-                />
-                <span
-                  v-if="!hasSelectedAllQuery && !allOnPageSelected && $mq.smaller('md').value && dataset.length"
-                  class="link"
-                  @click="toggleAllOnPageSelection($event)"
-                  v-html="`Select all <b>${dataset.length}</b> items`"
-                />
-
                 <AppCheckbox
                   v-if="!$mq.smaller('md').value"
                   :modelValue="allOnPageSelected"
                   class="md:w-[14px] w-auto"
                   @update:modelValue="toggleAllOnPageSelection($event)"
                 />
-
-                <div v-if="allOnPageSelected && $mq.smaller('md').value && selected.length < total">
-                  <span v-if="hasSelectedAllQuery" v-html="`Select all <b>${total}</b> items`" />
-                  <span
-                    v-else
-                    class="link"
-                    v-html="`All <b>${total}</b> items selected`"
-                  />
-                </div>
               </div>
             </th>
 
@@ -88,18 +61,19 @@
           </tr>
         </thead>
 
-        <tbody>
+        <tbody :class="{'block w-full': $mq.smaller('md').value}">
           <template v-for="(row, i) in dataset" :key="i">
             <tr
               :id="row[unique]"
-              :class="[rowClassChecker(row), rowClass,
-                       { 'cursor-pointer': clickable },
-                       { 'mb-[15px] border border-snuff p-[15px] shadow-card2 block': $mq.smaller('md').value }]"
+              :class="[rowClassChecker(row), rowClass, { 'cursor-pointer': clickable },
+                       { 'mb-[15px] border border-accentLight2 p-[15px] block w-full rounded-md card-tr':
+                         $mq.smaller('md').value }]"
               @click="$emit('rowClick', row)"
             >
-              <td v-if="selected" class="md:inline-block w-[40px] sticky left-0 ">
+              <td v-if="selected" class="md:inline-block w-[40px] sticky left-0">
                 <div
-                  :class="{'cell text-center': !$mq.smaller('md').value}"
+                  :class="[{'cell text-center': !$mq.smaller('md').value},
+                           {'bg-accentLight3 pt-[2px] rounded-full': $mq.smaller('md').value}]"
                   class="flex items-center justify-center"
                   @click.stop
                 >
@@ -109,8 +83,7 @@
 
               <td
                 v-if="$mq.smaller('md').value && fixedLast"
-                class="w-screen text-right"
-                :class="{ 'flex justify-end': !selected }"
+                class="text-right flex justify-end mb-3 relative actions-td "
               >
                 <Computed #default="{ lastColumn }" :lastColumn="visibleColumns[visibleColumns.length - 1]">
                   <slot :name="lastColumn.prop" :row="row" :rowIndex="i">
@@ -128,6 +101,7 @@
                     { 'inline': fixedLast && visibleColumns.length - 1 === hIndex && !$mq.smaller('md').value },
                     {'table-truncate': !!h.minWidth && !$mq.smaller('md').value},
                     {'flex flex-col': $mq.smaller('md').value},
+                    {'hidden': ($mq.smaller('md').value && h.prop === 'actions')},
                     h.cellClasses && !$mq.smaller('md').value
                   ]"
                 >
@@ -139,19 +113,20 @@
                         ? 'sticky right-0'
                         : '',
                       { 'cell--tr-default': detailsIndex === i && !$mq.smaller('md').value },
-                      { 'flex justify-between mb-[10px] items-center': $mq.smaller('md').value },
+                      { 'flex justify-between items-center': $mq.smaller('md').value },
                       {'cell truncate': !$mq.smaller('md').value},
                       h.contentClass
                     ]"
                   >
                     <slot v-if="$mq.smaller('md').value" :name="`header_${h.prop}`" :header="h">
-                      <p class="text-kimberly uppercase font-semibold">{{ h.label || '' }}</p>
+                      <p class="text-white uppercase font-semibold mr-3" :class="{'mr-9': h.prop !== 'options'}">
+                        {{ h.label || '' }}:
+                      </p>
                     </slot>
 
-                    <!-- <span :style="`max-width: ${h.minWidth}px`"> -->
                     <span
                       class="w-full py-1 max-h-full"
-                      :class="{'text-center': h.contentCenter}"
+                      :class="[{'text-center': h.contentCenter}, {'overflow-hidden': $mq.smaller('md').value}]"
                     >
                       <slot
                         v-if="!($mq.smaller('md').value && (fixedLast && hIndex === visibleColumns.length - 1))"
@@ -431,6 +406,24 @@ export default {
     }
   }
 }
-</style>
 
-//:class="{'cell text-center sticky left-0 shadow-fixed-column': !$mq.smaller('md').value}"
+.card-tr {
+  background: linear-gradient(130deg, #515660 10%, white 53%,  transparent 55%, white 60%);
+}
+
+.actions-td {
+  z-index: 0;
+}
+.actions-td::after {
+  content: '';
+  width: 120px;
+  height: 34px;
+  position: absolute;
+  top: -5px;
+  right: -4px;
+  z-index: -1;
+  border-radius: 50px 0 0 50px;
+  background-color: #6b7280;
+
+}
+</style>

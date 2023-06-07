@@ -43,6 +43,7 @@
       :dataset="users"
       :headers="headings"
       doNotChangeQuery
+      tableScrollPadding="2px"
       class="h-full"
       @update:selected="(val: string[]) => $emit('selectionChange', val)"
     />

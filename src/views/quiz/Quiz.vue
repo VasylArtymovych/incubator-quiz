@@ -35,11 +35,12 @@
     </div>
 
     <button
-      class="button-next self-end py-1 pl-3 pr-1 mb-4 mr-4 flex justify-center items-center text-white cursor-pointer"
+      class="button-next py-1 pl-3 pr-2 mb-6 mr-2 md:py-2 md:pl-5 md:pr-4 md:text-lg
+      flex justify-center items-center self-end text-white cursor-pointer"
       role="button"
     >
       NEXT
-      <IconArrowRight class="ml-2" />
+      <IconArrowRight class="ml-3" />
     </button>
   </DefaultContainer>
 </template>
@@ -74,24 +75,18 @@ const question = ref<IQuestion | null>({
   ]
 })
 
-const confirmReload = (event: BeforeUnloadEvent) => {
-  console.log(event)
-  event.preventDefault()
-  // event.returnValue = '' // Required for Chrome and Edge
+// const confirmReload = (event: BeforeUnloadEvent) => {
+//   event.preventDefault()
+//   event.returnValue = '' // Required for Chrome and Edge
+// }
 
-  // const shouldReload = confirm('Are you sure you want to reload the page?')
-  // if (shouldReload) {
-  //   window.removeEventListener('beforeunload', confirmReload)
-  // }
-}
+// onMounted(() => {
+//   window.addEventListener('beforeunload', confirmReload, { capture: true })
+// })
 
-onMounted(() => {
-  window.addEventListener('beforeunload', confirmReload)
-})
-
-onBeforeUnmount(() => {
-  window.removeEventListener('beforeunload', confirmReload)
-})
+// onBeforeUnmount(() => {
+//   window.removeEventListener('beforeunload', confirmReload)
+// })
 
 </script>
 
@@ -143,18 +138,6 @@ onBeforeUnmount(() => {
   background: #ff4713;
 }
 
-@keyframes wave-rainbow {
-  0% {
-    background-position: 0 0;
-  }
-  50% {
-    background-position: 400% 0;
-  }
-  100% {
-    background-position: 0 0;
-  }
-}
-
 .button-next:after {
   z-index: -1;
   content: "";
@@ -165,5 +148,17 @@ onBeforeUnmount(() => {
   height: 100%;
   background: linear-gradient(130deg, black 30%, #ff4713 50%, black 70% );
   border-radius: 10px;
+}
+
+@keyframes wave-rainbow {
+  0% {
+    background-position: 0 0;
+  }
+  50% {
+    background-position: 400% 0;
+  }
+  100% {
+    background-position: 0 0;
+  }
 }
 </style>

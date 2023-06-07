@@ -40,6 +40,7 @@
       :headers="headings"
       fixedLast
       doNotChangeQuery
+      tableScrollPadding="2px"
       class="h-full overflow-hidden"
       @sortBy="sortBy"
     >
