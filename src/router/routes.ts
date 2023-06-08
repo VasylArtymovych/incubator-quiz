@@ -8,7 +8,7 @@ import HomePage from '@/views/home/Home.vue'
 
 export const routes: RouteRecordRaw[] = [
   {
-    path: '/',
+    path: '/quizzes',
     name: routeNames.rootPage,
     component: () => HomePage,
     meta: { isProtected: true }
@@ -16,7 +16,7 @@ export const routes: RouteRecordRaw[] = [
 
   {
     path: '/:pathMatch(.*)*',
-    redirect: '/'
+    redirect: '/quizzes'
   },
 
   ...authRoutes,

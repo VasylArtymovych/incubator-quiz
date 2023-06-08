@@ -1,4 +1,5 @@
 <template>
+  <Header />
   <DefaultContainer
     v-if="question"
     class="flex flex-col h-full overflow-hidden"
@@ -47,33 +48,42 @@
 
 <script setup lang="ts">
 import DefaultContainer from '@/layouts/DefaultContainer.vue'
+import { refThrottled } from '@vueuse/core'
+const route = useRoute()
+const quizzesStore = useQuizzesStore()
+const { availableQuizzes } = storeToRefs(quizzesStore)
+const currentQuestion = ref({
+  id: '',
+  title: '',
+  value: ''
+})
+const currentQuizId = ref(+route.params.id)
+const currentQuiz = ref<IQuizPopulated| null>(null)
+const currentStep = ref(route.query.step || 1)
+
 const selectedOption = ref<string>()
 
-const question = ref<IQuestion | null>({
-  id: 7,
-  title: 'Is possible to change the name already defined function?',
-  timer: 5,
-  options: [
-    {
-      title: 'No, it is impossible',
-      is_correct: false
-    },
-    {
-      title: 'Func.name = newFuncName',
-      is_correct: false
-    },
-    {
-      title: 'Object.defineProperty()',
-      is_correct: true
+const getQuizById = async () => {
+  try {
+    const { data, error } = await quizService.getQuizById(+route.params.id)
+    if (error) throw new Error(error.message)
+    if (data) {
+      currentQuiz.value = data as IQuizPopulated
     }
-  ],
-  tags: [
-    'FE',
-    'junior',
-    'middle',
-    'senior'
-  ]
-})
+  } catch (error: any) {
+    return useErrorNotification(error.message)
+  }
+}
+
+function setCurrentAnswer (step = 1) {
+  currentQuestion.value = {
+    id: currentQuiz.value?.questions[step].id,
+    title: currentQuiz.value?.questions[step].title,
+    value: ''
+  }
+}
+
+await getQuizById()
 
 // const confirmReload = (event: BeforeUnloadEvent) => {
 //   event.preventDefault()

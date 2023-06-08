@@ -21,12 +21,11 @@ export const adminRoutes: RouteRecordRaw[] = [
       ...quizzesRoutes,
       ...usersRoutes
     ],
-    meta: { role: 'admin@softonix.org', isProtected: true },
+    meta: { role: 'admin', isProtected: true },
     beforeEnter: (to) => {
       const { activeUserData } = useAuthStore()
 
-      // if (to.meta.isProtected && activeUserData?.role !== to.meta.role) {
-      if (to.meta.isProtected && activeUserData?.email !== to.meta.role) {
+      if (to.meta.isProtected && activeUserData?.user_metadata.role !== to.meta.role) {
         return { name: authRoutesNames.login }
       }
       return true

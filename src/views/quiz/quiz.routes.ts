@@ -6,7 +6,7 @@ export const quizRoutesNames = {
 
 export const quizRoutes: RouteRecordRaw[] = [
   {
-    path: '/passQuiz',
+    path: '/passQuiz/:id',
     name: quizRoutesNames.passQuiz,
     component: () => import('@/views/quiz/Quiz.vue'),
     meta: { isProtected: true }

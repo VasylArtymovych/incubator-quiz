@@ -92,10 +92,6 @@ function submit () {
   formRef.value?.validate(isValid => {
     if (isValid) {
       authService.login(loginForm)
-        .then(data => {
-          console.log(data)
-          return data
-        })
         .then(({ data, error }) => {
           if (error) throw new Error(error.message)
           if (data.user) {
