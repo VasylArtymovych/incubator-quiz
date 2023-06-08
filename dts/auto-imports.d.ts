@@ -81,6 +81,7 @@ declare global {
   const useLink: typeof import('vue-router')['useLink']
   const useMaxLenRule: typeof import('../src/composables/form-config')['useMaxLenRule']
   const useMinLenRule: typeof import('../src/composables/form-config')['useMinLenRule']
+  const useQuizStore: typeof import('../src/views/quiz/quiz.store')['useQuizStore']
   const useQuizzesStore: typeof import('../src/store/modules/quizzes.store')['useQuizzesStore']
   const useRequiredRule: typeof import('../src/composables/form-config')['useRequiredRule']
   const useRoute: typeof import('vue-router')['useRoute']

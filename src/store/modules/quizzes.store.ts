@@ -1,4 +1,4 @@
-export const useQuizzesStore = defineStore('adminStore', () => {
+export const useQuizzesStore = defineStore('quizzesStore', () => {
   const availableQuizzes = ref<IQuizPopulated[] | null>(null)
   const loading = ref(false)
 

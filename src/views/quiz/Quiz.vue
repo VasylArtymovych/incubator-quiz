@@ -1,25 +1,25 @@
 <template>
   <Header />
   <DefaultContainer
-    v-if="question"
-    class="flex flex-col h-full overflow-hidden"
+    v-if="currentQuestion"
+    class="flex flex-col h-full overflow-hidden bg-bgrDarkAlpha"
   >
     <AppTimer
       class="ml-auto my-4"
       :width="60"
       :strokeWidth="3"
-      :time="question.timer"
+      :time="currentQuestion.timer"
     />
 
     <div class="flex flex-col h-full overflow-auto p-4 lg:px-8">
       <div class="relative  p-2 mb-8 rounded-lg bg-borderGradient shadow-lg shadow-gray-medium">
         <h2 class="p-2 md:p-6 font-semibold bg-catskill-white rounded-sm select-none md:text-lg">
-          {{ question?.title }}
+          {{ currentQuestion?.title }}
         </h2>
       </div>
 
       <div
-        v-for="(opt, i) in question.options"
+        v-for="(opt, i) in currentQuestion.options"
         :key="i"
         class="option-wrap group p-1 mb-6 bg-borderGradient2 rounded-md hover:scale-[0.99] shadow-lg shadow-white
         hover:shadow-accentLight2  md:w-[70%] md:self-center"
@@ -39,6 +39,7 @@
       class="button-next py-1 pl-3 pr-2 mb-6 mr-2 md:py-2 md:pl-5 md:pr-4 md:text-lg
       flex justify-center items-center self-end text-white cursor-pointer"
       role="button"
+      @click="onNextClick"
     >
       NEXT
       <IconArrowRight class="ml-3" />
@@ -48,42 +49,45 @@
 
 <script setup lang="ts">
 import DefaultContainer from '@/layouts/DefaultContainer.vue'
-import { refThrottled } from '@vueuse/core'
+
 const route = useRoute()
-const quizzesStore = useQuizzesStore()
-const { availableQuizzes } = storeToRefs(quizzesStore)
-const currentQuestion = ref({
-  id: '',
-  title: '',
-  value: ''
-})
-const currentQuizId = ref(+route.params.id)
-const currentQuiz = ref<IQuizPopulated| null>(null)
-const currentStep = ref(route.query.step || 1)
+const quizStore = useQuizStore()
+const { currentQuestion, loading } = storeToRefs(quizStore)
 
-const selectedOption = ref<string>()
+const quizId = ref(+route.params.id)
+const currentStep = ref(+route.query.step || 1)
+const selectedOption = ref<string>('')
 
-const getQuizById = async () => {
-  try {
-    const { data, error } = await quizService.getQuizById(+route.params.id)
-    if (error) throw new Error(error.message)
-    if (data) {
-      currentQuiz.value = data as IQuizPopulated
+const currentAnswer = ref<IAnswer| null>(null)
+
+const setCurrentAnswer = () => {
+  if (currentQuestion.value) {
+    currentAnswer.value = {
+      id: currentQuestion.value.id,
+      title: currentQuestion.value.title,
+      value: selectedOption.value
     }
-  } catch (error: any) {
-    return useErrorNotification(error.message)
   }
 }
 
-function setCurrentAnswer (step = 1) {
-  currentQuestion.value = {
-    id: currentQuiz.value?.questions[step].id,
-    title: currentQuiz.value?.questions[step].title,
-    value: ''
-  }
+const onNextClick = () => {
+  setCurrentAnswer()
+  currentAnswer.value && quizStore.addAnswer(currentAnswer.value)
+  currentStep.value += 1
+  quizStore.setCurrentQuestion(currentStep.value)
 }
 
-await getQuizById()
+onBeforeMount(() => {
+  quizStore.getQuizById(quizId.value)
+})
+
+// function setCurrentAnswer (step = 1) {
+//   currentQuestion.value = {
+//     id: currentQuiz.value?.questions[step].id,
+//     title: currentQuiz.value?.questions[step].title,
+//     value: ''
+//   }
+// }
 
 // const confirmReload = (event: BeforeUnloadEvent) => {
 //   event.preventDefault()

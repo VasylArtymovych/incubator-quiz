@@ -80,6 +80,7 @@
     "useLink": true,
     "useMaxLenRule": true,
     "useMinLenRule": true,
+    "useQuizStore": true,
     "useQuizzesStore": true,
     "useRequiredRule": true,
     "useRoute": true,

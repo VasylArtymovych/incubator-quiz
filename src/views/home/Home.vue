@@ -1,6 +1,6 @@
 <template>
   <Header />
-  <DefaultContainer v-loading="loading" class="flex flex-col h-full dddd">
+  <DefaultContainer v-loading="loading" class="flex flex-col h-full bg-bgrDarkAlpha">
     <el-empty
       v-if="!availableQuizzes || !availableQuizzes.length && !loading"
       description="No available quizzes"
@@ -35,12 +35,8 @@ quizzesStore.getQuizzes()
 
 </script>
 <style lang="scss" scoped>
-  .dddd {
-    background-color: rgba(0, 0, 0, 0.787);
-  }
   .tabs {
     background-color: transparent;
     border: none;
-    // background-color: rgba(0, 0, 0, 0.787);
   }
 </style>

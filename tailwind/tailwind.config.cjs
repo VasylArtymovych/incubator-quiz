@@ -17,6 +17,7 @@ module.exports = {
       accentLight4: '#ff7e5a4f',
       accentLight5: '#ffede7',
       bgrDark: '#262a2b',
+      bgrDarkAlpha: 'rgba(0, 0, 0, 0.7)',
       borderCard: '#252727',
       titleWhite: '#b7b7b7'
 
