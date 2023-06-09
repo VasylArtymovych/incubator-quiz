@@ -2,21 +2,42 @@
   <header
     class="relative py-4 bg-black border-b border-accent"
   >
-    <DefaultContainer class="flex justify-between items-center">
+    <DefaultContainer
+      class="flex justify-between items-center"
+    >
       <div
-        class="flex justify-center items-center cursor-pointer"
+        class="logo flex justify-center items-center cursor-pointer"
         @click="$router.push({name: $routeNames.rootPage})"
       >
-        <img :src="owlLogo" alt="logo" class="w-12 h-12 text-red-600">
-        <p class="logo-text font-bold text-2xl">QUIZ</p>
+        <img
+          :src="owlLogo"
+          alt="logo"
+          class="w-12 h-12 text-red-600"
+        >
+        <p class="logo-text font-bold text-2xl">
+          QUIZ
+        </p>
+        <el-badge
+          value="BETA"
+          type="primary"
+          class="ml-1 mb-3"
+        />
       </div>
 
-      <NavBar v-if="isAdmin" :isActive="isActive" />
+      <NavBar v-if="userRole === 'admin'" :isActive="isActive" :role="'admin'" />
+      <NavBar v-if="userRole === 'user'" :isActive="isActive" :role="'user'" />
 
       <div class="flex">
-        <BurgerButton v-if="isAdmin" :isActive="isActive" class="md:hidden" @click="isActive = !isActive" />
+        <BurgerButton
+          :isActive="isActive"
+          class="md:hidden"
+          @click="isActive = !isActive"
+        />
 
-        <el-dropdown trigger="click" @command="onDropdown">
+        <el-dropdown
+          trigger="click"
+          @command="onDropdown"
+        >
           <div
             class="w-10 h-10 flex justify-center items-center bg-white rounded-full border-4 border-double border-black
             ml-4 hover:bg-accent"
@@ -40,7 +61,7 @@ import DefaultContainer from '@/layouts/DefaultContainer.vue'
 
 const authStore = useAuthStore()
 
-const isAdmin = computed(() => authStore.activeUserData?.email === 'admin@softonix.org')
+const userRole = computed(() => authStore.activeUserData?.user_metadata.role)
 
 const isActive = ref(false)
 
@@ -50,6 +71,7 @@ const onDropdown = () => {
 </script>
 
 <style lang="scss" scoped>
+
 .logo-text {
   background-color: black;
   background-image: linear-gradient(

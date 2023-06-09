@@ -9,10 +9,12 @@
       class="flex flex-col h-full overflow-hidden"
     >
       <AppTimer
+        :key="currentStep"
         class="ml-auto my-4"
         :width="60"
         :strokeWidth="3"
         :time="currentQuestion.timer"
+        @timeIsUp="onNextClick"
       />
 
       <div class="flex flex-col h-full overflow-auto p-4 lg:px-8">
@@ -54,16 +56,17 @@
 
 <script setup lang="ts">
 import DefaultContainer from '@/layouts/DefaultContainer.vue'
-
+const authStore = useAuthStore()
 const quizzesStore = useQuizzesStore()
 const quizStore = useQuizStore()
 const { currentQuiz, currentQuestion, loading, answers } = storeToRefs(quizStore)
 const route = useRoute()
+const router = useRouter()
+const { $routeNames } = useGlobalProperties()
 
 const quizId = ref(+route.params.id)
 const currentStep = ref(+route.query.step! || 1)
 const selectedOption = ref<string>('')
-const currentAnswer = ref<IAnswer| null>(null)
 
 const lastQuesIndx = computed(() => {
   if (currentQuiz.value?.questions.length) {
@@ -73,47 +76,53 @@ const lastQuesIndx = computed(() => {
   }
 })
 
-const setCurrentAnswer = () => {
+const addCurrentAnswer = () => {
   if (currentQuestion.value) {
-    currentAnswer.value = {
+    const currAnswer = {
       id: currentQuestion.value.id,
       title: currentQuestion.value.title,
       value: selectedOption.value
     }
+    quizStore.addAnswer(currAnswer)
+    selectedOption.value = ''
   }
 }
 
 const onNextClick = () => {
   if ((currentStep.value - 1) === lastQuesIndx.value) {
-    setCurrentAnswer()
-    currentAnswer.value && quizStore.addAnswer(currentAnswer.value)
-    return console.log('last question', answers.value)
+    addCurrentAnswer()
+    const res = {
+      uaer: authStore.activeUserData?.id,
+      quiz: quizId.value,
+      answers: answers.value
+    }
+    return console.log('last step res', res)
   } else {
-    setCurrentAnswer()
-    currentAnswer.value && quizStore.addAnswer(currentAnswer.value)
+    addCurrentAnswer()
     currentStep.value += 1
     quizStore.setCurrentQuestion(currentStep.value)
+    router.replace({
+      name: $routeNames.passQuiz,
+      params: { id: quizId.value },
+      query: { step: currentStep.value }
+    })
   }
 }
 
-onBeforeMount(async () => {
+const checkIfAvailableQuizOrFetch = async () => {
   if (quizzesStore.availableQuizzes && quizzesStore.availableQuizzes.length) {
     const currQuiz = quizzesStore.availableQuizzes.find((quiz) => quiz.id === quizId.value)
     currQuiz && quizStore.setCurrentQuiz(currQuiz)
-    quizStore.setCurrentQuestion(currentStep.value)
   } else {
     await quizStore.getQuizById(quizId.value)
-    quizStore.setCurrentQuestion(currentStep.value)
   }
-})
 
-// function setCurrentAnswer (step = 1) {
-//   currentQuestion.value = {
-//     id: currentQuiz.value?.questions[step].id,
-//     title: currentQuiz.value?.questions[step].title,
-//     value: ''
-//   }
-// }
+  quizStore.setCurrentQuestion(currentStep.value)
+}
+
+onBeforeMount(() => {
+  checkIfAvailableQuizOrFetch()
+})
 
 // const confirmReload = (event: BeforeUnloadEvent) => {
 //   event.preventDefault()

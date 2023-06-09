@@ -115,6 +115,8 @@
 </template>
 
 <script setup lang="ts">
+import cloneDeep from 'lodash.clonedeep'
+
 const emit = defineEmits(['inserted', 'updated'])
 const { type } = useWindowWidth()
 
@@ -209,7 +211,7 @@ const openQuestionDialog = (row?: IQuestion) => {
 
   if (row) {
     updatingQuestionId.value = row.id
-    formModel.value = row
+    formModel.value = cloneDeep(row)
     correctOpt.value = row.options.findIndex(opt => (opt.is_correct === true))
   }
   dialogVisible.value = true

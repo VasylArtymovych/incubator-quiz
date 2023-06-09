@@ -1,30 +1,16 @@
 class UsersLIstService {
-  getUsers () {
+  getUsers (from: number, to: number) {
     return supabase
-      .auth.admin.listUsers()
-      // .select('*', { count: 'exact' })
-      // .eq('role', 'user')
-      // .range(from, to)
+      .from('profiles')
+      .select('*', { count: 'exact' })
+      .range(from, to)
   }
 
   getUserByEmail (email: string) {
     return supabase
-      .from('users')
+      .from('profiles')
       .select('*', { count: 'exact' })
       .eq('email', email)
-  }
-
-  addUser (payload: TAddUserPayload) {
-    return supabase
-      .from('users')
-      .insert([payload])
-  }
-
-  deleteUser (id: string) {
-    return supabase
-      .from('users')
-      .delete()
-      .eq('id', id)
   }
 }
 

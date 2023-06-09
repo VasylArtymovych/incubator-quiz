@@ -1,7 +1,6 @@
 export const useQuizStore = defineStore('quizStore', () => {
-  const currentQuiz = ref<IQuizPopulated| null>(null)
   const loading = ref(false)
-
+  const currentQuiz = ref<IQuizPopulated| null>(null)
   const currentQuestion = ref<IQuestion | null>(null)
   const answers = ref<IAnswer[]>([])
 
@@ -36,8 +35,8 @@ export const useQuizStore = defineStore('quizStore', () => {
   }
 
   return {
-    currentQuiz,
     loading,
+    currentQuiz,
     currentQuestion,
     answers,
     setCurrentQuiz,

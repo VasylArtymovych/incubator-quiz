@@ -17,7 +17,7 @@
     </li>
 
     <li
-      v-show="$route.name === $routeNames.rootPage"
+      v-show="$route.name === $routeNames.rootPage && role === 'admin'"
       class="flex justify-center items-center"
     >
       <RouterLink
@@ -28,26 +28,47 @@
       </RouterLink>
     </li>
 
-    <li
-      v-for="item in items" :key="item"
-      class="flex justify-center items-center"
-    >
-      <RouterLink
-        :to="`/admin/${item}`"
-        class="link relative w-full text-center p-4 md:p-0 hover:text-accent capitalize"
+    <template v-if="role === 'admin'">
+      <li
+        v-for="item in adminRoutes" :key="item"
+        class="flex justify-center items-center"
       >
-        {{ item }}
-      </RouterLink>
-    </li>
+        <RouterLink
+          :to="`/admin/${item}`"
+          class="link relative w-full text-center p-4 md:p-0 hover:text-accent capitalize"
+        >
+          {{ item }}
+        </RouterLink>
+      </li>
+    </template>
+
+    <template v-if="role === 'user'">
+      <li
+        v-for="item in userRoutes" :key="item.route"
+        class="flex justify-center items-center"
+      >
+        <RouterLink
+          :to="`/${item.route}`"
+          class="link relative w-full text-center p-4 md:p-0 hover:text-accent capitalize"
+        >
+          {{ item.name }}
+        </RouterLink>
+      </li>
+    </template>
   </ul>
 </template>
 
 <script setup lang="ts">
 defineProps<{
   isActive: boolean
+  role: 'admin' | 'user'
 }>()
 
-const items = ['quizzes', 'questions', 'users']
+const adminRoutes = ['quizzes', 'questions', 'users']
+const userRoutes = [
+  { route: 'availableQuizzes', name: 'quizzes' },
+  { route: 'results', name: 'results' }
+]
 </script>
 
 <style lang="scss" scoped>

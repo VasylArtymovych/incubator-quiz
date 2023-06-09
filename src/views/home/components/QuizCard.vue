@@ -1,7 +1,6 @@
 <template>
   <div
     class="card relative border border-borderCard text-left m-3"
-    :style="{width, minWidth, maxWidth}"
   >
     <div class="pt-28 px-5 pb-10 bg-bgrDark min-h-[35vh]">
       <p class="time-text absolute top-[90px] right-[20px] opacity-[0.2] m-0 text-[110px]">
@@ -24,9 +23,6 @@
 <script setup lang="ts">
 const props = defineProps<{
   quiz: IQuizPopulated
-  width?: string
-  minWidth?: string
-  maxWidth?: string
 }>()
 
 const calcQuizTime = computed(() => {
@@ -103,24 +99,14 @@ const calcQuizTime = computed(() => {
     background-color: rgba(255, 255, 255, 0.02);
   }
 
-  .card:nth-of-type(1)::before {
-    background: #C9FFBF;
-    background: -webkit-linear-gradient(to right, #FFAFBD, #C9FFBF);
-    background: linear-gradient(to right, #FFAFBD, #C9FFBF);
+  .card:nth-of-type(odd)::before {
+    background: #ff4713;
+    background: -webkit-linear-gradient(to right, #ff4713, #ffa389);
+    background: linear-gradient(to right, #ff4713, #ffa389);
     }
-  .card:nth-of-type(2):before {
-    background: #f2709c;
-    background: -webkit-linear-gradient(to right, #ff9472, #f2709c);
-    background: linear-gradient(to right, #ff9472, #f2709c);
+  .card:nth-of-type(even):before {
+    background: #ff4713;
+    background: -webkit-linear-gradient(to right, #ffa389, #ff4713);
+    background: linear-gradient(to right,  #ffa389, #ff4713);
   }
-  .card:nth-of-type(3):before {
-    background: #c21500;
-    background: -webkit-linear-gradient(to right, #ffc500, #c21500);
-    background: linear-gradient(to right, #ffc500, #c21500);
-  }
-  // .card:nth-of-type(4):before {
-  //   background: #FC354C;
-  //   background: -webkit-linear-gradient(to right, #0ABFBC, #FC354C);
-  //   background: linear-gradient(to right, #0ABFBC, #FC354C);
-  // }
 </style>

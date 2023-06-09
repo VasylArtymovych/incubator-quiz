@@ -5,6 +5,8 @@ import { resultRoutesNames } from '@/views/result/result.routes'
 
 export const routeNames = {
   rootPage: 'rootPage',
+  availableQuizzes: 'availableQuizzes',
+  results: 'results',
   ...authRoutesNames,
   ...adminRoutesNames,
   ...quizRoutesNames,

@@ -17,7 +17,6 @@
 @use "element-plus/theme-chalk/src/table";
 @use "element-plus/theme-chalk/src/overlay";
 @use "element-plus/theme-chalk/src/divider";
-@use "element-plus/theme-chalk/src/tabs";
 @use "element-plus/theme-chalk/src/icon";
 
 // @use "element-plus/theme-chalk/src/statistic";
@@ -33,3 +32,4 @@
 @import './select';
 @import './pagination';
 @import './empty';
+@import './badge';
