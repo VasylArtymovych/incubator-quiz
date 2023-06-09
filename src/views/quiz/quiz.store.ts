@@ -5,6 +5,10 @@ export const useQuizStore = defineStore('quizStore', () => {
   const currentQuestion = ref<IQuestion | null>(null)
   const answers = ref<IAnswer[]>([])
 
+  const setCurrentQuiz = (quiz: IQuizPopulated) => {
+    currentQuiz.value = quiz
+  }
+
   const setCurrentQuestion = (step = 1) => {
     if (currentQuiz.value) {
       currentQuestion.value = currentQuiz.value?.questions[step - 1]
@@ -22,8 +26,7 @@ export const useQuizStore = defineStore('quizStore', () => {
       const { data, error } = await quizService.getQuizById(id)
       if (error) throw new Error(error.message)
       if (data) {
-        currentQuiz.value = data as IQuizPopulated
-        setCurrentQuestion()
+        setCurrentQuiz(data as IQuizPopulated)
       }
     } catch (error: any) {
       return useErrorNotification(error.message)
@@ -37,6 +40,7 @@ export const useQuizStore = defineStore('quizStore', () => {
     loading,
     currentQuestion,
     answers,
+    setCurrentQuiz,
     setCurrentQuestion,
     addAnswer,
     getQuizById

@@ -1,64 +1,77 @@
 <template>
   <Header />
   <DefaultContainer
-    v-if="currentQuestion"
-    class="flex flex-col h-full overflow-hidden bg-bgrDarkAlpha"
+    v-loading="loading"
+    class="h-full overflow-hidden bg-bgrDarkAlpha"
   >
-    <AppTimer
-      class="ml-auto my-4"
-      :width="60"
-      :strokeWidth="3"
-      :time="currentQuestion.timer"
-    />
-
-    <div class="flex flex-col h-full overflow-auto p-4 lg:px-8">
-      <div class="relative  p-2 mb-8 rounded-lg bg-borderGradient shadow-lg shadow-gray-medium">
-        <h2 class="p-2 md:p-6 font-semibold bg-catskill-white rounded-sm select-none md:text-lg">
-          {{ currentQuestion?.title }}
-        </h2>
-      </div>
-
-      <div
-        v-for="(opt, i) in currentQuestion.options"
-        :key="i"
-        class="option-wrap group p-1 mb-6 bg-borderGradient2 rounded-md hover:scale-[0.99] shadow-lg shadow-white
-        hover:shadow-accentLight2  md:w-[70%] md:self-center"
-        :class="{'bg-borderGradientChecked scale-[0.99] shadow-none': selectedOption === opt.title}"
-      >
-        <p
-          class="option-text p-2 bg-catskill-white option select-none hover:shadow-accentLight2"
-          :class="{'selected bg-green-100 font-semibold': selectedOption === opt.title}"
-          @click="selectedOption = opt.title"
-        >
-          <span class="font-semibold"> {{ i+1 }}</span>: {{ opt.title }}
-        </p>
-      </div>
-    </div>
-
-    <button
-      class="button-next py-1 pl-3 pr-2 mb-6 mr-2 md:py-2 md:pl-5 md:pr-4 md:text-lg
-      flex justify-center items-center self-end text-white cursor-pointer"
-      role="button"
-      @click="onNextClick"
+    <div
+      v-if="currentQuestion"
+      class="flex flex-col h-full overflow-hidden"
     >
-      NEXT
-      <IconArrowRight class="ml-3" />
-    </button>
+      <AppTimer
+        class="ml-auto my-4"
+        :width="60"
+        :strokeWidth="3"
+        :time="currentQuestion.timer"
+      />
+
+      <div class="flex flex-col h-full overflow-auto p-4 lg:px-8">
+        <div class="relative  p-2 mb-8 rounded-lg bg-borderGradient shadow-lg shadow-gray-medium">
+          <h2 class="p-2 md:p-6 font-semibold bg-catskill-white rounded-sm select-none md:text-lg">
+            {{ currentQuestion?.title }}
+          </h2>
+        </div>
+
+        <div
+          v-for="(opt, i) in currentQuestion.options"
+          :key="i"
+          class="option-wrap group p-1 mb-6 bg-borderGradient2 rounded-md hover:scale-[0.99] shadow-lg shadow-white
+        hover:shadow-accentLight2  md:w-[70%] md:self-center"
+          :class="{'bg-borderGradientChecked scale-[0.99] shadow-none': selectedOption === opt.title}"
+        >
+          <p
+            class="option-text p-2 bg-catskill-white option select-none hover:shadow-accentLight2"
+            :class="{'selected bg-green-100 font-semibold': selectedOption === opt.title}"
+            @click="selectedOption = opt.title"
+          >
+            <span class="font-semibold"> {{ i+1 }}</span>: {{ opt.title }}
+          </p>
+        </div>
+      </div>
+
+      <button
+        class="button-next py-1 pl-3 pr-2 mb-6 mr-2 md:py-2 md:pl-5 md:pr-4 md:text-lg
+      flex justify-center items-center self-end text-white cursor-pointer"
+        role="button"
+        @click="onNextClick"
+      >
+        {{ (currentStep - 1) === lastQuesIndx ? 'Finish' : 'NEXT' }}
+        <IconArrowRight class="ml-3" />
+      </button>
+    </div>
   </DefaultContainer>
 </template>
 
 <script setup lang="ts">
 import DefaultContainer from '@/layouts/DefaultContainer.vue'
 
-const route = useRoute()
+const quizzesStore = useQuizzesStore()
 const quizStore = useQuizStore()
-const { currentQuestion, loading } = storeToRefs(quizStore)
+const { currentQuiz, currentQuestion, loading, answers } = storeToRefs(quizStore)
+const route = useRoute()
 
 const quizId = ref(+route.params.id)
-const currentStep = ref(+route.query.step || 1)
+const currentStep = ref(+route.query.step! || 1)
 const selectedOption = ref<string>('')
-
 const currentAnswer = ref<IAnswer| null>(null)
+
+const lastQuesIndx = computed(() => {
+  if (currentQuiz.value?.questions.length) {
+    return currentQuiz.value?.questions.length - 1
+  } else {
+    return 0
+  }
+})
 
 const setCurrentAnswer = () => {
   if (currentQuestion.value) {
@@ -71,14 +84,27 @@ const setCurrentAnswer = () => {
 }
 
 const onNextClick = () => {
-  setCurrentAnswer()
-  currentAnswer.value && quizStore.addAnswer(currentAnswer.value)
-  currentStep.value += 1
-  quizStore.setCurrentQuestion(currentStep.value)
+  if ((currentStep.value - 1) === lastQuesIndx.value) {
+    setCurrentAnswer()
+    currentAnswer.value && quizStore.addAnswer(currentAnswer.value)
+    return console.log('last question', answers.value)
+  } else {
+    setCurrentAnswer()
+    currentAnswer.value && quizStore.addAnswer(currentAnswer.value)
+    currentStep.value += 1
+    quizStore.setCurrentQuestion(currentStep.value)
+  }
 }
 
-onBeforeMount(() => {
-  quizStore.getQuizById(quizId.value)
+onBeforeMount(async () => {
+  if (quizzesStore.availableQuizzes && quizzesStore.availableQuizzes.length) {
+    const currQuiz = quizzesStore.availableQuizzes.find((quiz) => quiz.id === quizId.value)
+    currQuiz && quizStore.setCurrentQuiz(currQuiz)
+    quizStore.setCurrentQuestion(currentStep.value)
+  } else {
+    await quizStore.getQuizById(quizId.value)
+    quizStore.setCurrentQuestion(currentStep.value)
+  }
 })
 
 // function setCurrentAnswer (step = 1) {

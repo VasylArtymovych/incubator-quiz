@@ -138,7 +138,7 @@
                           {{ falsyFilter(row[h.prop]) ? $filters.dateFilter(row[h.prop]) : '-' }}
                         </span>
 
-                        <TruncatedTooltip v-else :copyAvailable="h.copy" :contentProp="generateValue(row, h.prop)" />
+                        <TruncatedTooltip v-else :contentProp="generateValue(row, h.prop)" />
                       </slot>
                     </span>
                   </div>
