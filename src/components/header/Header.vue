@@ -20,7 +20,7 @@
         <el-badge
           value="BETA"
           type="primary"
-          class="ml-1 mb-3"
+          class="ml-1 mb-4"
         />
       </div>
 

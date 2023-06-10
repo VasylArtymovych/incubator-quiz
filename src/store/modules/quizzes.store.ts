@@ -1,6 +1,7 @@
-export const useQuizzesStore = defineStore('quizzesStore', () => {
-  const availableQuizzes = ref<IQuizPopulated[] | null>(null)
+export const useHomeStore = defineStore('homeStore', () => {
   const loading = ref(false)
+  const availableQuizzes = ref<IQuizPopulated[] | null>(null)
+  const results = ref<IResult[] | null>(null)
 
   const getQuizzes = async () => {
     if (availableQuizzes.value) return
@@ -18,9 +19,26 @@ export const useQuizzesStore = defineStore('quizzesStore', () => {
     }
   }
 
+  const getResults = async (userId: string) => {
+    try {
+      loading.value = true
+      const { data, error } = await homeService.getResults(userId)
+      if (error) throw new Error(error.message)
+      if (data) {
+        results.value = data as IResult[]
+      }
+    } catch (error: any) {
+      return useErrorNotification(error.message)
+    } finally {
+      loading.value = false
+    }
+  }
+
   return {
-    availableQuizzes,
     loading,
-    getQuizzes
+    availableQuizzes,
+    results,
+    getQuizzes,
+    getResults
   }
 })

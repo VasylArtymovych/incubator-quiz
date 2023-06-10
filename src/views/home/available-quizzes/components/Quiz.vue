@@ -57,9 +57,10 @@
 <script setup lang="ts">
 import DefaultContainer from '@/layouts/DefaultContainer.vue'
 const authStore = useAuthStore()
-const quizzesStore = useQuizzesStore()
+const homeStore = useHomeStore()
 const quizStore = useQuizStore()
 const { currentQuiz, currentQuestion, loading, answers } = storeToRefs(quizStore)
+
 const route = useRoute()
 const router = useRouter()
 const { $routeNames } = useGlobalProperties()
@@ -88,15 +89,30 @@ const addCurrentAnswer = () => {
   }
 }
 
+const saveResults = async () => {
+  loading.value = true
+  const result = {
+    user: authStore.activeUserData!.id,
+    quiz: quizId.value,
+    answers: answers.value
+  } as IPayload
+  try {
+    const { status, error } = await homeService.saveResults(result)
+    if (error) throw new Error(error.message)
+    if (status === 201) {
+      router.replace({ name: $routeNames.results })
+    }
+  } catch (error: any) {
+    return useErrorNotification(error.message)
+  } finally {
+    loading.value = false
+  }
+}
+
 const onNextClick = () => {
   if ((currentStep.value - 1) === lastQuesIndx.value) {
     addCurrentAnswer()
-    const res = {
-      uaer: authStore.activeUserData?.id,
-      quiz: quizId.value,
-      answers: answers.value
-    }
-    return console.log('last step res', res)
+    saveResults()
   } else {
     addCurrentAnswer()
     currentStep.value += 1
@@ -109,9 +125,9 @@ const onNextClick = () => {
   }
 }
 
-const checkIfAvailableQuizOrFetch = async () => {
-  if (quizzesStore.availableQuizzes && quizzesStore.availableQuizzes.length) {
-    const currQuiz = quizzesStore.availableQuizzes.find((quiz) => quiz.id === quizId.value)
+const setCurrentQuizAndQuestion = async () => {
+  if (homeStore.availableQuizzes && homeStore.availableQuizzes.length) {
+    const currQuiz = homeStore.availableQuizzes.find((quiz) => quiz.id === quizId.value)
     currQuiz && quizStore.setCurrentQuiz(currQuiz)
   } else {
     await quizStore.getQuizById(quizId.value)
@@ -121,7 +137,7 @@ const checkIfAvailableQuizOrFetch = async () => {
 }
 
 onBeforeMount(() => {
-  checkIfAvailableQuizOrFetch()
+  setCurrentQuizAndQuestion()
 })
 
 // const confirmReload = (event: BeforeUnloadEvent) => {

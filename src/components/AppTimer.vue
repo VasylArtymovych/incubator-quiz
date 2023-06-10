@@ -77,7 +77,6 @@ onMounted(() => {
 .second-circle {
   stroke-dasharray: var(--strokeDasharray);  //2*PI*r
   animation: timer linear forwards;
-  // stroke-dashoffset: 0;
 }
 
 .circles-wrap::before {

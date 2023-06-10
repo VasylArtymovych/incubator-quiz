@@ -2,8 +2,6 @@ import type { RouteRecordRaw } from 'vue-router'
 import { routeNames } from '@/router/route-names'
 import { authRoutes } from '@/views/auth/auth.routes'
 import { adminRoutes } from '@/views/admin/admin.routes'
-import { quizRoutes } from '@/views/quiz/quiz.routes'
-import { resultRoutes } from '@/views/result/result.routes'
 
 import HomePage from '@/views/home/Home.vue'
 
@@ -17,12 +15,22 @@ export const routes: RouteRecordRaw[] = [
       {
         path: 'availableQuizzes',
         name: routeNames.availableQuizzes,
-        component: () => import('@/views/home/components/AvailableQuizzes.vue')
+        component: () => import('@/views/home/available-quizzes/AvailableQuizzes.vue')
+      },
+      {
+        path: '/availableQuizzes/quiz/:id',
+        name: routeNames.passQuiz,
+        component: () => import('@/views/home/available-quizzes/components/Quiz.vue')
       },
       {
         path: 'results',
         name: routeNames.results,
-        component: () => import('@/components/Results.vue')
+        component: () => import('@/views/home/results/Results.vue')
+      },
+      {
+        path: 'results/resultInfo/:resultId',
+        name: routeNames.resultInfo,
+        component: () => import('@/views/home/results/components/ResultInfo.vue')
       }
     ]
   },
@@ -33,7 +41,5 @@ export const routes: RouteRecordRaw[] = [
   },
 
   ...authRoutes,
-  ...adminRoutes,
-  ...quizRoutes,
-  ...resultRoutes
+  ...adminRoutes
 ]

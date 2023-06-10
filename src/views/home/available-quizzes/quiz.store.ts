@@ -22,7 +22,7 @@ export const useQuizStore = defineStore('quizStore', () => {
     if (currentQuiz.value) return
     try {
       loading.value = true
-      const { data, error } = await quizService.getQuizById(id)
+      const { data, error } = await homeService.getQuizById(id)
       if (error) throw new Error(error.message)
       if (data) {
         setCurrentQuiz(data as IQuizPopulated)

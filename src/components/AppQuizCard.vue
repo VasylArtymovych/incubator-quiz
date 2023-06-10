@@ -1,48 +1,53 @@
 <template>
   <div
-    class="card relative border border-borderCard text-left m-3"
+    class="card relative z-[1] inline-block text-left my-2 h-fit"
   >
-    <div class="pt-28 px-5 pb-10 bg-bgrDark min-h-[35vh]">
-      <p class="time-text absolute top-[90px] right-[20px] opacity-[0.2] m-0 text-[110px]">
-        {{ calcQuizTime }}
+    <div class="relative flex flex-col justify-center px-5 bg-bgrDark aspect-[3.2/4] overflow-hidden">
+      <p
+        v-if="isCompleted"
+        class="px-8 text-white bg-red-700 text-center absolute top-[30px] left-[-30px] -rotate-45"
+      >
+        Completed
+      </p>
+      <p
+        class="time absolute top-[10%] right-[30px] opacity-[0.5] m-0 text-base
+        leading-[0.9] transition-all duration-300 ease-in-out text-white"
+      >
+        <span class="text-xs mr-2 text-accent">{{ time && "Quiz time:" }} {{ score && 'Score:' }}</span>
+        <template v-if="time">
+          {{ convertSeconds(time).hours }}hr : {{ addLeadingZero(convertSeconds(time).mins, 2) }}min
+        </template>
+        <template v-if="score">
+          {{ score }}
+        </template>
       </p>
       <h2 class="text-[28px] leading-10 text-titleWhite mb-4">
-        {{ quiz.title }}
+        {{ title }}
       </h2>
       <button
         class="btn relative bg-transparent border border-titleWhite py-3 px-5 text-titleWhite rounded-[3px]
         cursor-pointer overflow-hidden hover:text-bgrDark"
-        @click="$router.push({name: $routeNames.passQuiz, params:{id: quiz.id}, query: {step: 1}})"
+        @click="$emit('onQuizBtnClick')"
       >
-        Go to quiz
+        {{ time && "Go to quiz" }} {{ isCompleted && 'Go to result' }}
       </button>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-const props = defineProps<{
-  quiz: IQuizPopulated
+import { convertSeconds, addLeadingZero } from '@/core/helpers'
+defineProps<{
+  title: string
+  time?: number
+  isCompleted?: boolean
+  score?: number
 }>()
 
-const calcQuizTime = computed(() => {
-  return props.quiz.questions.reduce((time, ques) => {
-    time = ques.timer
-    return time
-  }, 0)
-})
+defineEmits(['onQuizBtnClick'])
 </script>
 
 <style lang="scss" scoped>
-  .card {
-    display: inline-block;
-    z-index: 1;
-  }
-
-  .time-text {
-    transition: all 0.3s ease-in-out;
-  }
-
   .btn {
     transition: all 0.3s ease-in-out;
     transform: translateY(-40px);
@@ -65,12 +70,12 @@ const calcQuizTime = computed(() => {
   }
 
   .card:hover .btn {
-    transform: translateY(10px);
+    transform: translateY(20px);
     opacity: 1;
   }
-  .card:hover .time-text {
-    top: 60px;
-    opacity: 0.6;
+  .card:hover .time {
+    opacity: 0.8;
+    transform: scale(1.1);
   }
 
   .btn:hover::before {
