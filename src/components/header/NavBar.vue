@@ -9,7 +9,7 @@
       class="flex justify-center items-center"
     >
       <RouterLink
-        :to="$routeNames.rootPage"
+        :to="{name: $routeNames.rootPage}"
         class="link relative w-full text-center p-4 md:p-0 hover:text-accent"
       >
         Home
@@ -21,7 +21,7 @@
       class="flex justify-center items-center"
     >
       <RouterLink
-        :to="$routeNames.admin"
+        :to="{name: $routeNames.admin}"
         class="link relative w-full text-center p-4 md:p-0 hover:text-accent"
       >
         Dashboard
@@ -73,11 +73,11 @@ const userRoutes = [
 
 <style lang="scss" scoped>
 
-.link.router-link-active {
+.link.router-link-exact-active {
     @apply text-accent
   }
   @media (min-width: 768px) {
-    .link.router-link-active {
+    .link.link.router-link-exact-active {
       &::after {
         content: '';
         display: block;

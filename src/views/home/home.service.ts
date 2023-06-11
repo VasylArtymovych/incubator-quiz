@@ -22,6 +22,15 @@ class HomeService {
       .eq('user', userId)
   }
 
+  getResultById (userId: string, resultId: number) {
+    return supabase
+      .from('answers')
+      .select('*')
+      .eq('user', userId)
+      .eq('id', resultId)
+      .single()
+  }
+
   saveResults (payload: IPayload) {
     return supabase
       .from('answers')

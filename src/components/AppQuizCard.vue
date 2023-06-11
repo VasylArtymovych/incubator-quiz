@@ -13,7 +13,7 @@
         class="time absolute top-[10%] right-[30px] opacity-[0.5] m-0 text-base
         leading-[0.9] transition-all duration-300 ease-in-out text-white"
       >
-        <span class="text-xs mr-2 text-accent">{{ time && "Quiz time:" }} {{ score && 'Score:' }}</span>
+        <span class="text-xs mr-2 text-accent">{{ time ? "Quiz time:" : score ? 'Score:' : '' }}</span>
         <template v-if="time">
           {{ convertSeconds(time).hours }}hr : {{ addLeadingZero(convertSeconds(time).mins, 2) }}min
         </template>
@@ -29,7 +29,7 @@
         cursor-pointer overflow-hidden hover:text-bgrDark"
         @click="$emit('onQuizBtnClick')"
       >
-        {{ time && "Go to quiz" }} {{ isCompleted && 'Go to result' }}
+        {{ isCompleted ? 'Go to result' : "Go to quiz" }}
       </button>
     </div>
   </div>
@@ -63,10 +63,15 @@ defineEmits(['onQuizBtnClick'])
     background-color: #b7b7b7;
     top: 0;
     opacity: 0;
-    left: -120px;
+    left: -120%;
     border-radius: 0 20px 20px 0;
     z-index: -1;
     transition: all 0.3s ease-in-out;
+  }
+
+  .btn:hover::before {
+    left: 0;
+    opacity: 0.5;
   }
 
   .card:hover .btn {
@@ -74,13 +79,8 @@ defineEmits(['onQuizBtnClick'])
     opacity: 1;
   }
   .card:hover .time {
-    opacity: 0.8;
+    opacity: 0.9;
     transform: scale(1.1);
-  }
-
-  .btn:hover::before {
-    left: 0;
-    opacity: 0.5;
   }
 
   .card::before {
@@ -101,7 +101,7 @@ defineEmits(['onQuizBtnClick'])
     left: 0;
     width: 40%;
     height: 100%;
-    background-color: rgba(255, 255, 255, 0.02);
+    background-color: rgba(255, 255, 255, 0.04);
   }
 
   .card:nth-of-type(odd)::before {

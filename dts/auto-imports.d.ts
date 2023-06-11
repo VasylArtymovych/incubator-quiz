@@ -75,7 +75,7 @@ declare global {
   const useEmailRule: typeof import('../src/composables/form-config')['useEmailRule']
   const useErrorNotification: typeof import('../src/composables/el-notification')['useErrorNotification']
   const useGlobalProperties: typeof import('../src/composables/global-properties')['useGlobalProperties']
-  const useHomeStore: typeof import('../src/store/modules/quizzes.store')['useHomeStore']
+  const useHomeStore: typeof import('../src/store/modules/home.store')['useHomeStore']
   const useHttp: typeof import('../src/composables/http/index')['useHttp']
   const useLink: typeof import('vue-router')['useLink']
   const useMaxLenRule: typeof import('../src/composables/form-config')['useMaxLenRule']

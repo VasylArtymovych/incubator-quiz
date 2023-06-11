@@ -1,8 +1,7 @@
 <template>
-  <Header />
   <DefaultContainer
     v-loading="loading"
-    class="h-full overflow-hidden bg-bgrDarkAlpha"
+    class="h-full overflow-hidden"
   >
     <div
       v-if="currentQuestion"

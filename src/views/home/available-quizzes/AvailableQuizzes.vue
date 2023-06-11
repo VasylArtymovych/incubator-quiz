@@ -25,10 +25,11 @@ homeStore.getQuizzes()
 
 const calcQuizTime = (quiz: IQuizPopulated) => {
   return quiz.questions.reduce((time, ques) => {
-    time = ques.timer
+    time += ques.timer
     return time
   }, 0)
 }
+
 </script>
 
 <style scoped>

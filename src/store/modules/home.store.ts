@@ -2,6 +2,7 @@ export const useHomeStore = defineStore('homeStore', () => {
   const loading = ref(false)
   const availableQuizzes = ref<IQuizPopulated[] | null>(null)
   const results = ref<IResult[] | null>(null)
+  const currentResult = ref<IResult | null>(null)
 
   const getQuizzes = async () => {
     if (availableQuizzes.value) return
@@ -34,11 +35,28 @@ export const useHomeStore = defineStore('homeStore', () => {
     }
   }
 
+  const getResultById = async (userId: string, resultId: number) => {
+    try {
+      loading.value = true
+      const { data, error } = await homeService.getResultById(userId, resultId)
+      if (error) throw new Error(error.message)
+      if (data) {
+        currentResult.value = data as IResult
+      }
+    } catch (error: any) {
+      return useErrorNotification(error.message)
+    } finally {
+      loading.value = false
+    }
+  }
+
   return {
     loading,
     availableQuizzes,
     results,
+    currentResult,
     getQuizzes,
-    getResults
+    getResults,
+    getResultById
   }
 })
