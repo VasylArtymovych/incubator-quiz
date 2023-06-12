@@ -74,7 +74,7 @@ declare module '@vue/runtime-core' {
     Quiz: typeof import('./../src/views/home/available-quizzes/components/Quiz.vue')['default']
     QuizCard: typeof import('./../src/views/home/components/QuizCard.vue')['default']
     QuizList: typeof import('./../src/views/home/components/QuizList.vue')['default']
-    ResultInfo: typeof import('./../src/views/home/results/components/ResultInfo.vue')['default']
+    ResultInfo: typeof import('./../src/components/ResultInfo.vue')['default']
     Results: typeof import('./../src/components/Results.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']

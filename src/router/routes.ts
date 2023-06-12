@@ -24,13 +24,13 @@ export const routes: RouteRecordRaw[] = [
       },
       {
         path: 'results',
-        name: routeNames.results,
-        component: () => import('@/views/home/results/Results.vue')
+        name: routeNames.userResults,
+        component: () => import('@/views/home/user-results/UserResults.vue')
       },
       {
         path: 'results/resultInfo/:resultId',
         name: routeNames.resultInfo,
-        component: () => import('@/views/home/results/components/ResultInfo.vue')
+        component: () => import('@/components/ResultInfo.vue')
       }
     ]
   },

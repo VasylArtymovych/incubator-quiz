@@ -5,6 +5,6 @@ interface IRegisterPayload {
 
 interface IUser {
   id: string
-  email?: string 
+  email: string 
   [key: string]: any
 }

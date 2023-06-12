@@ -80,7 +80,6 @@ const addCurrentAnswer = () => {
   if (currentQuestion.value) {
     const currAnswer = {
       id: currentQuestion.value.id,
-      title: currentQuestion.value.title,
       value: selectedOption.value
     }
     quizStore.addAnswer(currAnswer)
@@ -91,15 +90,15 @@ const addCurrentAnswer = () => {
 const saveResults = async () => {
   loading.value = true
   const result = {
-    user: authStore.activeUserData!.id,
-    quiz: quizId.value,
+    user_id: authStore.activeUserData!.id,
+    quiz_id: quizId.value,
     answers: answers.value
   } as IPayload
   try {
     const { status, error } = await homeService.saveResults(result)
     if (error) throw new Error(error.message)
     if (status === 201) {
-      router.replace({ name: $routeNames.results })
+      router.replace({ name: $routeNames.userResults })
     }
   } catch (error: any) {
     return useErrorNotification(error.message)

@@ -51,6 +51,7 @@
     "ref": true,
     "resolveComponent": true,
     "resolveDirective": true,
+    "resultsService": true,
     "setActivePinia": true,
     "setMapStoreSuffix": true,
     "shallowReactive": true,

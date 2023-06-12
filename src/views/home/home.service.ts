@@ -19,14 +19,13 @@ class HomeService {
     return supabase
       .from('answers')
       .select('*', { count: 'exact' })
-      .eq('user', userId)
+      .eq('user_id', userId)
   }
 
-  getResultById (userId: string, resultId: number) {
+  getResultById (resultId: number) {
     return supabase
       .from('answers')
       .select('*')
-      .eq('user', userId)
       .eq('id', resultId)
       .single()
   }

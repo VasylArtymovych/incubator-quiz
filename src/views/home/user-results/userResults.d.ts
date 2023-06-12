@@ -1,20 +1,22 @@
 interface IAnswer {
   id: number
-  title: string
   value: string
 }
 
 interface IPayload {
-  user: string
-  quiz: number
+  user_id: string
+  quiz_id: number
   answers: IAnswer[]
 }
 
 interface IResult {
   id: number
-  user: string
-  quiz: number
-  questions?: IQuestion[]
+  user_id: string
+  user_row: IUser
+  quiz_id: number
+  quiz_row: IQuizRow
+  questions: IQuestion[]
   answers: IAnswer[]
   score?: number
+  created_at: string
 }

@@ -44,3 +44,10 @@ export const convertSeconds = (sec: number) => {
 
   return { hours, mins, secs }
 }
+
+export const createHashedObject = (arr: any[], key = 'id') => {
+  return arr.reduce((hasMap, obj) => {
+    hasMap.set(obj[key], obj)
+    return hasMap
+  }, new Map())
+}

@@ -5,7 +5,7 @@ export const routeNames = {
   rootPage: 'rootPage',
   availableQuizzes: 'availableQuizzes',
   passQuiz: 'passQuiz',
-  results: 'results',
+  userResults: 'userResults',
   resultInfo: 'resultInfo',
   ...authRoutesNames,
   ...adminRoutesNames

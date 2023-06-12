@@ -1,14 +1,14 @@
 <template>
   <div v-loading="loading" class="w-full h-full overflow-hidden my-4 md:my-6">
     <el-empty
-      v-if="!results || !results.length && !loading"
+      v-if="!userResults || !userResults.length && !loading"
       description="No available quizzes"
       class="w-full h-full font-bold text-white md:text-[28px]"
     />
 
     <div v-else class="h-full flex justify-center flex-wrap gap-x-6 gap-y-2 overflow-auto">
       <AppQuizCard
-        v-for="result of results" :key="result.id"
+        v-for="result of userResults" :key="result.id"
         :title="'Junior Frontend Developer'"
         :score="result.score || 95"
         isCompleted
@@ -22,9 +22,15 @@
 <script setup lang="ts">
 const authStore = useAuthStore()
 const homeStore = useHomeStore()
-const { results, loading } = storeToRefs(homeStore)
+const { userResults, loading } = storeToRefs(homeStore)
 
-homeStore.getResults(authStore.activeUserData!.id)
+onMounted(() => {
+  loading.value = true
+  // todo: remove setTimeout when this issue will be fixed on supabase
+  setTimeout(() => {
+    homeStore.getResults(authStore.activeUserData!.id)
+  }, 1500)
+})
 </script>
 
 <style scoped>

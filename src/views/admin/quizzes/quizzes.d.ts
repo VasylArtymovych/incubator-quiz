@@ -3,6 +3,7 @@ interface IQuiz {
   title: string
   questions: number[]
   users: string[]
+  created_at: string
 }
 
 interface IQuizPopulated {
@@ -25,3 +26,5 @@ interface ISortPropOrderQuiz {
   prop: TPropQuiz
   order: TOrder
 }
+
+type IQuizRow = Omit<IQuiz, 'questions'>

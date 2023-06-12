@@ -2,13 +2,15 @@ import type { RouteRecordRaw } from 'vue-router'
 import { questionsRoutesNames, questionsRoutes } from './questions/questions.routes'
 import { quizzesRoutesNames, quizzesRoutes } from './quizzes/quizzes.routes'
 import { usersRoutesNames, usersRoutes } from './users-list/users-list.routes'
+import { resultsRoutesNames, resultsRoutes } from './results/results.routes'
 import { authRoutesNames } from '@/views/auth/auth.routes'
 
 export const adminRoutesNames = {
   admin: 'admin',
   ...questionsRoutesNames,
   ...quizzesRoutesNames,
-  ...usersRoutesNames
+  ...usersRoutesNames,
+  ...resultsRoutesNames
 }
 
 export const adminRoutes: RouteRecordRaw[] = [
@@ -19,9 +21,12 @@ export const adminRoutes: RouteRecordRaw[] = [
     children: [
       ...questionsRoutes,
       ...quizzesRoutes,
-      ...usersRoutes
+      ...usersRoutes,
+      ...resultsRoutes
     ],
     meta: { role: 'admin', isProtected: true },
+    redirect: { name: adminRoutesNames.quizzes },
+
     beforeEnter: (to) => {
       const { activeUserData } = useAuthStore()
 

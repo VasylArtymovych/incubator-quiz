@@ -4,30 +4,6 @@
     md:flex justify-end gap-4 lg:gap-8  bg-black md:bg-inherit font-bold text-white md:text-lg xl:text-2xl"
     :class="[isActive ? 'right-0': 'right-[-100%]']"
   >
-    <li
-      v-show="$route.name !== $routeNames.rootPage"
-      class="flex justify-center items-center"
-    >
-      <RouterLink
-        :to="{name: $routeNames.rootPage}"
-        class="link relative w-full text-center p-4 md:p-0 hover:text-accent"
-      >
-        Home
-      </RouterLink>
-    </li>
-
-    <li
-      v-show="$route.name === $routeNames.rootPage && role === 'admin'"
-      class="flex justify-center items-center"
-    >
-      <RouterLink
-        :to="{name: $routeNames.admin}"
-        class="link relative w-full text-center p-4 md:p-0 hover:text-accent"
-      >
-        Dashboard
-      </RouterLink>
-    </li>
-
     <template v-if="role === 'admin'">
       <li
         v-for="item in adminRoutes" :key="item"
@@ -43,6 +19,17 @@
     </template>
 
     <template v-if="role === 'user'">
+      <li
+        v-show="$route.name !== $routeNames.rootPage"
+        class="flex justify-center items-center"
+      >
+        <RouterLink
+          :to="{name: $routeNames.rootPage}"
+          class="link relative w-full text-center p-4 md:p-0 hover:text-accent"
+        >
+          Home
+        </RouterLink>
+      </li>
       <li
         v-for="item in userRoutes" :key="item.route"
         class="flex justify-center items-center"
@@ -64,7 +51,7 @@ defineProps<{
   role: 'admin' | 'user'
 }>()
 
-const adminRoutes = ['quizzes', 'questions', 'users']
+const adminRoutes = ['quizzes', 'questions', 'users', 'results']
 const userRoutes = [
   { route: 'availableQuizzes', name: 'quizzes' },
   { route: 'results', name: 'results' }
