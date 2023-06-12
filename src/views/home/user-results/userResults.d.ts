@@ -17,6 +17,6 @@ interface IResult {
   quiz_row: IQuizRow
   questions: IQuestion[]
   answers: IAnswer[]
-  score?: number
+  percentage_score?: number
   created_at: string
 }

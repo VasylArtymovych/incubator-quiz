@@ -15,7 +15,7 @@
       >
         <span class="text-xs mr-2 text-accent">{{ time ? "Quiz time:" : score ? 'Score:' : '' }}</span>
         <template v-if="time">
-          {{ convertSeconds(time).hours }}hr : {{ addLeadingZero(convertSeconds(time).mins, 2) }}min
+          {{ convertSeconds(time).hours }}h:{{ convertSeconds(time).mins }}m:{{ convertSeconds(time).secs }}s
         </template>
         <template v-if="score">
           {{ score }}
@@ -36,7 +36,7 @@
 </template>
 
 <script setup lang="ts">
-import { convertSeconds, addLeadingZero } from '@/core/helpers'
+import { convertSeconds } from '@/core/helpers'
 defineProps<{
   title: string
   time?: number

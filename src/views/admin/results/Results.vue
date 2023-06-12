@@ -1,6 +1,42 @@
 <template>
   <div>
-    results
+    <div class="flex justify-between my-3 bg-transparent">
+      <el-select
+        :size="type === 'sm' ? $elComponentSize.small : $elComponentSize.default"
+        multiple
+        collapse-tags
+        collapse-tags-tooltip
+        placeholder="Select quiz title"
+        clearable
+        :tag-type="$elComponentType.primary"
+        @change="() => {}"
+      >
+        <el-option
+          v-for="title in uniqQuizTitles"
+          :key="title"
+          :label="title"
+          :value="title"
+        />
+      </el-select>
+
+      <el-input
+        placeholder="User email"
+        clearable
+        :size="type === 'sm' ? $elComponentSize.small : $elComponentSize.default"
+        class="w-[300px]"
+        @input="()=>{}"
+      >
+        <template #append>
+          <el-button
+            :type="$elComponentType.primary"
+            @click="()=>{}"
+          >
+            <IconSearch />
+          </el-button>
+        </template>
+      </el-input>
+    </div>
+
     <AppTable
       v-if="results"
       :dataset="results"
@@ -10,20 +46,38 @@
       doNotChangeQuery
       tableScrollPadding="2px"
       class="h-full overflow-hidden"
-    />
+    >
+      <template #email="{row}">
+        {{ row.user_row.email }}
+      </template>
+      <template #quizTitle="{row}">
+        {{ row.quiz_row.title }}
+      </template>
+      <template #questions="{row}">
+        {{ row.questions.length }}
+      </template>
+    </AppTable>
   </div>
 </template>
 
 <script setup lang="ts">
+const { type } = useWindowWidth()
+
 const loading = ref(false)
 const results = ref<IResult[] | null>(null)
 
 const headers: any[] = [
-  { label: 'Email', prop: 'user_row[email]', minWidth: 240, contentClass: 'font-semibold xl:!text-lg' }
-  // { label: 'Options', prop: 'options', minWidth: 160 },
-  // { label: 'Tags', prop: 'tags', minWidth: 130, maxWidth: 200 },
-  // { label: 'Timer', prop: 'timer', sortable: true, width: 100 }
+  { label: 'Email', prop: 'email', minWidth: 240, contentClass: 'font-semibold xl:!text-lg' },
+  { label: 'Quiz title', prop: 'quizTitle', minWidth: 260 },
+  { label: 'Score', prop: 'percentage_score', sortable: true, minWidth: 130, maxWidth: 200 },
+  { label: 'Questions', prop: 'questions', width: 100 }
 ]
+
+const uniqQuizTitles = computed(() => {
+  if (results.value) {
+    return new Set(results.value.map((obj) => obj.quiz_row.title))
+  }
+})
 
 const getAllResults = async () => {
   try {

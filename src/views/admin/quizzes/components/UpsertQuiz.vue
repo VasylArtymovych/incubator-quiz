@@ -120,6 +120,9 @@ const getQuizById = async (id: number) => {
 props.quizId && getQuizById(props.quizId)
 
 const createQuiz = async () => {
+  if (!selectedQuestions.value.length) {
+    return useErrorNotification('Questions list cannot be empty')
+  }
   try {
     loading.value = true
     const payload = { title: formModel.title, questions: selectedQuestions.value, users: selectedUsers.value }

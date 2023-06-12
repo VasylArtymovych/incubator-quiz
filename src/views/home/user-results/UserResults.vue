@@ -3,14 +3,14 @@
     <el-empty
       v-if="!userResults || !userResults.length && !loading"
       description="No available quizzes"
-      class="w-full h-full font-bold text-white md:text-[28px]"
+      class="w-full h-full"
     />
 
     <div v-else class="h-full flex justify-center flex-wrap gap-x-6 gap-y-2 overflow-auto">
       <AppQuizCard
         v-for="result of userResults" :key="result.id"
-        :title="'Junior Frontend Developer'"
-        :score="result.score || 95"
+        :title="result.quiz_row.title"
+        :score="result.percentage_score || 85"
         isCompleted
         class="w-[25%] min-w-[250px] max-w-[300px]"
         @onQuizBtnClick="$router.push({name: $routeNames.resultInfo, params: {resultId: result.id}})"

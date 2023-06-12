@@ -2,6 +2,6 @@
 
 .el-empty__description {
   & p {
-    @apply text-white
+    @apply text-warmGray-400 md:text-xl
   }
 }

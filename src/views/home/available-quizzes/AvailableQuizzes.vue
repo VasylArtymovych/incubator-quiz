@@ -3,7 +3,7 @@
     <el-empty
       v-if="!availableQuizzes || !availableQuizzes.length && !loading"
       description="No available quizzes"
-      class="w-full h-full font-bold text-white md:text-[28px]"
+      class="w-full h-full"
     />
 
     <div v-else class="h-full flex justify-center flex-wrap gap-x-6 gap-y-2 overflow-auto">
