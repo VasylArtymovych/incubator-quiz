@@ -26,9 +26,9 @@
         <div
           v-for="(opt, i) in currentQuestion.options"
           :key="i"
-          class="option-wrap group p-1 mb-6 bg-borderGradient2 rounded-md hover:scale-[0.99] shadow-lg shadow-white
-        hover:shadow-accentLight2  md:w-[70%] md:self-center"
-          :class="{'bg-borderGradientChecked scale-[0.99] shadow-none': selectedOption === opt.title}"
+          class="option-wrap group p-1 mb-6 bg-borderGradient2 rounded-md hover:scale-[0.98] shadow-lg shadow-white
+          hover:shadow-accentLight2  md:w-[70%] md:self-center transition-all duration-300"
+          :class="{'bg-borderGradientChecked scale-[0.98] shadow-none': selectedOption === opt.title}"
         >
           <p
             class="option-text p-2 bg-catskill-white option select-none hover:shadow-accentLight2"
