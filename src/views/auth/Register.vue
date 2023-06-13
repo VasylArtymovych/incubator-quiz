@@ -106,6 +106,7 @@ const submit = () => {
           if (error) throw new Error(error.message)
 
           if (data.user) {
+            data.user.user_metadata.role = 'user'
             setUserData(data.user)
             navigateToAdminOrUserPage(data.user)
           }
