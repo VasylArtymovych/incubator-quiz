@@ -83,7 +83,7 @@
 
               <td
                 v-if="$mq.smaller('md').value && fixedLast"
-                class="text-right flex justify-end mb-3 mr-2 relative actions-td "
+                class="actions-td text-right flex justify-end mb-3 mr-2 relative"
               >
                 <Computed #default="{ lastColumn }" :lastColumn="visibleColumns[visibleColumns.length - 1]">
                   <slot :name="lastColumn.prop" :row="row" :rowIndex="i">
@@ -105,7 +105,6 @@
                     h.cellClasses && !$mq.smaller('md').value
                   ]"
                 >
-                  <!-- TODO: remove shadow when block is fully visible -->
                   <div
                     class="flex items-center"
                     :class="[
@@ -118,7 +117,7 @@
                       h.contentClass
                     ]"
                   >
-                    <slot v-if="$mq.smaller('md').value" :name="`header_${h.prop}`" :header="h">
+                    <slot v-if="$mq.smaller('md').value && h.label !== 'Score'" :name="`header_${h.prop}`" :header="h">
                       <p class="w-[33%] text-white uppercase font-semibold pr-2">
                         {{ h.label || '' }}:
                       </p>

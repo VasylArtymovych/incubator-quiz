@@ -18,7 +18,7 @@
           {{ convertSeconds(time).hours }}h:{{ convertSeconds(time).mins }}m:{{ convertSeconds(time).secs }}s
         </template>
         <template v-if="score">
-          {{ score }}
+          {{ score }}%
         </template>
       </p>
       <h2 class="text-[28px] leading-10 text-titleWhite mb-4">

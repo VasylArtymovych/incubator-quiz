@@ -172,11 +172,12 @@
         </el-popconfirm>
       </template>
     </AppTable>
+
     <el-pagination
       v-if="questions && tags && totalCount"
       v-model:current-page="currentPage"
       v-model:page-size="pageSize"
-      :page-sizes="[ 3, 9, 15, 20]"
+      :page-sizes="[ 5, 10, 15, 20]"
       :total="totalCount"
       background
       :small="type==='sm'"
@@ -203,7 +204,7 @@ const dialogRef = ref<InstanceType<typeof UpsertQuestion> | null >(null)
 
 const totalCount = ref<number>(0)
 const currentPage = ref(1)
-const pageSize = ref(9)
+const pageSize = ref(10)
 
 const skip = computed(() => ((currentPage.value - 1) * (pageSize.value)))
 const limit = computed(() => (skip.value + pageSize.value - 1))
