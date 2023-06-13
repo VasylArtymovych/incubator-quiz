@@ -24,10 +24,12 @@
         />
       </div>
 
-      <NavBar v-if="userRole === 'admin'" :isActive="isActive" :role="'admin'" />
-      <NavBar v-if="userRole === 'user'" :isActive="isActive" :role="'user'" />
+      <NavBar :isActive="isActive" />
 
-      <div class="flex">
+      <div
+        v-if="authStore.activeUserData"
+        class="flex"
+      >
         <BurgerButton
           :isActive="isActive"
           class="md:hidden"
@@ -60,8 +62,6 @@ import owlLogo from '@/assets/images/owl_logo.png'
 import DefaultContainer from '@/layouts/DefaultContainer.vue'
 
 const authStore = useAuthStore()
-
-const userRole = computed(() => authStore.activeUserData?.user_metadata.role)
 
 const isActive = ref(false)
 

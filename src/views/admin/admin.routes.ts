@@ -28,9 +28,9 @@ export const adminRoutes: RouteRecordRaw[] = [
     redirect: { name: adminRoutesNames.quizzes },
 
     beforeEnter: (to) => {
-      const { activeUserData } = useAuthStore()
+      const { getUserRole } = useAuthStore()
 
-      if (to.meta.isProtected && activeUserData?.user_metadata.role !== to.meta.role) {
+      if (to.meta.isProtected && getUserRole !== to.meta.role) {
         return { name: authRoutesNames.login }
       }
       return true

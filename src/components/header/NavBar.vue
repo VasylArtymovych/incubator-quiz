@@ -4,7 +4,20 @@
     md:flex justify-end gap-4 lg:gap-8  bg-black md:bg-inherit font-bold text-white md:text-lg xl:text-2xl"
     :class="[isActive ? 'right-0': 'right-[-100%]']"
   >
-    <template v-if="role === 'admin'">
+    <template v-if="!isAuthenticated">
+      <li
+        v-for="item in publicRoutes" :key="item"
+        class="flex justify-center items-center"
+      >
+        <RouterLink
+          :to="`/${item.route}`"
+          class="link relative w-full text-center p-4 md:p-0 hover:text-accent capitalize"
+        >
+          {{ item.name }}
+        </RouterLink>
+      </li>
+    </template>
+    <template v-if="isAuthenticated && getUserRole === 'admin'">
       <li
         v-for="item in adminRoutes" :key="item"
         class="flex justify-center items-center"
@@ -18,7 +31,7 @@
       </li>
     </template>
 
-    <template v-if="role === 'user'">
+    <template v-if="isAuthenticated && getUserRole === 'user'">
       <li
         v-show="$route.name !== $routeNames.rootPage"
         class="flex justify-center items-center"
@@ -48,9 +61,16 @@
 <script setup lang="ts">
 defineProps<{
   isActive: boolean
-  role: 'admin' | 'user'
 }>()
 
+const authStore = useAuthStore()
+const { isAuthenticated, getUserRole } = storeToRefs(authStore)
+
+const publicRoutes = [
+  { route: '', name: 'about us' },
+  { route: 'login', name: 'login' },
+  { route: 'register', name: 'register' }
+]
 const adminRoutes = ['quizzes', 'questions', 'users', 'results']
 const userRoutes = [
   { route: 'availableQuizzes', name: 'quizzes' },

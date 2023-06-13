@@ -1,35 +1,45 @@
 class ResultsService {
-  getAllResults (from: number, to: number) {
+  getAllResults () {
     return supabase
       .from('answers')
       .select('*', { count: 'exact' })
-      .range(from, to)
   }
 
-  getResultsByQuizTitle (quizIdArr: number[], from: number, to: number) {
+  getResultsByQuizTitle (quizIdArr: number[]) {
     return supabase
       .from('answers')
       .select('*', { count: 'exact' })
       .in('quiz_id', quizIdArr)
-      .range(from, to)
   }
 
-  getResultsByUserId (userIdArr: string[], from: number, to: number) {
+  getResultsByUserId (userIdArr: string[]) {
     return supabase
       .from('answers')
       .select('*', { count: 'exact' })
       .in('user_id', userIdArr)
-      .range(from, to)
   }
 
-  getResultsByQuizTitleUserId (quizIdArr: number[], userIdArr: string[], from: number, to: number) {
+  getResultsByQuizTitleUserId (quizIdArr: number[], userIdArr: string[]) {
     return supabase
       .from('answers')
       .select('*', { count: 'exact' })
       .in('quiz_id', quizIdArr)
       .in('user_id', userIdArr)
-      .range(from, to)
+  }
+
+  getUsersBySearchQuery (query: string) {
+    return supabase
+      .from('profiles')
+      .select('*')
+      .ilike('email', `%${query}%`)
+  }
+
+  getQuizzesBySearchQuery (query: string) {
+    console.log('getQuizzesBySearchQuery', query)
+    return supabase
+      .from('quizzes')
+      .select('*')
+      .ilike('title', `%${query}%`)
   }
 }
-
 export const resultsService = new ResultsService()

@@ -5,12 +5,6 @@ class QuizzesService {
       .range(skip, limit)
   }
 
-  // getQuizByIdArrOfObj (quiz_id: number) {
-  //   return supabase
-  //     .rpc('get_quiz_by_id', { quiz_id })
-  //     .single()
-  // }
-
   getQuizById (id: number) {
     return supabase
       .from('quizzes')
@@ -23,8 +17,7 @@ class QuizzesService {
     return supabase
       .from('quizzes')
       .select('*', { count: 'exact' })
-      // .eq('title', titleText)
-      .ilike('title', titleText)
+      .ilike('title', `%${titleText}%`)
   }
 
   addQuiz (payload: INewQuiz) {
