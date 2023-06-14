@@ -3,21 +3,20 @@
     <h2 class="mt-4 font-semibold text-center text md:text-lg">
       {{ currentResult.quiz_row.title }}
     </h2>
-    <div class="flex justify-between mt-3">
-      <p class="text-xs md:text-sm">
+    <div class="flex justify-between mt-3 px-2">
+      <p class="text-xs md:text-base">
         <span class="font-semibold">User:</span> {{ currentResult.user_row.email }}
       </p>
-      <p class="text-xs md:text-sm">
+      <p class="text-xs md:text-base">
         <span class="font-semibold">Score:</span> {{ currentResult.percentage_score }}%
       </p>
     </div>
     <ul v-if="currentResult" v-loading="loading" class="p-2 mt-3 height-full overflow-auto">
       <li
         v-for="ques in currentResult.questions" :key="ques.id"
-        class="item relative p-2 mb-4 md:mb-5 rounded overflow-hidden text-sm md:text-base shadow-lg
-      "
+        class="item relative p-3 pt-2 mb-4 md:mb-5 rounded overflow-hidden text-sm md:text-base shadow-lg bg-white"
       >
-        <h2 class="px-3 py-1 mb-2 font-semibold">
+        <h2 class=" mb-2 font-semibold">
           {{ ques.title }}
         </h2>
 

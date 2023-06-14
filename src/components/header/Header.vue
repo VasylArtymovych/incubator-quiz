@@ -27,7 +27,6 @@
       <NavBar :isActive="isActive" />
 
       <div
-        v-if="authStore.activeUserData"
         class="flex"
       >
         <BurgerButton
@@ -37,6 +36,7 @@
         />
 
         <el-dropdown
+          v-if="authStore.activeUserData"
           trigger="click"
           @command="onDropdown"
         >
