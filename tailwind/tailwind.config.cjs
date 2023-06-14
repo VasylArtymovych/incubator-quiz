@@ -39,7 +39,8 @@ module.exports = {
         gradientTableCard: 'linear-gradient(130deg, #515660 10%, white 53%,  transparent 55%, white 60%)',
         borderGradient: 'linear-gradient(130deg, #ff4713, #ffffff 41.07%, #000000 76.05%)',
         borderGradient2: 'linear-gradient(220deg, #ff4713, #ffffff 41.07%, #000000 76.05%)',
-        borderGradientChecked: 'linear-gradient(220deg, #1f7a31, #6eb47c 41.07%, #1f7a31 76.05%)'
+        borderGradientChecked: 'linear-gradient(220deg, #1f7a31, #6eb47c 41.07%, #1f7a31 76.05%)',
+        buttonGradient: 'linear-gradient(130deg, black 30%, #ff4713 50%, black 70% )'
       }
     }
   },

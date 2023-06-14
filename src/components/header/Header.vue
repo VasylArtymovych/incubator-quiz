@@ -15,7 +15,7 @@
           class="w-12 h-12 text-red-600"
         >
         <p class="logo-text font-bold text-2xl">
-          QUIZ
+          QuizCraft
         </p>
         <el-badge
           value="BETA"

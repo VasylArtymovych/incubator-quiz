@@ -28,11 +28,11 @@
           :key="i"
           class="option-wrap group p-1 mb-6 bg-borderGradient2 rounded-md hover:scale-[0.98] shadow-lg shadow-white
           hover:shadow-accentLight2  md:w-[70%] md:self-center transition-all duration-300"
-          :class="{'bg-borderGradientChecked scale-[0.98] shadow-none': selectedOption === opt.title}"
+          :class="{'scale-[0.98] shadow-none': selectedOption === opt.title}"
         >
           <p
             class="option-text p-2 bg-catskill-white option select-none hover:shadow-accentLight2"
-            :class="{'selected bg-green-100 font-semibold': selectedOption === opt.title}"
+            :class="{'selected bg-black font-semibold text-white': selectedOption === opt.title}"
             @click="selectedOption = opt.title"
           >
             <span class="font-semibold"> {{ i+1 }}</span>: {{ opt.title }}
@@ -41,12 +41,13 @@
       </div>
 
       <button
-        class="button-next py-1 pl-3 pr-2 mb-6 mr-2 md:py-2 md:pl-5 md:pr-4 md:text-lg
-      flex justify-center items-center self-end text-white cursor-pointer"
+        class="btn-next relative w-32 md:w-40 py-2 md:py-3 px-5 ml-auto mb-4 mr-2 flex justify-center items-center
+        text-white border border-accent rounded-md cursor-pointer bg-buttonGradient transition-all duration-300
+        ease-in-out hover:shadow-[1px_1px_3px_#ff4713,-1px_-1px_3px_#ff4713] hover:text-[larger]"
         role="button"
         @click="onNextClick"
       >
-        {{ (currentStep - 1) === lastQuesIndx ? 'Finish' : 'NEXT' }}
+        {{ (currentStep - 1) === lastQuesIndx ? 'FINISH' : 'NEXT' }}
         <IconArrowRight class="ml-3" />
       </button>
     </div>
@@ -104,6 +105,7 @@ const saveResults = async () => {
     return useErrorNotification(error.message)
   } finally {
     loading.value = false
+    answers.value = []
   }
 }
 
@@ -155,73 +157,7 @@ onBeforeMount(() => {
 
 <style lang="scss" scoped>
 .option-wrap:hover > .option-text:not(.selected) {
-  @apply bg-accentLight3
-}
-
-.button-next {
-  border: none;
-  outline: none;
-  position: relative;
-  z-index: 0;
-  border-radius: 10px;
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
-}
-
-.button-next:before {
-  content: "";
-  background: linear-gradient(
-    45deg,
-    #ff0000,
-    #ff4713,
-    #ff7300,
-    #48ff00,
-    #00ffd5,
-    #002bff,
-    #7a00ff,
-    #ff00c8,
-    #ff0000
-  );
-  position: absolute;
-  top: -2px;
-  left: -2px;
-  background-size: 400%;
-  z-index: -1;
-  filter: blur(5px);
-  -webkit-filter: blur(5px);
-  width: calc(100% + 4px);
-  height: calc(100% + 4px);
-  animation: wave-rainbow 20s linear infinite;
-  transition: opacity 0.3s ease-in-out;
-  border-radius: 10px;
-}
-
-.button-next:hover.button-next:before {
-  background: #ff4713;
-}
-
-.button-next:after {
-  z-index: -1;
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(130deg, black 30%, #ff4713 50%, black 70% );
-  border-radius: 10px;
-}
-
-@keyframes wave-rainbow {
-  0% {
-    background-position: 0 0;
-  }
-  50% {
-    background-position: 400% 0;
-  }
-  100% {
-    background-position: 0 0;
-  }
+  font-weight: 600;
+  opacity: 0.9;
 }
 </style>

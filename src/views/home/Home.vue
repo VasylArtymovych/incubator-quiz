@@ -12,17 +12,23 @@
         <div
           class="absolute top-0 left-0 w-full h-full p-4 bg-white rotate-[10deg] shadow-[-1px_5px_3px__rgba(0,0,0,0.6)]"
         >
-          <h1 class="font-bold text-2xl text-center">Welcome to  <em class="text-accent">QUIZ</em> !</h1>
-          <p class="text-justify text-xs indent-3">
-            We are happy to introduce to you the QuizApp that has been developed to assess the skills of
+          <h1 class="mb-3 font-bold text-2xl text-center">Welcome to  <em class="text-accent">QuizCraft</em> !</h1>
+          <p class="mb-3 text-justify text-xs md:text-sm lg:text-base indent-3">
+            We are happy to introduce to you the TechQuizApp that has been developed to assess the skills of
             candidates for various job vacancies and streamline the decision-making process for recruiters
             when reviewing applications.
           </p>
-          <p>To pass the quiz, go to section <em>Quizzes</em> and answer the questions within the allocated time.</p>
-          <p>In section <em>Results</em> you are able to see your results correct answers.</p>
+          <p class="mb-3 indent-3 text-xs md:text-sm lg:text-base">
+            To pass a quiz, go to section <em class="text-accent">Quizzes</em>
+            chose the available quiz and answer the questions within the allocated time.
+          </p>
+          <p class="indent-3 text-xs md:text-sm lg:text-base">
+            In section <em class="text-accent">Results</em>
+            you are able to see your quiz score and results of your answers.
+          </p>
         </div>
       </div>
-    </div>я
+    </div>
     <RouterView />
   </DefaultContainer>
 </template>
