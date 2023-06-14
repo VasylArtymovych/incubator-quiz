@@ -3,29 +3,34 @@
     v-loading="loading"
     class="quizzes flex flex-col h-full overflow-hidden"
   >
-    <div class="flex my-3">
-      <el-input
-        v-model="searchedQuiz"
-        placeholder="Search"
-        clearable
-        :size="type === 'sm' ? $elComponentSize.small : $elComponentSize.default"
-        class="w-[300px]"
-        @input="handleClearInputData"
-      >
-        <template #append>
-          <el-button
-            :type="$elComponentType.primary"
-            @click="handleSearchQuiz"
-          >
-            <IconSearch />
-          </el-button>
-        </template>
-      </el-input>
+    <div class="flex justify-between items-end my-3">
+      <div>
+        <p class="pl-1 mb-1 text-accent text-sm font-semibold">
+          Find Quiz
+        </p>
+        <el-input
+          v-model="searchedQuiz"
+          placeholder="Quiz title"
+          clearable
+          :size="type === 'sm' ? $elComponentSize.small : $elComponentSize.default"
+          class="w-[300px]"
+          @input="handleClearInputData"
+        >
+          <template #append>
+            <el-button
+              :type="$elComponentType.primary"
+              @click="handleSearchQuiz"
+            >
+              <IconSearch />
+            </el-button>
+          </template>
+        </el-input>
+      </div>
 
       <el-button
         :type="$elComponentType.primary"
         plain
-        class="flex items-center ml-auto"
+        class="flex items-center"
         @click="$router.push({name: $routeNames.upsertQuiz, params: {quizId: 'new'}})"
       >
         <template #icon>
@@ -94,8 +99,8 @@
       :total="totalCount"
       background
       :small="type ==='sm'"
-      :layout="`total,sizes, prev, pager, next, ${type==='sm' ? '': 'jumper'}`"
-      class="justify-center my-2"
+      :layout="`total, ${type==='sm' ? '': 'sizes'}, prev, pager, next, ${type==='sm' ? '': 'jumper'}`"
+      class="quizzes--align-center"
       @current-change="handleChangeCurrentPage"
       @size-change="handleChangeSize"
     />
@@ -103,7 +108,6 @@
 </template>
 
 <script setup lang="ts">
-// import type { ITableHeading } from '@/types'
 import { quizzesService } from './quizzes.service'
 
 const { type } = useWindowWidth()

@@ -38,6 +38,7 @@
           v-model="correctOpt"
           :label="index"
           class="shrink-0 text-[10px] flex"
+          :class="`option-${index}`"
         >
           Correct
         </el-radio>
@@ -146,7 +147,7 @@ const formRules = useElFormRules({
 })
 const optionRules = [useRequiredRule()]
 
-const correctOpt = ref<number>()
+const correctOpt = ref<number>(0)
 const tagOptions = ref(['FE', 'BE'])
 
 const addOption = () => {
@@ -199,7 +200,7 @@ const resetFrom = () => {
     ],
     tags: []
   }
-  correctOpt.value = undefined
+  correctOpt.value = 0
 }
 
 const onCloseDialog = () => {

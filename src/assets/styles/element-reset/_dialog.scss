@@ -6,6 +6,6 @@
       @apply text-2xl font-semibold text-accent 
     }
   }
-  @apply shadow-lg shadow-accentLight2 bg-[url('@/assets/images/Shape-1.png')] w-[90%] md:w-[50%] bg-slate-700
+  @apply shadow-lg shadow-accentLight2  w-[90%] lg:w-[70%]  bg-white bg-bgImgWhite
 
 }

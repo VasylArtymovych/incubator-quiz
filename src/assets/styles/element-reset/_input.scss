@@ -6,9 +6,10 @@
   gap: 2px;
 }
 
+.questions,
 .results,
 .upsert-quiz, 
-.users ,
+.users,
 .quizzes {
   & .el-input {
     & .el-input__wrapper {
@@ -43,7 +44,7 @@
 }
 
 
-.questions {
+.questions .wrapper {
   & .el-input {
     & .el-input__wrapper {
       & .el-input__suffix {

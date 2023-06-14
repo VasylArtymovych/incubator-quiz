@@ -6,11 +6,11 @@
       class="flex justify-center items-center h-full"
     >
       <div
-        class="relative w-[300px] md:w-[400px] xl:w-[500px] aspect-[3/4] bg-accent rotate-[-10deg]
-        shadow-md shadow-black"
+        class="relative w-[300px] md:w-[400px] xl:w-[500px] aspect-[3/4] bg-black rotate-[-15deg]
+        shadow shadow-black"
       >
         <div
-          class="absolute top-0 left-0 w-full h-full p-4 md:p-6 bg-white rotate-[10deg]
+          class="absolute z-[1] top-0 left-0 w-full h-full p-4 md:p-6 bg-white rotate-[15deg]
           shadow-[-1px_5px_3px__rgba(0,0,0,0.6)]"
         >
           <h1 class="mb-3 font-bold text-lg md:text-3xl xl:text-4xl text-center">
@@ -30,6 +30,11 @@
             you are able to see your quiz score and results of your answers.
           </p>
         </div>
+
+        <div
+          class="absolute top-0 left-0 w-full h-full bg-accent rotate-[5deg]
+          shadow-[-1px_5px_3px__rgba(0,0,0,0.6)]"
+        />
       </div>
     </div>
     <RouterView />

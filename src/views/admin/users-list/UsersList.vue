@@ -1,6 +1,6 @@
 <template>
   <div v-loading="loading" class="users flex flex-col h-full">
-    <div class="flex justify-between my-4 bg-transparent">
+    <div class="flex justify-between my-3 bg-transparent">
       <el-form
         ref="formRef"
         label-position="top"
@@ -53,17 +53,20 @@
       v-if="users && totalCount"
       id="pagination"
       v-model:current-page="currentPage"
+      v-model:page-size="pageSize"
+      :page-sizes="[ 5, 10, 15, 20]"
       :total="totalCount"
       background
       :small="type==='sm'"
-      :layout="`total, prev, pager, next, ${type==='sm' ? '': 'jumper'}`"
+      :layout="`total, ${type==='sm' ? '': 'sizes'}, prev, pager, next, ${type==='sm' ? '': 'jumper'}`"
       class="justify-center my-2"
+      @current-change="handleChangeCurrentPage"
+      @size-change="handleChangeSize"
     />
   </div>
 </template>
 
 <script setup lang="ts">
-// import type { ITableHeading } from '@/types'
 import { usersListService } from './users-list.service'
 interface IProps {
   selectedRows?: any[]
@@ -110,6 +113,16 @@ const handleClearInputData = (val: string) => {
     currentPage.value = 1
     getUsers()
   }
+}
+
+const handleChangeCurrentPage = (page: number) => {
+  currentPage.value = page
+  getUsers()
+}
+const handleChangeSize = (size: number) => {
+  currentPage.value = 1
+  pageSize.value = size
+  getUsers()
 }
 
 async function getUserByEmail (email: string) {

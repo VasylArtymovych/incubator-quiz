@@ -2,11 +2,21 @@
 
 
 .el-pagination {
+  .el-pagination__sizes {
+    @apply mr-auto
+  }
+
+  .el-pagination__jump {
+    @apply ml-auto
+  }
 
   & .el-pagination__total,
   & .el-pagination__jump {
     --el-text-color-regular: #ff4713;
     @apply font-semibold
   }
+}
 
+.el-pagination.quizzes--align-center {
+  @apply justify-center
 }

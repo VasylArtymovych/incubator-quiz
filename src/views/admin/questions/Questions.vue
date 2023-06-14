@@ -5,25 +5,28 @@
       @updated="updatedQuestion"
       @inserted="insertedQuestion"
     />
-    <div class="flex justify-between my-3 bg-transparent">
-      <el-select
-        v-model="selectedTags"
-        :size="type === 'sm' ? $elComponentSize.small : $elComponentSize.default"
-        multiple
-        collapse-tags
-        collapse-tags-tooltip
-        placeholder="Select tags"
-        clearable
-        :tag-type="$elComponentType.primary"
-        @change="handleChangeSelect"
-      >
-        <el-option
-          v-for="tag in tags"
-          :key="tag"
-          :label="tag.toUpperCase()"
-          :value="tag"
-        />
-      </el-select>
+    <div class="flex justify-between items-end my-3 bg-transparent wrapper">
+      <div>
+        <p class="pl-1 mb-1 text-accent text-sm font-semibold">Filter by tag</p>
+        <el-select
+          v-model="selectedTags"
+          :size="type === 'sm' ? $elComponentSize.small : $elComponentSize.default"
+          multiple
+          collapse-tags
+          collapse-tags-tooltip
+          placeholder="Select tags"
+          clearable
+          :tag-type="$elComponentType.primary"
+          @change="handleChangeSelect"
+        >
+          <el-option
+            v-for="tag in tags"
+            :key="tag"
+            :label="tag.toUpperCase()"
+            :value="tag"
+          />
+        </el-select>
+      </div>
 
       <el-tag
         v-if="questions && selectedRows"
@@ -31,15 +34,6 @@
       >
         {{ type==='sm'? '': ' Selected:' }} {{ selectedRows.length }} of {{ totalCount }}
       </el-tag>
-
-      <!-- <el-statistic v-if="questions && selectedRows" :value="selectedRows.length">
-        <template #title>
-          <div style="display: inline-flex; align-items: center">
-            Checked:
-          </div>
-        </template>
-        <template #suffix>of {{ totalCount }}</template>
-      </el-statistic> -->
 
       <el-button
         :type="$elComponentType.primary"
@@ -50,7 +44,7 @@
         <template #icon>
           <IconPlus />
         </template>
-        Add
+        ADD
       </el-button>
     </div>
 
@@ -181,7 +175,7 @@
       :total="totalCount"
       background
       :small="type==='sm'"
-      :layout="`total,sizes, prev, pager, next, ${type==='sm' ? '': 'jumper'}`"
+      :layout="`total, ${type==='sm' ? '': 'sizes'}, prev, pager, next, ${type==='sm' ? '': 'jumper'}`"
       class="justify-center my-2"
       @current-change="handleChangeCurrentPage"
       @size-change="handleChangeSize"
@@ -212,7 +206,7 @@ const limit = computed(() => (skip.value + pageSize.value - 1))
 const selectedTags = ref<string[]>([])
 const tags = ref<Set<string> | null>(null)
 
-const quesLoading = ref(false)
+const quesLoading = ref(true)
 const sortingPropOrder = ref<ISortPropOrderQues | null>(null)
 
 const questions = ref<IQuestion[] | null>(null)
@@ -327,7 +321,6 @@ const openUpsertDialog = (row?: IQuestion) => {
 
 async function getQuestions () {
   try {
-    quesLoading.value = true
     const { data, error, count } = await questionsService.getQuestions(skip.value, limit.value)
     if (error) throw new Error(error.message)
     if (data) {
@@ -357,7 +350,6 @@ async function getTags () {
 
 async function getQuestionsByTags () {
   try {
-    quesLoading.value = true
     const { data, error, count } = await questionsService
       .getQuestionsByTags(selectedTags.value, skip.value, limit.value)
 

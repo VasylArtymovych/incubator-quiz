@@ -2,27 +2,28 @@
 
 .upsert-question-form.el-form {
   & .el-form-item {
+    margin-bottom: 22px;
     & .el-form-item__label {
-      color: white;
+      @apply text-gray font-[500]
     }
 
     & .el-form-item__content {
       flex-wrap: nowrap;
-      gap: 4px;
+      gap: 12px;
 
       & .el-textarea__inner {
         &::placeholder {
-          @apply text-warmGray-600
+          @apply text-warmGray-400
         }
 
-        @apply bg-slate-400 text-black
+      @apply text-black bg-accentLight5
       }
 
       & .el-input {
         & .el-input__wrapper {
           & .el-input__inner {
             &::placeholder {
-              @apply text-warmGray-600
+              @apply text-warmGray-400
             }
 
             @apply text-black
@@ -33,14 +34,23 @@
               @apply text-accent
             }
           }
-
-          @apply bg-slate-400
+          @apply text-black bg-accentLight5
         }
+      }
+
+      & .el-radio.option-0,
+      & .el-radio.option-1 {
+        @apply mr-[36px]
       }
 
       & .el-radio {
         .el-radio__label {
-          color: white
+          @apply text-black
+        }
+        .el-radio__input {
+          .el-radio__original {
+            @apply cursor-pointer
+          }
         }
       }
 

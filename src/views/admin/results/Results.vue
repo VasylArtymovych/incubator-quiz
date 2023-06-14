@@ -4,35 +4,9 @@
     v-if="results"
     class="results flex flex-col w-full h-full overflow-hidden"
   >
-    <div class="flex items-start gap-4  my-3 bg-transparent ">
+    <div class="flex items-start gap-5  my-3 bg-transparent ">
       <div>
-        <p class="text-xs text-gray mb-1">Quiz title</p>
-        <el-select
-          v-model="selectedQuizIds"
-          multiple
-          filterable
-          remote
-          reserve-keyword
-          remote-show-suffix
-          collapse-tags
-          collapse-tags-tooltip
-          :size="type === 'sm' ? $elComponentSize.small : $elComponentSize.default"
-          placeholder="Enter quiz title"
-          :remote-method="remoteQuizzesMethod"
-          :loading="quizSelectLoading"
-          @change="handleChangeSelect"
-        >
-          <el-option
-            v-for="item in quizSelectData"
-            :key="item.id"
-            :label="item.title"
-            :value="item.id"
-          />
-        </el-select>
-      </div>
-
-      <div>
-        <p class="text-xs text-gray mb-1">User email</p>
+        <p class="pl-1 mb-1 text-accent text-sm font-semibold">User email</p>
         <el-select
           v-model="selectedUserIds"
           multiple
@@ -52,6 +26,32 @@
             v-for="item in userSelectData"
             :key="item.id"
             :label="item.email"
+            :value="item.id"
+          />
+        </el-select>
+      </div>
+
+      <div>
+        <p class="pl-1 mb-1 text-accent text-sm font-semibold">Quiz title</p>
+        <el-select
+          v-model="selectedQuizIds"
+          multiple
+          filterable
+          remote
+          reserve-keyword
+          remote-show-suffix
+          collapse-tags
+          collapse-tags-tooltip
+          :size="type === 'sm' ? $elComponentSize.small : $elComponentSize.default"
+          placeholder="Enter quiz title"
+          :remote-method="remoteQuizzesMethod"
+          :loading="quizSelectLoading"
+          @change="handleChangeSelect"
+        >
+          <el-option
+            v-for="item in quizSelectData"
+            :key="item.id"
+            :label="item.title"
             :value="item.id"
           />
         </el-select>
