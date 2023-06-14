@@ -2,6 +2,6 @@
 
 .el-empty__description {
   & p {
-    @apply text-[#d5d7de] font-semibold md:text-xl
+    @apply text-gray-medium font-semibold md:text-xl
   }
 }

@@ -79,11 +79,11 @@ const userRoutes = [
 
 <style lang="scss" scoped>
 
-.link.router-link-active {
+.link.router-link-exact-active {
     @apply text-accent
   }
   @media (min-width: 768px) {
-    .link.link.router-link-active {
+    .link.link.router-link-exact-active {
       &::after {
         content: '';
         display: block;
