@@ -6,7 +6,7 @@
   >
     <template v-if="!isAuthenticated">
       <li
-        v-for="item in publicRoutes" :key="item"
+        v-for="(item, index) in publicRoutes" :key="index"
         class="flex justify-center items-center"
       >
         <RouterLink

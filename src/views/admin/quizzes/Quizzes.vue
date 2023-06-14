@@ -72,7 +72,7 @@
           title="Are you sure to delete this?"
           confirm-button-text="Yes"
           cancel-button-text="No"
-          @confirm="handleDelete(row)"
+          @confirm="() => { handleDelete(row) }"
         >
           <template #reference>
             <el-button
