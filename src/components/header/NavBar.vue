@@ -33,14 +33,13 @@
 
     <template v-if="isAuthenticated && getUserRole === 'user'">
       <li
-        v-show="$route.name !== $routeNames.rootPage"
         class="flex justify-center items-center"
       >
         <RouterLink
           :to="{name: $routeNames.rootPage}"
           class="link relative w-full text-center p-4 md:p-0 hover:text-accent"
         >
-          Home
+          About Us
         </RouterLink>
       </li>
       <li

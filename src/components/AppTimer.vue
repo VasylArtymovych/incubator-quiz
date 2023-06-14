@@ -19,7 +19,7 @@
         :style="`stroke-width: ${strokeWidth}px; animation-duration: ${time}s; stroke: ${strokeColor}`"
       />
     </svg>
-    <div class="absolute text-sm text-black font-semibold">
+    <div class="absolute text-base text-black font-semibold">
       {{ addLeadingZero(mins, 2) }}:{{ addLeadingZero(secs, 2) }}
     </div>
   </div>

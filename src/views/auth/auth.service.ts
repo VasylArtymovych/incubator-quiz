@@ -1,3 +1,5 @@
+import { router, routeNames } from '@/router'
+
 class AuthService {
   register (payload: IRegisterPayload) {
     return supabase.auth.signUp(payload)
@@ -19,6 +21,16 @@ class AuthService {
 
   updatePassword (newData: {password: string}) {
     return supabase.auth.updateUser(newData)
+  }
+
+  navigateToAdminOrUserPage () {
+    const authStore = useAuthStore()
+
+    let name = routeNames.rootPage
+
+    if (authStore.getUserRole === 'admin') name = routeNames.admin
+
+    router.push({ name, replace: true })
   }
 }
 

@@ -65,8 +65,6 @@
 </template>
 
 <script setup lang="ts">
-import { navigateToAdminOrUserPage } from '@/views/auth/auth.helpers'
-
 const regFormRef = useElFormRef()
 
 const regForm = useElFormModel({
@@ -102,7 +100,7 @@ const submit = () => {
 
           if (data.user) {
             setUserData(data.user)
-            navigateToAdminOrUserPage()
+            authService.navigateToAdminOrUserPage()
           }
         })
         .catch(error => (useErrorNotification(error.message)))

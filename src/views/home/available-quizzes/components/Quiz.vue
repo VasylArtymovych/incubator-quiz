@@ -9,14 +9,18 @@
     >
       <AppTimer
         :key="currentStep"
-        class="ml-auto my-4"
-        :width="60"
+        class="mx-auto my-4"
+        :width="100"
         :strokeWidth="3"
         :time="currentQuestion.timer"
         @timeIsUp="onNextClick"
       />
 
       <div class="flex flex-col h-full overflow-auto p-4 lg:px-8">
+        <div class="text-base font-semibold mb-3">
+          Question:
+          {{ currentStep }}/{{ currentQuiz?.questions.length }}
+        </div>
         <div class="relative  p-2 mb-8 rounded-lg bg-borderGradient shadow-lg shadow-gray-medium">
           <h2 class="p-2 md:p-6 font-semibold bg-catskill-white rounded-sm select-none md:text-lg">
             {{ currentQuestion?.title }}
@@ -56,10 +60,10 @@
 
 <script setup lang="ts">
 import DefaultContainer from '@/layouts/DefaultContainer.vue'
+
 const authStore = useAuthStore()
-const homeStore = useHomeStore()
-const quizStore = useQuizStore()
-const { currentQuiz, currentQuestion, loading, answers } = storeToRefs(quizStore)
+const availableQuizzesStore = useAvailableQuizStore()
+const { currentQuiz, currentQuestion, availableQuizzes, loading, answers } = storeToRefs(availableQuizzesStore)
 
 const route = useRoute()
 const router = useRouter()
@@ -83,7 +87,7 @@ const addCurrentAnswer = () => {
       id: currentQuestion.value.id,
       value: selectedOption.value
     }
-    quizStore.addAnswer(currAnswer)
+    availableQuizzesStore.addAnswer(currAnswer)
     selectedOption.value = ''
   }
 }
@@ -96,7 +100,7 @@ const saveResults = async () => {
     answers: answers.value
   } as IPayload
   try {
-    const { status, error } = await homeService.saveResults(result)
+    const { status, error } = await userResultsService.saveResults(result)
     if (error) throw new Error(error.message)
     if (status === 201) {
       router.replace({ name: $routeNames.userResults })
@@ -116,7 +120,7 @@ const onNextClick = () => {
   } else {
     addCurrentAnswer()
     currentStep.value += 1
-    quizStore.setCurrentQuestion(currentStep.value)
+    availableQuizzesStore.setCurrentQuestion(currentStep.value)
     router.replace({
       name: $routeNames.passQuiz,
       params: { id: quizId.value },
@@ -126,14 +130,14 @@ const onNextClick = () => {
 }
 
 const setCurrentQuizAndQuestion = async () => {
-  if (homeStore.availableQuizzes && homeStore.availableQuizzes.length) {
-    const currQuiz = homeStore.availableQuizzes.find((quiz) => quiz.id === quizId.value)
-    currQuiz && quizStore.setCurrentQuiz(currQuiz)
+  if (availableQuizzes.value.length) {
+    const currQuiz = availableQuizzes.value.find((quiz) => quiz.id === quizId.value)
+    currQuiz && availableQuizzesStore.setCurrentQuiz(currQuiz)
   } else {
-    await quizStore.getQuizById(quizId.value)
+    await availableQuizzesStore.getQuizById(quizId.value)
   }
 
-  quizStore.setCurrentQuestion(currentStep.value)
+  availableQuizzesStore.setCurrentQuestion(currentStep.value)
 }
 
 onBeforeMount(() => {
@@ -141,15 +145,18 @@ onBeforeMount(() => {
 })
 
 // const confirmReload = (event: BeforeUnloadEvent) => {
+//   console.log('confirmReload')
 //   event.preventDefault()
 //   event.returnValue = '' // Required for Chrome and Edge
 // }
 
 // onMounted(() => {
+//   // if (import.meta.env.VITE_ENV === 'local') return
 //   window.addEventListener('beforeunload', confirmReload, { capture: true })
 // })
 
 // onBeforeUnmount(() => {
+//   console.log('onBeforeUnmount')
 //   window.removeEventListener('beforeunload', confirmReload)
 // })
 

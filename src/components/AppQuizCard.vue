@@ -21,7 +21,7 @@
           {{ score }}%
         </template>
       </p>
-      <h2 class="text-[28px] leading-10 text-titleWhite mb-4">
+      <h2 class="title text-[28px] leading-10 text-titleWhite mb-4 opacity-[0.8]">
         {{ title }}
       </h2>
       <button
@@ -78,8 +78,13 @@ defineEmits(['onQuizBtnClick'])
     transform: translateY(20px);
     opacity: 1;
   }
+  .card:hover .title {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+
   .card:hover .time {
-    opacity: 0.9;
+    opacity: 1;
     transform: scale(1.1);
   }
 

@@ -53,21 +53,21 @@
           Forgot password?
         </el-button>
 
-        <el-button
-          native-type="submit"
-          :type="$elComponentType.primary"
-          class="login-btn w-full"
-        >
-          LogIn
-        </el-button>
+        <div>
+          <el-button
+            native-type="submit"
+            :type="$elComponentType.primary"
+            class="login-btn w-full"
+          >
+            LogIn
+          </el-button>
+        </div>
       </el-form>
     </el-card>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { navigateToAdminOrUserPage } from '@/views/auth/auth.helpers'
-
 const formRef = useElFormRef()
 
 const loginForm = useElFormModel({
@@ -90,7 +90,7 @@ function submit () {
           if (error) throw new Error(error.message)
           if (data.user) {
             setUserData(data.user)
-            navigateToAdminOrUserPage()
+            authService.navigateToAdminOrUserPage()
           }
         })
         .catch(error => {
@@ -101,10 +101,3 @@ function submit () {
   })
 }
 </script>
-
-<style scoped lang="scss">
-  .el-button.login-btn {
-    margin-left: 0;
-  }
-
-</style>

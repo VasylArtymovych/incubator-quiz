@@ -1,7 +1,7 @@
 <template>
   <div v-loading="loading" class="w-full h-full overflow-hidden my-4 md:my-6">
     <el-empty
-      v-if="!availableQuizzes || !availableQuizzes.length && !loading"
+      v-if="!loading && !availableQuizzes.length"
       description="No available quizzes"
       class="w-full h-full"
     >
@@ -28,9 +28,9 @@
 </template>
 
 <script setup lang="ts">
-const homeStore = useHomeStore()
-const { availableQuizzes, loading } = storeToRefs(homeStore)
-homeStore.getQuizzes()
+const availableQuizzesStore = useAvailableQuizStore()
+const { availableQuizzes, loading } = storeToRefs(availableQuizzesStore)
+availableQuizzesStore.getQuizzes()
 
 const calcQuizTime = (quiz: IQuizPopulated) => {
   return quiz.questions.reduce((time, ques) => {

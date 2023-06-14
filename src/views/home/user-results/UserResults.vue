@@ -1,7 +1,7 @@
 <template>
   <div v-loading="loading" class="w-full h-full overflow-hidden my-4 md:my-6">
     <el-empty
-      v-if="!userResults || !userResults.length && !loading"
+      v-if="!loading && !userResults.length"
       description="No available quizzes"
       class="w-full h-full"
     >
@@ -30,18 +30,14 @@
 
 <script setup lang="ts">
 const authStore = useAuthStore()
-const homeStore = useHomeStore()
-const { userResults, loading } = storeToRefs(homeStore)
+const userResultsStore = useUserResultsStore()
+const { userResults, loading } = storeToRefs(userResultsStore)
 
 onMounted(() => {
   loading.value = true
   // todo: remove setTimeout when this issue will be fixed on supabase
   setTimeout(() => {
-    homeStore.getResults(authStore.activeUserData!.id)
+    userResultsStore.getResults(authStore.activeUserData!.id)
   }, 2000)
 })
 </script>
-
-<style scoped>
-
-</style>
