@@ -19,7 +19,7 @@
       <AppQuizCard
         v-for="result of userResults" :key="result.id"
         :title="result.quiz_row.title"
-        :score="result.percentage_score || 85"
+        :score="result.percentage_score"
         isCompleted
         class="w-[25%] min-w-[250px] max-w-[300px]"
         @onQuizBtnClick="$router.push({name: $routeNames.resultInfo, params: {resultId: result.id}})"

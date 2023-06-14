@@ -13,11 +13,11 @@
         class="time absolute top-[10%] right-[30px] opacity-[0.5] m-0 text-base
         leading-[0.9] transition-all duration-300 ease-in-out text-white"
       >
-        <span class="text-xs mr-2 text-accent">{{ time ? "Quiz time:" : score ? 'Score:' : '' }}</span>
+        <span class="text-xs mr-2 text-accent">{{ time ? "Quiz time:" : isCompleted ? 'Score:' : '' }}</span>
         <template v-if="time">
           {{ convertSeconds(time).hours }}h:{{ convertSeconds(time).mins }}m:{{ convertSeconds(time).secs }}s
         </template>
-        <template v-if="score">
+        <template v-if="isCompleted">
           {{ score }}%
         </template>
       </p>
