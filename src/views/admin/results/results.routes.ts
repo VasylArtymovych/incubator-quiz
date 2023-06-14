@@ -1,7 +1,8 @@
 import type { RouteRecordRaw } from 'vue-router'
 
 export const resultsRoutesNames = {
-  results: 'results'
+  results: 'results',
+  userResult: 'userResult'
 }
 
 export const resultsRoutes: RouteRecordRaw[] = [
@@ -9,11 +10,10 @@ export const resultsRoutes: RouteRecordRaw[] = [
     path: 'results',
     name: resultsRoutesNames.results,
     component: () => import('@/views/admin/results/Results.vue')
+  },
+  {
+    path: 'results/resultInfo/:resultId',
+    name: resultsRoutesNames.userResult,
+    component: () => import('@/components/ResultInfo.vue')
   }
-  // {
-  //   path: 'quizzes/:quizId',
-  //   name: resultsRoutesNames.upsertQuiz,
-  //   component: () => import('@/views/admin/quizzes/components/UpsertQuiz.vue'),
-  //   props: (route) => ({ quizId: route.params.quizId === 'new' ? null : Number(route.params.quizId) })
-  // }
 ]

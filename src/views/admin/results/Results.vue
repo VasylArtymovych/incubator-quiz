@@ -69,7 +69,12 @@
       @sortBy="sortBy"
     >
       <template #email="{row}">
-        {{ row.user_row.email }}
+        <p
+          class="cursor-pointer"
+          @click="$router.push({name: $routeNames.userResult, params: {resultId: row.id}})"
+        >
+          {{ row.user_row.email }}
+        </p>
       </template>
       <template #quizTitle="{row}">
         {{ row.quiz_row.title }}

@@ -8,7 +8,7 @@
         <span class="font-semibold">User:</span> {{ currentResult.user_row.email }}
       </p>
       <p class="text-xs md:text-sm">
-        <span class="font-semibold">Score:</span> {{ currentResult.percentage_score || 85 }}%
+        <span class="font-semibold">Score:</span> {{ currentResult.percentage_score }}%
       </p>
     </div>
     <ul v-if="currentResult" v-loading="loading" class="p-2 mt-3 height-full overflow-auto">

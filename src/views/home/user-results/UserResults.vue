@@ -38,7 +38,7 @@ onMounted(() => {
   // todo: remove setTimeout when this issue will be fixed on supabase
   setTimeout(() => {
     homeStore.getResults(authStore.activeUserData!.id)
-  }, 1500)
+  }, 2000)
 })
 </script>
 
