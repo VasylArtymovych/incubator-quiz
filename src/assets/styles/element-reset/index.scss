@@ -5,7 +5,6 @@
   ));
 
 @use "element-plus/theme-chalk/src/base";
-// @use "element-plus/theme-chalk/src/button";
 @use "element-plus/theme-chalk/src/input-number";
 @use "element-plus/theme-chalk/src/dropdown";
 @use "element-plus/theme-chalk/src/scrollbar";
@@ -19,6 +18,7 @@
 @use "element-plus/theme-chalk/src/overlay";
 @use "element-plus/theme-chalk/src/divider";
 @use "element-plus/theme-chalk/src/icon";
+
 // @use "element-plus/theme-chalk/src/statistic";
 
 
@@ -31,3 +31,5 @@
 @import './input';
 @import './select';
 @import './pagination';
+@import './empty';
+@import './badge';

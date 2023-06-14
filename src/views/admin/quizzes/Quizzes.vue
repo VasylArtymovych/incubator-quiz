@@ -8,6 +8,7 @@
         v-model="searchedQuiz"
         placeholder="Search"
         clearable
+        :size="type === 'sm' ? $elComponentSize.small : $elComponentSize.default"
         class="w-[300px]"
         @input="handleClearInputData"
       >
@@ -40,6 +41,7 @@
       :headers="headings"
       fixedLast
       doNotChangeQuery
+      tableScrollPadding="2px"
       class="h-full overflow-hidden"
       @sortBy="sortBy"
     >
@@ -70,7 +72,7 @@
           title="Are you sure to delete this?"
           confirm-button-text="Yes"
           cancel-button-text="No"
-          @confirm="handleDelete(row)"
+          @confirm="() => { handleDelete(row) }"
         >
           <template #reference>
             <el-button
@@ -91,7 +93,8 @@
       :page-sizes="[ 5, 10, 15, 20]"
       :total="totalCount"
       background
-      layout="total,sizes, prev, pager, next, jumper"
+      :small="type ==='sm'"
+      :layout="`total,sizes, prev, pager, next, ${type==='sm' ? '': 'jumper'}`"
       class="justify-center my-2"
       @current-change="handleChangeCurrentPage"
       @size-change="handleChangeSize"
@@ -103,6 +106,7 @@
 // import type { ITableHeading } from '@/types'
 import { quizzesService } from './quizzes.service'
 
+const { type } = useWindowWidth()
 const router = useRouter()
 const { $routeNames } = useGlobalProperties()
 
@@ -138,7 +142,7 @@ const sortedQuizzes = computed(() => {
 })
 
 const headings: any[] = [
-  { label: 'Quiz title', prop: 'title', sortable: true, minWidth: 120 },
+  { label: 'Quiz title', prop: 'title', sortable: true, minWidth: 120, contentClass: 'font-semibold xl:!text-lg' },
   { label: 'Questions', prop: 'questions', minWidth: 60 },
   { label: 'Users', prop: 'users', minWidth: 60 },
   { label: 'Actions', prop: 'actions', width: 120 }
@@ -204,7 +208,6 @@ async function getQuizzes () {
   try {
     loading.value = true
     const { data, error, count } = await quizzesService.getQuizzes(skip.value, limit.value)
-    console.log(error)
     if (error) throw new Error(error.message)
     if (data) {
       quizzes.value = data as IQuiz[]

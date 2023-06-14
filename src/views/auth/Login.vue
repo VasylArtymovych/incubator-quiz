@@ -1,4 +1,5 @@
 <template>
+  <Header />
   <div class="min-w-[300px] md:min-w-[500px] m-auto">
     <el-card
       v-loading="loading"
@@ -8,13 +9,6 @@
         <div class="flex justify-center items-center">
           <p class="font-semibold text-xl">
             Login
-          </p>
-          <el-divider direction="vertical" />
-          <p
-            class="text-xl cursor-pointer"
-            @click="$router.push({name: $routeNames.register})"
-          >
-            Register
           </p>
         </div>
       </template>
@@ -92,15 +86,11 @@ function submit () {
   formRef.value?.validate(isValid => {
     if (isValid) {
       authService.login(loginForm)
-        .then(data => {
-          console.log(data)
-          return data
-        })
         .then(({ data, error }) => {
           if (error) throw new Error(error.message)
           if (data.user) {
             setUserData(data.user)
-            navigateToAdminOrUserPage(data.user)
+            navigateToAdminOrUserPage()
           }
         })
         .catch(error => {

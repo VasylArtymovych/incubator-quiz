@@ -39,6 +39,9 @@ const props = withDefaults(defineProps<{
   strokeWidth: 2,
   strokeColor: '#ff4713'
 })
+
+const emit = defineEmits(['timeIsUp'])
+
 const timer = ref()
 const endTime = ref(0)
 const mins = ref(0)
@@ -52,8 +55,10 @@ onMounted(() => {
 
   timer.value = setInterval(function () {
     const diff = endTime.value - Date.now()
-    if (diff <= 0) return clearInterval(timer.value)
-
+    if (diff <= 0) {
+      emit('timeIsUp')
+      return clearInterval(timer.value)
+    }
     const second = 1000
     const minute = second * 60
     const hour = minute * 60
@@ -72,7 +77,6 @@ onMounted(() => {
 .second-circle {
   stroke-dasharray: var(--strokeDasharray);  //2*PI*r
   animation: timer linear forwards;
-  // stroke-dashoffset: 0;
 }
 
 .circles-wrap::before {

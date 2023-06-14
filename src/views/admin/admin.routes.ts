@@ -2,13 +2,15 @@ import type { RouteRecordRaw } from 'vue-router'
 import { questionsRoutesNames, questionsRoutes } from './questions/questions.routes'
 import { quizzesRoutesNames, quizzesRoutes } from './quizzes/quizzes.routes'
 import { usersRoutesNames, usersRoutes } from './users-list/users-list.routes'
+import { resultsRoutesNames, resultsRoutes } from './results/results.routes'
 import { authRoutesNames } from '@/views/auth/auth.routes'
 
 export const adminRoutesNames = {
   admin: 'admin',
   ...questionsRoutesNames,
   ...quizzesRoutesNames,
-  ...usersRoutesNames
+  ...usersRoutesNames,
+  ...resultsRoutesNames
 }
 
 export const adminRoutes: RouteRecordRaw[] = [
@@ -19,14 +21,16 @@ export const adminRoutes: RouteRecordRaw[] = [
     children: [
       ...questionsRoutes,
       ...quizzesRoutes,
-      ...usersRoutes
+      ...usersRoutes,
+      ...resultsRoutes
     ],
-    meta: { role: 'admin@softonix.org', isProtected: true },
-    beforeEnter: (to) => {
-      const { activeUserData } = useAuthStore()
+    meta: { role: 'admin', isProtected: true },
+    redirect: { name: adminRoutesNames.quizzes },
 
-      // if (to.meta.isProtected && activeUserData?.role !== to.meta.role) {
-      if (to.meta.isProtected && activeUserData?.email !== to.meta.role) {
+    beforeEnter: (to) => {
+      const { getUserRole } = useAuthStore()
+
+      if (to.meta.isProtected && getUserRole !== to.meta.role) {
         return { name: authRoutesNames.login }
       }
       return true

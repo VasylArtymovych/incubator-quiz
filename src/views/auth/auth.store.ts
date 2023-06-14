@@ -2,6 +2,8 @@ import { router, routeNames } from '@/router'
 
 export const useAuthStore = defineStore('authStore', () => {
   const activeUserData = ref<IUser | null>(JSON.parse(localStorage.getItem('iq-user') || 'null'))
+  const isAuthenticated = computed(() => !!activeUserData.value)
+  const getUserRole = computed(() => activeUserData.value?.user_metadata?.role || 'user')
 
   const setUserData = (user: IUser) => {
     activeUserData.value = user
@@ -18,6 +20,8 @@ export const useAuthStore = defineStore('authStore', () => {
 
   return {
     activeUserData,
+    isAuthenticated,
+    getUserRole,
     setUserData,
     logOut
   }

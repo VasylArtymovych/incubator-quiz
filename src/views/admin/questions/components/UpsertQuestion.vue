@@ -10,6 +10,7 @@
       v-loading="loading"
       :model="formModel"
       :rules="formRules"
+      :size="type === 'sm' ? $elComponentSize.small : $elComponentSize.default"
       label-position="top"
       class="upsert-question-form"
     >
@@ -114,7 +115,11 @@
 </template>
 
 <script setup lang="ts">
+import cloneDeep from 'lodash.clonedeep'
+
 const emit = defineEmits(['inserted', 'updated'])
+const { type } = useWindowWidth()
+
 const dialogVisible = ref(false)
 const formRef = useElFormRef()
 const updatingQuestionId = ref()
@@ -206,7 +211,7 @@ const openQuestionDialog = (row?: IQuestion) => {
 
   if (row) {
     updatingQuestionId.value = row.id
-    formModel.value = row
+    formModel.value = cloneDeep(row)
     correctOpt.value = row.options.findIndex(opt => (opt.is_correct === true))
   }
   dialogVisible.value = true

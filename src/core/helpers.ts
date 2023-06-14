@@ -33,3 +33,21 @@ export const getNestedProp = (obj: TIndexedObject, key: string) => {
 export const addLeadingZero = (value: number, pad: number) => {
   return String(value).padStart(pad, '0')
 }
+
+export const convertSeconds = (sec: number) => {
+  const min = 60
+  const hour = min * 60
+
+  const hours = Math.floor(sec / hour)
+  const mins = Math.floor((sec % hour) / min)
+  const secs = Math.floor(((sec % hour) % min))
+
+  return { hours, mins, secs }
+}
+
+export const createHashedObject = (arr: any[], key = 'id') => {
+  return arr.reduce((hasMap, obj) => {
+    hasMap.set(obj[key], obj)
+    return hasMap
+  }, new Map())
+}

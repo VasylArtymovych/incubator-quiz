@@ -24,7 +24,7 @@
   </template>
 
   <template v-else>
-    <div :class="copyAvailable ? 'flex' : 'truncate'">
+    <div :class="'truncate'">
       <el-tooltip
         v-if="showTooltip"
         :content="content"

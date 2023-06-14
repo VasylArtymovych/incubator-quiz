@@ -1,17 +1,18 @@
 <template>
   <div v-loading="loading" class="users flex flex-col h-full">
-    <div class="flex justify-between my-3 bg-transparent">
+    <div class="flex justify-between my-4 bg-transparent">
       <el-form
         ref="formRef"
         label-position="top"
         :model="formModel"
         :rules="formRules"
+        :size="type === 'sm' ? 'small' : 'default'"
         class="users-form"
       >
         <el-form-item
           label="Find User"
           prop="email"
-          class="w-[300px]"
+          class="w-52 md:w-[300px]"
         >
           <el-input
             v-model.trim="formModel.email"
@@ -33,7 +34,7 @@
       </el-form>
 
       <el-tag v-if="users && selectedRows" class="self-end">
-        Checked: {{ selectedRows.length }} of {{ totalCount }}
+        Selected: {{ selectedRows.length }} of {{ totalCount }}
       </el-tag>
     </div>
 
@@ -43,6 +44,7 @@
       :dataset="users"
       :headers="headings"
       doNotChangeQuery
+      tableScrollPadding="2px"
       class="h-full"
       @update:selected="(val: string[]) => $emit('selectionChange', val)"
     />
@@ -53,9 +55,9 @@
       v-model:current-page="currentPage"
       :total="totalCount"
       background
-      layout="total, prev, pager, next, jumper"
+      :small="type==='sm'"
+      :layout="`total, prev, pager, next, ${type==='sm' ? '': 'jumper'}`"
       class="justify-center my-2"
-      @current-change="handleCurrentChange"
     />
   </div>
 </template>
@@ -67,15 +69,17 @@ interface IProps {
   selectedRows?: any[]
 }
 
+const { type } = useWindowWidth()
+
 defineProps<IProps>()
 defineEmits(['selectionChange'])
 
 const currentPage = ref(1)
 const totalCount = ref<number>(0)
-// const pageSize = ref(3)
+const pageSize = ref(10)
 
-// const skip = computed(() => ((currentPage.value - 1) * (pageSize.value)))
-// const limit = computed(() => (skip.value + pageSize.value - 1))
+const skip = computed(() => ((currentPage.value - 1) * (pageSize.value)))
+const limit = computed(() => (skip.value + pageSize.value - 1))
 const loading = ref(false)
 
 const users = ref<IUserData[] | null>(null)
@@ -93,11 +97,6 @@ const formRules = useElFormRules({
   email: [useEmailRule()]
 })
 
-const handleCurrentChange = () => {
-  // currentPage.value = page
-  getUsers()
-}
-
 const handleSearchUser = () => {
   formRef.value?.validate((isValid) => {
     if (isValid) {
@@ -108,7 +107,7 @@ const handleSearchUser = () => {
 
 const handleClearInputData = (val: string) => {
   if (val === '') {
-    // currentPage.value = 1
+    currentPage.value = 1
     getUsers()
   }
 }
@@ -137,13 +136,13 @@ async function getUserByEmail (email: string) {
 async function getUsers () {
   try {
     loading.value = true
-    const { data, error } = await usersListService.getUsers()
+    const { data, error, count } = await usersListService.getUsers(skip.value, limit.value)
     if (error) throw new Error(error.message)
-    if (data.users) {
-      users.value = data.users as IUserData[]
+    if (data) {
+      users.value = data as IUserData[]
     }
-    if (data.total) {
-      totalCount.value = data.total
+    if (count) {
+      totalCount.value = count
     }
   } catch (error: any) {
     return useErrorNotification(error.message)

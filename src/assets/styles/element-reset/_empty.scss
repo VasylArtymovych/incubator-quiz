@@ -1,0 +1,7 @@
+@use "element-plus/theme-chalk/src/empty";
+
+.el-empty__description {
+  & p {
+    @apply text-[#d5d7de] font-semibold md:text-xl
+  }
+}

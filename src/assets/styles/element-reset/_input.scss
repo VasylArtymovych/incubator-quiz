@@ -5,6 +5,8 @@
   align-items: center;
   gap: 2px;
 }
+
+.results,
 .upsert-quiz, 
 .users ,
 .quizzes {
@@ -35,7 +37,7 @@
       box-shadow: 0 1px 0 0 #ff7e5a4f inset,
       0 -1px 0 0 #ff7e5a4f inset,
       -1px 0 0 0 #ff7e5a4f inset;
-      @apply text-accent bg-transparent
+      @apply text-accent bg-transparent hover:bg-accentLight2 hover:text-white
     }
   }
 }

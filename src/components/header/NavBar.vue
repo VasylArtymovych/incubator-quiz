@@ -4,41 +4,57 @@
     md:flex justify-end gap-4 lg:gap-8  bg-black md:bg-inherit font-bold text-white md:text-lg xl:text-2xl"
     :class="[isActive ? 'right-0': 'right-[-100%]']"
   >
-    <li
-      v-show="$route.name !== $routeNames.rootPage"
-      class="flex justify-center items-center"
-    >
-      <RouterLink
-        :to="$routeNames.rootPage"
-        class="link relative w-full text-center p-4 md:p-0 hover:text-accent"
+    <template v-if="!isAuthenticated">
+      <li
+        v-for="(item, index) in publicRoutes" :key="index"
+        class="flex justify-center items-center"
       >
-        Home
-      </RouterLink>
-    </li>
+        <RouterLink
+          :to="`/${item.route}`"
+          class="link relative w-full text-center p-4 md:p-0 hover:text-accent capitalize"
+        >
+          {{ item.name }}
+        </RouterLink>
+      </li>
+    </template>
+    <template v-if="isAuthenticated && getUserRole === 'admin'">
+      <li
+        v-for="item in adminRoutes" :key="item"
+        class="flex justify-center items-center"
+      >
+        <RouterLink
+          :to="`/admin/${item}`"
+          class="link relative w-full text-center p-4 md:p-0 hover:text-accent capitalize"
+        >
+          {{ item }}
+        </RouterLink>
+      </li>
+    </template>
 
-    <li
-      v-show="$route.name === $routeNames.rootPage"
-      class="flex justify-center items-center"
-    >
-      <RouterLink
-        :to="$routeNames.admin"
-        class="link relative w-full text-center p-4 md:p-0 hover:text-accent"
+    <template v-if="isAuthenticated && getUserRole === 'user'">
+      <li
+        v-show="$route.name !== $routeNames.rootPage"
+        class="flex justify-center items-center"
       >
-        Dashboard
-      </RouterLink>
-    </li>
-
-    <li
-      v-for="item in items" :key="item"
-      class="flex justify-center items-center"
-    >
-      <RouterLink
-        :to="`/admin/${item}`"
-        class="link relative w-full text-center p-4 md:p-0 hover:text-accent capitalize"
+        <RouterLink
+          :to="{name: $routeNames.rootPage}"
+          class="link relative w-full text-center p-4 md:p-0 hover:text-accent"
+        >
+          Home
+        </RouterLink>
+      </li>
+      <li
+        v-for="item in userRoutes" :key="item.route"
+        class="flex justify-center items-center"
       >
-        {{ item }}
-      </RouterLink>
-    </li>
+        <RouterLink
+          :to="`/${item.route}`"
+          class="link relative w-full text-center p-4 md:p-0 hover:text-accent capitalize"
+        >
+          {{ item.name }}
+        </RouterLink>
+      </li>
+    </template>
   </ul>
 </template>
 
@@ -47,16 +63,28 @@ defineProps<{
   isActive: boolean
 }>()
 
-const items = ['quizzes', 'questions', 'users']
+const authStore = useAuthStore()
+const { isAuthenticated, getUserRole } = storeToRefs(authStore)
+
+const publicRoutes = [
+  { route: '', name: 'about us' },
+  { route: 'login', name: 'login' },
+  { route: 'register', name: 'register' }
+]
+const adminRoutes = ['quizzes', 'questions', 'users', 'results']
+const userRoutes = [
+  { route: 'availableQuizzes', name: 'quizzes' },
+  { route: 'results', name: 'results' }
+]
 </script>
 
 <style lang="scss" scoped>
 
-.link.router-link-active {
+.link.router-link-exact-active {
     @apply text-accent
   }
   @media (min-width: 768px) {
-    .link.router-link-active {
+    .link.link.router-link-exact-active {
       &::after {
         content: '';
         display: block;

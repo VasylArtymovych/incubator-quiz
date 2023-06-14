@@ -8,6 +8,7 @@
     <div class="flex justify-between my-3 bg-transparent">
       <el-select
         v-model="selectedTags"
+        :size="type === 'sm' ? $elComponentSize.small : $elComponentSize.default"
         multiple
         collapse-tags
         collapse-tags-tooltip
@@ -28,7 +29,7 @@
         v-if="questions && selectedRows"
         class="self-end"
       >
-        Checked: {{ selectedRows.length }} of {{ totalCount }}
+        {{ type==='sm'? '': ' Selected:' }} {{ selectedRows.length }} of {{ totalCount }}
       </el-tag>
 
       <!-- <el-statistic v-if="questions && selectedRows" :value="selectedRows.length">
@@ -43,6 +44,7 @@
       <el-button
         :type="$elComponentType.primary"
         plain
+        :size="type === 'sm' ? $elComponentSize.small : $elComponentSize.default"
         class="flex items-center" @click="openUpsertDialog()"
       >
         <template #icon>
@@ -60,6 +62,7 @@
       rowHeight="50px"
       fixedLast
       doNotChangeQuery
+      tableScrollPadding="2px"
       class="h-full overflow-hidden"
       @sortBy="sortBy"
       @update:selected="(val: number[])=> $emit('selectionChange', val)"
@@ -101,26 +104,18 @@
             <template #reference>
               <div class="text-accent">
                 <template v-if="type === 'xl'">
-                  <el-tag class="mr-1">
-                    {{ row.tags[0] }}
+                  <el-tag v-for="i of 3" :key="i" class="mr-1">
+                    {{ row.tags[i-1] }}
                   </el-tag>
-                  <el-tag class="mr-1">
-                    {{ row.tags[1] }}
-                  </el-tag>
-                  <el-tag class="mr-1">
-                    {{ row.tags[2] }}
-                  </el-tag>
+                  <span v-if="row.tags.length > 3" class="ml-2">...</span>
                 </template>
 
                 <template v-else>
-                  <el-tag class="mr-1">
-                    {{ row.tags[0] }}
+                  <el-tag v-for="i of 2" :key="i" class="mr-1">
+                    {{ row.tags[i-1] }}
                   </el-tag>
-                  <el-tag class="mr-1">
-                    {{ row.tags[1] }}
-                  </el-tag>
+                  <span v-if="row.tags.length > 2">...</span>
                 </template>
-                ...
               </div>
             </template>
             <div>
@@ -164,7 +159,7 @@
           title="Are you sure to delete this?"
           confirm-button-text="Yes"
           cancel-button-text="No"
-          @confirm="handleDelete(row)"
+          @confirm="() => { handleDelete(row) }"
         >
           <template #reference>
             <el-button
@@ -177,14 +172,16 @@
         </el-popconfirm>
       </template>
     </AppTable>
+
     <el-pagination
       v-if="questions && tags && totalCount"
       v-model:current-page="currentPage"
       v-model:page-size="pageSize"
-      :page-sizes="[ 3, 9, 15, 20]"
+      :page-sizes="[ 5, 10, 15, 20]"
       :total="totalCount"
       background
-      layout="total,sizes, prev, pager, next, jumper"
+      :small="type==='sm'"
+      :layout="`total,sizes, prev, pager, next, ${type==='sm' ? '': 'jumper'}`"
       class="justify-center my-2"
       @current-change="handleChangeCurrentPage"
       @size-change="handleChangeSize"
@@ -194,10 +191,11 @@
 
 <script setup lang="ts">
 import UpsertQuestion from './components/UpsertQuestion.vue'
-const { type } = useWindowWidth()
 interface IProps {
   selectedRows?: any[]
 }
+
+const { type } = useWindowWidth()
 
 defineProps<IProps>()
 defineEmits(['selectionChange'])
@@ -206,7 +204,7 @@ const dialogRef = ref<InstanceType<typeof UpsertQuestion> | null >(null)
 
 const totalCount = ref<number>(0)
 const currentPage = ref(1)
-const pageSize = ref(9)
+const pageSize = ref(10)
 
 const skip = computed(() => ((currentPage.value - 1) * (pageSize.value)))
 const limit = computed(() => (skip.value + pageSize.value - 1))

@@ -1,17 +1,12 @@
 <template>
+  <Header />
+
   <div class="min-w-[300px] md:min-w-[500px] m-auto">
     <el-card v-loading="loading" class="auth-card md:pb-5 text-black">
       <template #header>
         <div class="flex justify-center items-center">
           <p class="font-semibold text-xl">
             Register
-          </p>
-          <el-divider direction="vertical" />
-          <p
-            class="text-xl cursor-pointer"
-            @click="$router.push({name: $routeNames.login})"
-          >
-            Login
           </p>
         </div>
       </template>
@@ -107,7 +102,7 @@ const submit = () => {
 
           if (data.user) {
             setUserData(data.user)
-            navigateToAdminOrUserPage(data.user)
+            navigateToAdminOrUserPage()
           }
         })
         .catch(error => (useErrorNotification(error.message)))
