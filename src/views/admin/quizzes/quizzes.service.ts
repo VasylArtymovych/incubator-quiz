@@ -1,7 +1,14 @@
 class QuizzesService {
-  getQuizzes (skip: number, limit: number) {
+  getQuizzesPopulated (skip: number, limit: number) {
     return supabase
       .rpc('get_quizzes', {}, { count: 'exact' })
+      .range(skip, limit)
+  }
+
+  getQuizzes (skip: number, limit: number) {
+    return supabase
+      .from('quizzes')
+      .select('*', { count: 'exact' })
       .range(skip, limit)
   }
 

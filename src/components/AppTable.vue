@@ -89,7 +89,7 @@
                   <slot :name="lastColumn.prop" :row="row" :rowIndex="i">
                     <TruncatedTooltip
                       :contentProp="generateValue(row, lastColumn.prop)"
-                      :style="`max-width: ${lastColumn.minWidth}px`"
+                      :style="`min-width: ${lastColumn.minWidth}px`"
                     />
                   </slot>
                 </Computed>

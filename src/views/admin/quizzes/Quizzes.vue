@@ -225,7 +225,6 @@ async function getQuizzes () {
     loading.value = false
   }
 }
-getQuizzes()
 
 async function deleteQuiz (id: number) {
   try {
@@ -242,4 +241,6 @@ async function deleteQuiz (id: number) {
     loading.value = false
   }
 }
+
+getQuizzes()
 </script>

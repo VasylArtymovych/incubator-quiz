@@ -102,19 +102,10 @@
           >
             <template #reference>
               <div class="text-accent">
-                <template v-if="type === 'xl'">
-                  <el-tag v-for="i of 3" :key="i" class="mr-1">
-                    {{ row.tags[i-1] }}
-                  </el-tag>
-                  <span v-if="row.tags.length > 3" class="ml-2">...</span>
-                </template>
-
-                <template v-else>
-                  <el-tag v-for="i of 2" :key="i" class="mr-1">
-                    {{ row.tags[i-1] }}
-                  </el-tag>
-                  <span v-if="row.tags.length > 2">...</span>
-                </template>
+                <el-tag v-for="i of 2" :key="i" class="mr-1">
+                  {{ row.tags[i-1] }}
+                </el-tag>
+                <span>...</span>
               </div>
             </template>
             <div>
@@ -246,7 +237,7 @@ const sortedQuestions = computed(() => {
 const headers: any[] = [
   { label: 'Title', prop: 'title', sortable: true, minWidth: 240, contentClass: 'font-semibold xl:!text-lg' },
   { label: 'Options', prop: 'options', minWidth: 160 },
-  { label: 'Tags', prop: 'tags', minWidth: 130, maxWidth: 200 },
+  { label: 'Tags', prop: 'tags', minWidth: 130, maxWidth: 150 },
   { label: 'Timer', prop: 'timer', sortable: true, width: 100 },
   { label: 'Actions', prop: 'actions', width: 120, contentCenter: true }
 ]
