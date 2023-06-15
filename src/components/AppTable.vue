@@ -27,7 +27,6 @@
             </th>
 
             <template v-for="(header, index) in visibleColumns" :key="header.prop">
-              <!-- TODO: remove shadow when block is fully visible -->
               <th
                 v-if="!$mq.smaller('md').value"
                 :class="{ 'right-0 shadow-fixed-column': fixedLast && visibleColumns.length - 1 === index }"
@@ -66,11 +65,11 @@
             <tr
               :id="row[unique]"
               :class="[rowClassChecker(row), rowClass, { 'cursor-pointer': clickable },
-                       { 'mb-[15px] border border-accentLight2 p-[15px] block w-full rounded-md bg-gradientTableCard':
+                       { 'mb-[15px] border border-accentLight2 p-[15px] block w-full rounded-md bg-white shadow-md shadow-accentLight3':
                          $mq.smaller('md').value }]"
               @click="$emit('rowClick', row)"
             >
-              <td v-if="selected" class="md:inline-block w-[40px] sticky left-0">
+              <td v-if="selected" class="inline-block w-[40px] sticky left-0">
                 <div
                   :class="[{'cell text-center': !$mq.smaller('md').value},
                            {'bg-accentLight3 pt-[2px] rounded-full': $mq.smaller('md').value}]"
@@ -83,7 +82,7 @@
 
               <td
                 v-if="$mq.smaller('md').value && fixedLast"
-                class="actions-td text-right flex justify-end mb-3 mr-2 relative"
+                class="actions-td text-right inline-block  justify-end  w-full mb-2 relative"
               >
                 <Computed #default="{ lastColumn }" :lastColumn="visibleColumns[visibleColumns.length - 1]">
                   <slot :name="lastColumn.prop" :row="row" :rowIndex="i">
@@ -118,7 +117,7 @@
                     ]"
                   >
                     <slot v-if="$mq.smaller('md').value && h.label !== 'Score'" :name="`header_${h.prop}`" :header="h">
-                      <p class="w-[33%] text-white uppercase font-semibold pr-2">
+                      <p class="w-[33%] text-black uppercase font-semibold pr-2">
                         {{ h.label || '' }}:
                       </p>
                     </slot>
@@ -160,7 +159,6 @@
   </div>
 </template>
 
-<!-- TODO: rebuild this for Composition API with TS support -->
 <script>
 import { falsyFilter, getNestedProp } from '@/core/helpers'
 import { replaceRouterQuery } from '@/router'
@@ -360,7 +358,7 @@ export default {
 
   th {
     @apply md:h-[50px] h-[40px] sticky top-0 text-white border border-snuff
-    bg-gray #{!important};
+    bg-black #{!important};
     @apply z-[10];
   }
 
@@ -408,17 +406,5 @@ export default {
 
 .actions-td {
   z-index: 0;
-}
-.actions-td::after {
-  content: '';
-  width: 120px;
-  height: 34px;
-  position: absolute;
-  top: -5px;
-  right: -4px;
-  z-index: -1;
-  border-radius: 50px 0 0 50px;
-  background-color: #6b7280;
-
 }
 </style>

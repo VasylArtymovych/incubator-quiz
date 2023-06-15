@@ -83,7 +83,7 @@
         {{ row.questions.length }}
       </template>
       <template #percentage_score="{row}">
-        <p :class="{'text-white font-semibold pt-[2px] pr-2': $mq.smaller('md').value}">
+        <p :class="{'text-black font-semibold pt-[2px] pr-2': $mq.smaller('md').value}">
           {{ $mq.smaller('md').value ? 'Score:' : '' }} {{ row.percentage_score }}%
         </p>
       </template>
