@@ -35,8 +35,8 @@
           :class="{'scale-[0.98] shadow-none': selectedOption === opt.title}"
         >
           <p
-            class="option-text p-2 bg-catskill-white option select-none hover:shadow-accentLight2"
-            :class="{'selected bg-black font-semibold text-white': selectedOption === opt.title}"
+            class="option-text py-2 px-4 bg-catskill-white option select-none hover:shadow-accentLight2"
+            :class="{'selected !bg-black font-semibold text-white': selectedOption === opt.title}"
             @click="selectedOption = opt.title"
           >
             <span class="font-semibold"> {{ i+1 }}</span>: {{ opt.title }}
