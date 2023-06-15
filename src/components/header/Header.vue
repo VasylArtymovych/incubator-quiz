@@ -6,7 +6,7 @@
       class="flex justify-between items-center"
     >
       <div
-        class="logo flex justify-center items-center cursor-pointer"
+        class="logo flex justify-center min-w-fit items-center cursor-pointer overflow-hidden"
         @click="$router.push({name: $routeNames.rootPage})"
       >
         <img
@@ -15,7 +15,7 @@
           class="w-12 h-12 text-red-600"
         >
         <p class="logo-text font-bold text-2xl">
-          QuizCraft
+          uizCraft
         </p>
         <el-badge
           value="BETA"
@@ -58,7 +58,7 @@
 </template>
 
 <script setup lang="ts">
-import owlLogo from '@/assets/images/owl_logo.png'
+import owlLogo from '@/assets/images/logo-2.svg'
 import DefaultContainer from '@/layouts/DefaultContainer.vue'
 
 const authStore = useAuthStore()

@@ -11,7 +11,7 @@
       >
         <div
           class="absolute z-[1] top-0 left-0 w-full h-full p-4 md:p-6 bg-white rotate-[15deg]
-          shadow-[-1px_5px_3px__rgba(0,0,0,0.6)] text-sm md:text-base xl:text-lg indent-3"
+          shadow-[-1px_5px_3px__rgba(0,0,0,0.6)] text-sm md:text-base xl:text-lg indent-3 flex flex-col"
         >
           <h1 class="mb-2 md:mb-3 font-bold text-lg md:text-3xl xl:text-4xl text-center indent-0">
             Welcome to  <em class="text-accent">QuizCraft</em> !
@@ -29,6 +29,12 @@
             In section <em class="text-accent">Results</em>
             you are able to see your quiz score and results of your answers.
           </p>
+
+          <img
+            :src="owlLogo"
+            alt="logo"
+            class="w-4 h-4 md:w-12 md:h-12 text-red-600 ml-auto mt-auto"
+          >
         </div>
 
         <div
@@ -43,6 +49,7 @@
 
 <script setup lang="ts">
 import DefaultContainer from '@/layouts/DefaultContainer.vue'
+import owlLogo from '@/assets/images/logo-2.svg'
 </script>
 
 <style scoped lang="scss">
