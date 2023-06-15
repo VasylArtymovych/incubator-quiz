@@ -9,6 +9,7 @@
       :rules="formRules"
       :model="formModel"
       class="mb-4"
+      @submit.prevent
     >
       <el-form-item
         label="Quiz title"

@@ -1,6 +1,16 @@
 <template>
   <div v-loading="loading" class="users flex flex-col h-full">
-    <div class="flex justify-between my-3 bg-transparent">
+    <div class="flex gap-4 my-3 bg-transparent">
+      <div v-if="users && selectedRows">
+        <p class="pl-1 mb-1 text-accent text-sm font-semibold">Selected</p>
+        <el-tag
+          :size="type === 'sm' ? $elComponentSize.default : $elComponentSize.large"
+          class="self-end text-sm"
+        >
+          {{ selectedRows.length }} of {{ totalCount }}
+        </el-tag>
+      </div>
+
       <el-form
         ref="formRef"
         label-position="top"
@@ -8,6 +18,7 @@
         :rules="formRules"
         :size="type === 'sm' ? 'small' : 'default'"
         class="users-form"
+        @submit.prevent
       >
         <el-form-item
           label="Find User"
@@ -32,10 +43,6 @@
           </el-input>
         </el-form-item>
       </el-form>
-
-      <el-tag v-if="users && selectedRows" class="self-end">
-        Selected: {{ selectedRows.length }} of {{ totalCount }}
-      </el-tag>
     </div>
 
     <AppTable

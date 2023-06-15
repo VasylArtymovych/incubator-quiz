@@ -33,7 +33,11 @@
         :prop="'options.' + index + '.title'"
         :rules="optionRules"
       >
-        <el-input v-model="opt.title" clearable placeholder="Answer" />
+        <el-input
+          v-model="opt.title"
+          clearable
+          placeholder="Answer"
+        />
         <el-radio
           v-model="correctOpt"
           :label="index"
@@ -105,11 +109,18 @@
 
     <template #footer>
       <span class="dialog-footer">
-        <el-button :type="$elComponentType.primary" @click="dialogVisible = false">Cancel</el-button>
+        <el-button
+          :type="$elComponentType.primary"
+          @click="dialogVisible = false"
+        >
+          Cancel
+        </el-button>
         <el-button
           :type="$elComponentType.success"
           @click="submitForm"
-        >{{ updatingQuestionId ? "Update": 'Create' }}</el-button>
+        >
+          {{ updatingQuestionId ? "Update": 'Create' }}
+        </el-button>
       </span>
     </template>
   </el-dialog>
@@ -147,8 +158,8 @@ const formRules = useElFormRules({
 })
 const optionRules = [useRequiredRule()]
 
-const correctOpt = ref<number>(0)
-const tagOptions = ref(['FE', 'BE'])
+const correctOpt = ref(0)
+const tagOptions = ref<Set<string> | [] >([])
 
 const addOption = () => {
   formModel.value.options.push({
@@ -207,7 +218,7 @@ const onCloseDialog = () => {
   resetFrom()
 }
 
-const openQuestionDialog = (row?: IQuestion) => {
+const openQuestionDialog = (tags: Set<string> | null, row?: IQuestion) => {
   updatingQuestionId.value = ''
 
   if (row) {
@@ -215,6 +226,8 @@ const openQuestionDialog = (row?: IQuestion) => {
     formModel.value = cloneDeep(row)
     correctOpt.value = row.options.findIndex(opt => (opt.is_correct === true))
   }
+  if (tags) tagOptions.value = tags
+
   dialogVisible.value = true
 }
 

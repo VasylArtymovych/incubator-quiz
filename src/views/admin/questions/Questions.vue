@@ -6,34 +6,39 @@
       @inserted="insertedQuestion"
     />
     <div class="flex justify-between items-end my-3 bg-transparent wrapper">
-      <div>
-        <p class="pl-1 mb-1 text-accent text-sm font-semibold">Filter by tag</p>
-        <el-select
-          v-model="selectedTags"
-          :size="type === 'sm' ? $elComponentSize.small : $elComponentSize.default"
-          multiple
-          collapse-tags
-          collapse-tags-tooltip
-          placeholder="Select tags"
-          clearable
-          :tag-type="$elComponentType.primary"
-          @change="handleChangeSelect"
-        >
-          <el-option
-            v-for="tag in tags"
-            :key="tag"
-            :label="tag.toUpperCase()"
-            :value="tag"
-          />
-        </el-select>
-      </div>
+      <div class="flex gap-4">
+        <div v-if="questions && selectedRows">
+          <p class="pl-1 mb-1 text-accent text-sm font-semibold">Selected</p>
+          <el-tag
+            :size="type === 'sm' ? $elComponentSize.default : $elComponentSize.large"
+            class="self-end text-sm"
+          >
+            {{ selectedRows.length }} of {{ totalForSelected }}
+          </el-tag>
+        </div>
 
-      <el-tag
-        v-if="questions && selectedRows"
-        class="self-end"
-      >
-        {{ type==='sm'? '': ' Selected:' }} {{ selectedRows.length }} of {{ totalCount }}
-      </el-tag>
+        <div>
+          <p class="pl-1 mb-1 text-accent text-sm font-semibold">Filter by tag</p>
+          <el-select
+            v-model="selectedTags"
+            :size="type === 'sm' ? $elComponentSize.small : $elComponentSize.default"
+            multiple
+            collapse-tags
+            collapse-tags-tooltip
+            placeholder="Select tags"
+            clearable
+            :tag-type="$elComponentType.primary"
+            @change="handleChangeSelect"
+          >
+            <el-option
+              v-for="tag in tags"
+              :key="tag"
+              :label="tag.toUpperCase()"
+              :value="tag"
+            />
+          </el-select>
+        </div>
+      </div>
 
       <el-button
         :type="$elComponentType.primary"
@@ -196,7 +201,8 @@ defineEmits(['selectionChange'])
 
 const dialogRef = ref<InstanceType<typeof UpsertQuestion> | null >(null)
 
-const totalCount = ref<number>(0)
+const totalForSelected = ref(0)
+const totalCount = ref(0)
 const currentPage = ref(1)
 const pageSize = ref(10)
 
@@ -315,7 +321,7 @@ const handleChangeSelect = () => {
 
 const openUpsertDialog = (row?: IQuestion) => {
   if (dialogRef.value) {
-    dialogRef.value.openQuestionDialog(row)
+    dialogRef.value.openQuestionDialog(tags.value, row)
   }
 }
 
@@ -328,6 +334,7 @@ async function getQuestions () {
     }
     if (count) {
       totalCount.value = count
+      totalForSelected.value = count
     }
   } catch (error: any) {
     return useErrorNotification(error.message)
