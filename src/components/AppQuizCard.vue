@@ -15,13 +15,20 @@
       >
         <span class="text-xs mr-2 text-accent">{{ time ? "Quiz time:" : isCompleted ? 'Score:' : '' }}</span>
         <template v-if="time">
-          {{ convertSeconds(time).hours }}h:{{ convertSeconds(time).mins }}m:{{ convertSeconds(time).secs }}s
+          {{
+            `${convertSeconds(time).hours ? convertSeconds(time).hours + 'h:' : ''}
+            ${convertSeconds(time).mins ? convertSeconds(time).mins + 'm:' : ''}
+            ${convertSeconds(time).secs}s`
+          }}
         </template>
         <template v-if="isCompleted">
           {{ score }}%
         </template>
       </p>
-      <h2 class="title text-[28px] leading-10 text-titleWhite mb-4 opacity-[0.8]">
+      <h2
+        class="title text-[28px] leading-10 text-titleWhite mb-4 opacity-[0.8]
+      transition-all duration-300 ease-in-out"
+      >
         {{ title }}
       </h2>
       <button

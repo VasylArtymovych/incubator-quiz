@@ -122,7 +122,7 @@ props.quizId && getQuizById(props.quizId)
 
 const createQuiz = async () => {
   if (!selectedQuestions.value.length) {
-    return useErrorNotification('Questions list cannot be empty')
+    return useWarningNotification('Questions list cannot be empty')
   }
   try {
     loading.value = true

@@ -138,8 +138,11 @@
       </template>
 
       <template #timer="{row}">
-        <el-tag round>
-          {{ row.timer }}
+        <el-tag>
+          {{
+            `${convertSeconds(row.timer).mins ? convertSeconds(row.timer).mins + 'm :' : ''}
+            ${addLeadingZero(convertSeconds(row.timer).secs, 2)}s`
+          }}
         </el-tag>
       </template>
 
@@ -190,6 +193,7 @@
 
 <script setup lang="ts">
 import UpsertQuestion from './components/UpsertQuestion.vue'
+import { convertSeconds, addLeadingZero } from '@/core/helpers'
 interface IProps {
   selectedRows?: any[]
 }

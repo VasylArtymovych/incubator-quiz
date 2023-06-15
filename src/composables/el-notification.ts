@@ -7,6 +7,13 @@ export const useSuccessNotification = (message: string) => (
     type: 'success'
   })
 )
+export const useWarningNotification = (message: string) => (
+  ElNotification({
+    title: 'Warning',
+    message,
+    type: 'warning'
+  })
+)
 
 export const useErrorNotification = (message = 'Error occurred') => (
   ElNotification({
