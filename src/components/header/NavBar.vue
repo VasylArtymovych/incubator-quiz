@@ -1,7 +1,8 @@
 <template>
   <ul
-    class="absolute z-50 top-[81px] md:static w-full h-screen  pt-[25vh] md:p-0 transition-[right] duration-300 ears-in
-    md:flex justify-end gap-4 lg:gap-8  bg-black md:bg-inherit font-bold text-white md:text-lg xl:text-2xl"
+    class="absolute z-50 top-[81px] md:static w-full h-screen md:h-auto  pt-[25vh] md:py-4 md:p-0 transition-[right]
+    duration-300 ears-in md:flex justify-end gap-4 lg:gap-8  bg-black md:bg-inherit font-bold text-white md:text-lg
+    xl:text-2xl"
     :class="[isActive ? 'right-0': 'right-[-100%]']"
   >
     <template v-if="!isAuthenticated">
