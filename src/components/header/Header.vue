@@ -24,7 +24,7 @@
         />
       </div>
 
-      <NavBar :isActive="isActive" />
+      <NavBar :isActive="isActive" @toggleActive="isActive = !isActive" />
 
       <div
         class="flex"

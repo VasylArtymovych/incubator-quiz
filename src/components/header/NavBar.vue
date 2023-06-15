@@ -13,6 +13,7 @@
         <RouterLink
           :to="`/${item.route}`"
           class="link relative w-full text-center p-4 md:p-0 hover:text-accent capitalize"
+          @click="$emit('toggleActive')"
         >
           {{ item.name }}
         </RouterLink>
@@ -26,6 +27,7 @@
         <RouterLink
           :to="`/admin/${item}`"
           class="link relative w-full text-center p-4 md:p-0 hover:text-accent capitalize"
+          @click="$emit('toggleActive')"
         >
           {{ item }}
         </RouterLink>
@@ -39,6 +41,7 @@
         <RouterLink
           :to="{name: $routeNames.rootPage}"
           class="link relative w-full text-center p-4 md:p-0 hover:text-accent"
+          @click="$emit('toggleActive')"
         >
           About Us
         </RouterLink>
@@ -50,6 +53,7 @@
         <RouterLink
           :to="`/${item.route}`"
           class="link relative w-full text-center p-4 md:p-0 hover:text-accent capitalize"
+          @click="$emit('toggleActive')"
         >
           {{ item.name }}
         </RouterLink>
@@ -62,6 +66,8 @@
 defineProps<{
   isActive: boolean
 }>()
+
+defineEmits(['toggleActive'])
 
 const authStore = useAuthStore()
 const { isAuthenticated, getUserRole } = storeToRefs(authStore)
