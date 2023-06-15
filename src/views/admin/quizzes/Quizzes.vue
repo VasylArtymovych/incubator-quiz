@@ -12,7 +12,7 @@
           v-model="searchedQuiz"
           placeholder="Quiz title"
           clearable
-          :size="type === 'sm' ? $elComponentSize.small : $elComponentSize.default"
+          :size="$mq.smaller('md').value ? $elComponentSize.small : $elComponentSize.default"
           class="w-[300px]"
           @input="handleClearInputData"
         >
@@ -98,8 +98,9 @@
       :page-sizes="[ 5, 10, 15, 20]"
       :total="totalCount"
       background
-      :small="type ==='sm'"
-      :layout="`total, ${type==='sm' ? '': 'sizes'}, prev, pager, next, ${type==='sm' ? '': 'jumper'}`"
+      :small="$mq.smaller('md').value"
+      :layout="`total, ${$mq.smaller('md').value ? '': 'sizes'},
+      prev, pager, next, ${$mq.smaller('md').value ? '': 'jumper'}`"
       class="quizzes--align-center"
       @current-change="handleChangeCurrentPage"
       @size-change="handleChangeSize"
@@ -110,7 +111,6 @@
 <script setup lang="ts">
 import { quizzesService } from './quizzes.service'
 
-const { type } = useWindowWidth()
 const router = useRouter()
 const { $routeNames } = useGlobalProperties()
 

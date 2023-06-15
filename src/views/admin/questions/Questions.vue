@@ -10,7 +10,7 @@
         <div v-if="questions && selectedRows">
           <p class="pl-1 mb-1 text-accent text-sm font-semibold">Selected</p>
           <el-tag
-            :size="type === 'sm' ? $elComponentSize.default : $elComponentSize.large"
+            :size="$mq.smaller('md').value ? $elComponentSize.default : $elComponentSize.large"
             class="self-end text-sm"
           >
             {{ selectedRows.length }} of {{ totalForSelected }}
@@ -21,7 +21,7 @@
           <p class="pl-1 mb-1 text-accent text-sm font-semibold">Filter by tag</p>
           <el-select
             v-model="selectedTags"
-            :size="type === 'sm' ? $elComponentSize.small : $elComponentSize.default"
+            :size="$mq.smaller('md').value ? $elComponentSize.small : $elComponentSize.default"
             multiple
             collapse-tags
             collapse-tags-tooltip
@@ -43,7 +43,7 @@
       <el-button
         :type="$elComponentType.primary"
         plain
-        :size="type === 'sm' ? $elComponentSize.small : $elComponentSize.default"
+        :size="$mq.smaller('md').value ? $elComponentSize.small : $elComponentSize.default"
         class="flex items-center" @click="openUpsertDialog()"
       >
         <template #icon>
@@ -173,8 +173,9 @@
       :page-sizes="[ 5, 10, 15, 20]"
       :total="totalCount"
       background
-      :small="type==='sm'"
-      :layout="`total, ${type==='sm' ? '': 'sizes'}, prev, pager, next, ${type==='sm' ? '': 'jumper'}`"
+      :small="$mq.smaller('md').value"
+      :layout="`total, ${$mq.smaller('md').value ? '': 'sizes'},
+      prev, pager, next, ${$mq.smaller('md').value ? '': 'jumper'}`"
       class="justify-center my-2"
       @current-change="handleChangeCurrentPage"
       @size-change="handleChangeSize"
@@ -188,8 +189,6 @@ import { convertSeconds, addLeadingZero } from '@/core/helpers'
 interface IProps {
   selectedRows?: any[]
 }
-
-const { type } = useWindowWidth()
 
 defineProps<IProps>()
 defineEmits(['selectionChange'])

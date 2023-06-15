@@ -16,7 +16,7 @@
           remote-show-suffix
           collapse-tags
           collapse-tags-tooltip
-          :size="type === 'sm' ? $elComponentSize.small : $elComponentSize.default"
+          :size="$mq.smaller('md').value ? $elComponentSize.small : $elComponentSize.default"
           placeholder="Enter user email"
           :remote-method="remoteUsersMethod"
           :loading="userSelectLoading"
@@ -42,7 +42,7 @@
           remote-show-suffix
           collapse-tags
           collapse-tags-tooltip
-          :size="type === 'sm' ? $elComponentSize.small : $elComponentSize.default"
+          :size="$mq.smaller('md').value ? $elComponentSize.small : $elComponentSize.default"
           placeholder="Enter quiz title"
           :remote-method="remoteQuizzesMethod"
           :loading="quizSelectLoading"
@@ -83,8 +83,8 @@
         {{ row.questions.length }}
       </template>
       <template #percentage_score="{row}">
-        <p :class="{'text-white font-semibold pt-[2px] pr-2': type === 'sm'}">
-          {{ type === 'sm'? 'Score:' : '' }} {{ row.percentage_score }}%
+        <p :class="{'text-white font-semibold pt-[2px] pr-2': $mq.smaller('md').value}">
+          {{ $mq.smaller('md').value ? 'Score:' : '' }} {{ row.percentage_score }}%
         </p>
       </template>
     </AppTable>
@@ -92,7 +92,6 @@
 </template>
 
 <script setup lang="ts">
-const { type } = useWindowWidth()
 const headers: any[] = [
   { label: 'Email', prop: 'email', minWidth: 240, contentClass: 'font-semibold xl:!text-lg' },
   { label: 'Quiz title', prop: 'quizTitle', minWidth: 260 },

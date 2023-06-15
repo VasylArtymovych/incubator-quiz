@@ -4,7 +4,7 @@
       <div v-if="users && selectedRows">
         <p class="pl-1 mb-1 text-accent text-sm font-semibold">Selected</p>
         <el-tag
-          :size="type === 'sm' ? $elComponentSize.default : $elComponentSize.large"
+          :size="$mq.smaller('md').value ? $elComponentSize.default : $elComponentSize.large"
           class="self-end text-sm"
         >
           {{ selectedRows.length }} of {{ totalCount }}
@@ -16,7 +16,7 @@
         label-position="top"
         :model="formModel"
         :rules="formRules"
-        :size="type === 'sm' ? 'small' : 'default'"
+        :size="$mq.smaller('md').value ? 'small' : 'default'"
         class="users-form"
         @submit.prevent
       >
@@ -64,8 +64,9 @@
       :page-sizes="[ 5, 10, 15, 20]"
       :total="totalCount"
       background
-      :small="type==='sm'"
-      :layout="`total, ${type==='sm' ? '': 'sizes'}, prev, pager, next, ${type==='sm' ? '': 'jumper'}`"
+      :small="$mq.smaller('md').value"
+      :layout="`total, ${$mq.smaller('md').value ? '': 'sizes'},
+      prev, pager, next, ${$mq.smaller('md').value ? '': 'jumper'}`"
       class="justify-center my-2"
       @current-change="handleChangeCurrentPage"
       @size-change="handleChangeSize"
@@ -74,12 +75,9 @@
 </template>
 
 <script setup lang="ts">
-import { usersListService } from './users-list.service'
 interface IProps {
   selectedRows?: any[]
 }
-
-const { type } = useWindowWidth()
 
 defineProps<IProps>()
 defineEmits(['selectionChange'])
