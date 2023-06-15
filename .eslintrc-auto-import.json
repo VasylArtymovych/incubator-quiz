@@ -87,7 +87,6 @@
     "useSuccessNotification": true,
     "useUserResultsStore": true,
     "useWarningNotification": true,
-    "useWindowWidth": true,
     "userResultsService": true,
     "usersListService": true,
     "watch": true,

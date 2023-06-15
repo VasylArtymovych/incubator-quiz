@@ -88,7 +88,6 @@ declare global {
   const useSuccessNotification: typeof import('../src/composables/el-notification')['useSuccessNotification']
   const useUserResultsStore: typeof import('../src/views/home/user-results/user-results.store')['useUserResultsStore']
   const useWarningNotification: typeof import('../src/composables/el-notification')['useWarningNotification']
-  const useWindowWidth: typeof import('../src/composables/window-width')['useWindowWidth']
   const userResultsService: typeof import('../src/views/home/user-results/user-results.service')['userResultsService']
   const usersListService: typeof import('../src/views/admin/users-list/users-list.service')['usersListService']
   const watch: typeof import('vue')['watch']
