@@ -15,6 +15,7 @@
       <li
         v-for="ques in currentResult.questions" :key="ques.id"
         class="item relative p-3 pt-2 mb-4 md:mb-5 rounded overflow-hidden text-sm shadow-lg bg-white"
+        :class="{'item--no-answer': !hashedAnswers.get(ques.id).value}"
       >
         <h2 class="mb-2 font-semibold text-base md:text-lg">
           {{ ques.title }}
@@ -61,4 +62,23 @@ userResultsStore.getResultById(+route.params.resultId)
   flex-basis: calc((100% - 8px) / 2);
   flex-shrink: 0;
 }
+.item--no-answer {
+  position: relative;
+  filter: brightness(0.5);
+}
+
+.item--no-answer::after {
+  content: 'Answer was not provided';
+  font-size: 1rem;
+  color: red;
+  background-color: white;
+  font-weight: bold;
+  padding: 20px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 1;
+  transform: translate(-50%, -50%);
+}
+
 </style>

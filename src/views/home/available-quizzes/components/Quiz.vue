@@ -10,7 +10,7 @@
       <AppTimer
         :key="currentStep"
         class="mx-auto my-4"
-        :width="100"
+        :width="90"
         :strokeWidth="3"
         :time="currentQuestion.timer"
         @timeIsUp="onNextClick"
