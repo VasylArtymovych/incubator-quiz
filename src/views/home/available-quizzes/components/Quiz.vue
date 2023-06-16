@@ -59,7 +59,6 @@
 
 <script setup lang="ts">
 import DefaultContainer from '@/layouts/DefaultContainer.vue'
-
 const authStore = useAuthStore()
 const availableQuizzesStore = useAvailableQuizStore()
 const { currentQuiz, currentQuestion, availableQuizzes, loading, answers } = storeToRefs(availableQuizzesStore)
@@ -68,6 +67,7 @@ const route = useRoute()
 const router = useRouter()
 const { $routeNames } = useGlobalProperties()
 
+const preventNavigation = ref(true)
 const quizId = ref(+route.params.id)
 const currentStep = ref(+route.query.step! || 1)
 const selectedOption = ref<string>('')
@@ -102,6 +102,7 @@ const saveResults = async () => {
     const { status, error } = await userResultsService.saveResults(result)
     if (error) throw new Error(error.message)
     if (status === 201) {
+      preventNavigation.value = false
       router.replace({ name: $routeNames.userResults })
     }
   } catch (error: any) {
@@ -144,7 +145,6 @@ onBeforeMount(() => {
 })
 
 // Code to prevent page reload
-const preventNavigation = ref(true)
 
 function beforeUnload (e: any) {
   if (preventNavigation.value) {
