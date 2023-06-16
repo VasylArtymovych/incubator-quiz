@@ -15,14 +15,13 @@
         :time="currentQuestion.timer"
         @timeIsUp="onNextClick"
       />
-
       <div class="flex flex-col h-full overflow-auto p-4 lg:px-8">
         <div class="text-base font-semibold mb-3">
           Question:
           {{ currentStep }}/{{ currentQuiz?.questions.length }}
         </div>
         <div class="relative  p-2 mb-8 rounded-lg bg-borderGradient shadow-lg shadow-gray-medium">
-          <h2 class="p-2 md:p-6 font-semibold bg-catskill-white rounded-sm select-none md:text-lg">
+          <h2 class="p-2 md:p-6 font-semibold bg-catskill-white rounded-sm select-none md:text-lg lg:text-2xl">
             {{ currentQuestion?.title }}
           </h2>
         </div>
@@ -144,21 +143,36 @@ onBeforeMount(() => {
   setCurrentQuizAndQuestion()
 })
 
-// const confirmReload = (event: BeforeUnloadEvent) => {
-//   console.log('confirmReload')
-//   event.preventDefault()
-//   event.returnValue = '' // Required for Chrome and Edge
-// }
+// Code to prevent page reload
+const preventNavigation = ref(true)
 
-// onMounted(() => {
-//   // if (import.meta.env.VITE_ENV === 'local') return
-//   window.addEventListener('beforeunload', confirmReload, { capture: true })
-// })
+function beforeUnload (e: any) {
+  if (preventNavigation.value) {
+    e.preventDefault()
+    e.returnValue = ''
+  }
+}
 
-// onBeforeUnmount(() => {
-//   console.log('onBeforeUnmount')
-//   window.removeEventListener('beforeunload', confirmReload)
-// })
+onMounted(() => {
+  window.addEventListener('beforeunload', beforeUnload)
+})
+
+onBeforeUnmount(() => {
+  window.removeEventListener('beforeunload', beforeUnload)
+  preventNavigation.value = false
+})
+
+onBeforeRouteLeave((to, from, next) => {
+  if (preventNavigation.value) {
+    if (window.confirm('Do you really want to leave? you have unsaved changes!')) {
+      next()
+    } else {
+      next(false)
+    }
+  } else {
+    next()
+  }
+})
 
 </script>
 
