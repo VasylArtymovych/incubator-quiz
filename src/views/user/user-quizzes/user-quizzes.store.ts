@@ -1,6 +1,6 @@
-export const useAvailableQuizStore = defineStore('availableQuizzesStore', () => {
+export const useUserQuizzesStore = defineStore('userQuizzesStore', () => {
   const loading = ref(true)
-  const availableQuizzes = ref<IQuizPopulated[]>([])
+  const userQuizzes = ref<IQuizPopulated[]>([])
   const currentQuiz = ref<IQuizPopulated| null>(null)
   const currentQuestion = ref<IQuestion | null>(null)
   const answers = ref<IAnswer[]>([])
@@ -21,10 +21,10 @@ export const useAvailableQuizStore = defineStore('availableQuizzesStore', () => 
 
   const getQuizzes = async () => {
     try {
-      const { data, error } = await availableQuizzesService.getQuizzes()
+      const { data, error } = await userQuizzesService.getQuizzes()
       if (error) throw new Error(error.message)
       if (data) {
-        availableQuizzes.value = data as IQuizPopulated[]
+        userQuizzes.value = data as IQuizPopulated[]
       }
     } catch (error: any) {
       return useErrorNotification(error.message)
@@ -36,7 +36,7 @@ export const useAvailableQuizStore = defineStore('availableQuizzesStore', () => 
   const getQuizById = async (id: number) => {
     if (currentQuiz.value) return
     try {
-      const { data, error } = await availableQuizzesService.getQuizById(id)
+      const { data, error } = await userQuizzesService.getQuizById(id)
       if (error) throw new Error(error.message)
       if (data) {
         setCurrentQuiz(data as IQuizPopulated)
@@ -51,7 +51,7 @@ export const useAvailableQuizStore = defineStore('availableQuizzesStore', () => 
   return {
     loading,
     currentQuiz,
-    availableQuizzes,
+    userQuizzes,
     currentQuestion,
     answers,
     setCurrentQuiz,

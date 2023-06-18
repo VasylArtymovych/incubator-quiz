@@ -79,7 +79,7 @@ const publicRoutes = [
 ]
 const adminRoutes = ['quizzes', 'questions', 'users', 'results']
 const userRoutes = [
-  { route: 'availableQuizzes', name: 'quizzes' },
+  { route: 'userQuizzes', name: 'quizzes' },
   { route: 'results', name: 'results' }
 ]
 </script>

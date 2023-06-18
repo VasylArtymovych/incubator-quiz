@@ -1,7 +1,7 @@
 <template>
   <div v-loading="loading" class="w-full h-full overflow-hidden my-4 md:my-6">
     <el-empty
-      v-if="!loading && !availableQuizzes.length"
+      v-if="!loading && !userQuizzes.length"
       description="No available quizzes"
       class="w-full h-full"
     >
@@ -17,7 +17,7 @@
 
     <div v-else class="h-full flex justify-center flex-wrap gap-x-6 gap-y-2 overflow-auto">
       <AppQuizCard
-        v-for="quiz in availableQuizzes" :key="quiz.id"
+        v-for="quiz in userQuizzes" :key="quiz.id"
         :title="quiz.title"
         :time="calcQuizTime(quiz)"
         class="w-[25%] min-w-[250px] max-w-[300px]"
@@ -28,9 +28,9 @@
 </template>
 
 <script setup lang="ts">
-const availableQuizzesStore = useAvailableQuizStore()
-const { availableQuizzes, loading } = storeToRefs(availableQuizzesStore)
-availableQuizzesStore.getQuizzes()
+const userQuizzesStore = useUserQuizzesStore()
+const { userQuizzes, loading } = storeToRefs(userQuizzesStore)
+userQuizzesStore.getQuizzes()
 
 const calcQuizTime = (quiz: IQuizPopulated) => {
   return quiz.questions.reduce((time, ques) => {

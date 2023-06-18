@@ -1,7 +1,7 @@
 <template>
   <div v-loading="loading" />
   <div
-    v-if="results"
+    v-if="sortedResults"
     class="results flex flex-col w-full h-full overflow-hidden"
   >
     <div class="flex items-start gap-5  my-3 bg-transparent ">

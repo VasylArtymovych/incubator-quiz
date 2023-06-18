@@ -1,4 +1,4 @@
-class AvailableQuizzesService {
+class UserQuizzesService {
   getQuizzes () {
     const authStore = useAuthStore()
 
@@ -16,4 +16,4 @@ class AvailableQuizzesService {
   }
 }
 
-export const availableQuizzesService = new AvailableQuizzesService()
+export const userQuizzesService = new UserQuizzesService()

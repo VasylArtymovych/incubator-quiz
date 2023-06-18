@@ -3,7 +3,7 @@ import { adminRoutesNames } from '@/views/admin/admin.routes'
 
 export const routeNames = {
   rootPage: 'rootPage',
-  availableQuizzes: 'availableQuizzes',
+  userQuizzes: 'userQuizzes',
   passQuiz: 'passQuiz',
   userResults: 'userResults',
   resultInfo: 'resultInfo',

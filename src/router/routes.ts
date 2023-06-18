@@ -3,7 +3,7 @@ import { routeNames } from '@/router/route-names'
 import { authRoutes } from '@/views/auth/auth.routes'
 import { adminRoutes } from '@/views/admin/admin.routes'
 
-import HomePage from '@/views/home/Home.vue'
+import HomePage from '@/views/user/Home.vue'
 
 export const routes: RouteRecordRaw[] = [
   {
@@ -12,21 +12,21 @@ export const routes: RouteRecordRaw[] = [
     component: HomePage,
     children: [
       {
-        path: 'availableQuizzes',
-        name: routeNames.availableQuizzes,
-        component: () => import('@/views/home/available-quizzes/AvailableQuizzes.vue'),
+        path: 'userQuizzes',
+        name: routeNames.userQuizzes,
+        component: () => import('@/views/user/user-quizzes/UserQuizzes.vue'),
         meta: { isProtected: true }
       },
       {
-        path: '/availableQuizzes/quiz/:id',
+        path: '/userQuizzes/quiz/:id',
         name: routeNames.passQuiz,
-        component: () => import('@/views/home/available-quizzes/components/Quiz.vue'),
+        component: () => import('@/views/user/user-quizzes/components/Quiz.vue'),
         meta: { isProtected: true }
       },
       {
         path: 'results',
         name: routeNames.userResults,
-        component: () => import('@/views/home/user-results/UserResults.vue'),
+        component: () => import('@/views/user/user-results/UserResults.vue'),
         meta: { isProtected: true }
       },
       {

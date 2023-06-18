@@ -71,7 +71,7 @@ declare module '@vue/runtime-core' {
     IconSearch: typeof import('./../src/components/icons/IconSearch.vue')['default']
     IconUser: typeof import('./../src/components/icons/IconUser.vue')['default']
     NavBar: typeof import('./../src/components/header/NavBar.vue')['default']
-    Quiz: typeof import('./../src/views/home/available-quizzes/components/Quiz.vue')['default']
+    Quiz: typeof import('./../src/views/user/user-quizzes/components/Quiz.vue')['default']
     QuizCard: typeof import('./../src/views/home/components/QuizCard.vue')['default']
     QuizList: typeof import('./../src/views/home/components/QuizList.vue')['default']
     ResultInfo: typeof import('./../src/components/ResultInfo.vue')['default']

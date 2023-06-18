@@ -60,8 +60,8 @@
 <script setup lang="ts">
 import DefaultContainer from '@/layouts/DefaultContainer.vue'
 const authStore = useAuthStore()
-const availableQuizzesStore = useAvailableQuizStore()
-const { currentQuiz, currentQuestion, availableQuizzes, loading, answers } = storeToRefs(availableQuizzesStore)
+const userQuizzesStore = useUserQuizzesStore()
+const { currentQuiz, currentQuestion, userQuizzes, loading, answers } = storeToRefs(userQuizzesStore)
 
 const route = useRoute()
 const router = useRouter()
@@ -86,7 +86,7 @@ const addCurrentAnswer = () => {
       id: currentQuestion.value.id,
       value: selectedOption.value
     }
-    availableQuizzesStore.addAnswer(currAnswer)
+    userQuizzesStore.addAnswer(currAnswer)
     selectedOption.value = ''
   }
 }
@@ -120,7 +120,7 @@ const onNextClick = () => {
   } else {
     addCurrentAnswer()
     currentStep.value += 1
-    availableQuizzesStore.setCurrentQuestion(currentStep.value)
+    userQuizzesStore.setCurrentQuestion(currentStep.value)
     router.replace({
       name: $routeNames.passQuiz,
       params: { id: quizId.value },
@@ -130,14 +130,14 @@ const onNextClick = () => {
 }
 
 const setCurrentQuizAndQuestion = async () => {
-  if (availableQuizzes.value.length) {
-    const currQuiz = availableQuizzes.value.find((quiz) => quiz.id === quizId.value)
-    currQuiz && availableQuizzesStore.setCurrentQuiz(currQuiz)
+  if (userQuizzes.value.length) {
+    const currQuiz = userQuizzes.value.find((quiz) => quiz.id === quizId.value)
+    currQuiz && userQuizzesStore.setCurrentQuiz(currQuiz)
   } else {
-    await availableQuizzesStore.getQuizById(quizId.value)
+    await userQuizzesStore.getQuizById(quizId.value)
   }
 
-  availableQuizzesStore.setCurrentQuestion(currentStep.value)
+  userQuizzesStore.setCurrentQuestion(currentStep.value)
 }
 
 onBeforeMount(() => {
@@ -146,7 +146,7 @@ onBeforeMount(() => {
 
 // Code to prevent page reload
 
-function beforeUnload (e: any) {
+const beforeUnload = function (e: any) {
   if (preventNavigation.value) {
     e.preventDefault()
     e.returnValue = ''
