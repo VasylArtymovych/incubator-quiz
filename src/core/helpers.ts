@@ -51,3 +51,23 @@ export const createHashedObject = (arr: any[], key = 'id') => {
     return hasMap
   }, new Map())
 }
+
+export const sortStringData = (data: any[], order: string, prop: string) => {
+  if (order === 'ASC') {
+    return data.sort((prev, next) => (next[prop]).localeCompare(prev[prop]))
+  } else if (order === 'DESC') {
+    return data.sort((prev, next) => (prev[prop]).localeCompare(next[prop]))
+  } else {
+    return 0
+  }
+}
+
+export const sortNumberData = (data: any[], order: string, prop: string) => {
+  if (order === 'ASC') {
+    return data.sort((prev, next) => (next[prop] - prev[prop]))
+  } else if (order === 'DESC') {
+    return data.sort((prev, next) => (prev[prop] - next[prop]))
+  } else {
+    return 0
+  }
+}

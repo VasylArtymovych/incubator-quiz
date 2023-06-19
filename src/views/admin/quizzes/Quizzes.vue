@@ -41,7 +41,7 @@
     </div>
 
     <AppTable
-      v-if="quizzes"
+      v-if="sortedQuizzes"
       :dataset="sortedQuizzes"
       :headers="headings"
       fixedLast
@@ -109,6 +109,7 @@
 </template>
 
 <script setup lang="ts">
+import { sortStringData } from '@/core/helpers'
 import { quizzesService } from './quizzes.service'
 
 const router = useRouter()
@@ -131,15 +132,7 @@ const sortedQuizzes = computed(() => {
   if (sortingPropOrder.value && quizzes.value) {
     const { prop, order } = sortingPropOrder.value
 
-    return [...quizzes.value].sort((prev, next) => {
-      if (order === 'ASC') {
-        return (prev[prop] as string).localeCompare(next[prop] as string)
-      } else if (order === 'DESC') {
-        return (next[prop] as string).localeCompare(prev[prop] as string)
-      } else {
-        return 0
-      }
-    })
+    return sortStringData([...quizzes.value], order, prop)
   } else {
     return quizzes.value
   }

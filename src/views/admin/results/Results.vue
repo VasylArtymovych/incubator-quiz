@@ -92,6 +92,8 @@
 </template>
 
 <script setup lang="ts">
+import { sortNumberData } from '@/core/helpers'
+
 const headers: any[] = [
   { label: 'Email', prop: 'email', minWidth: 240, contentClass: 'font-semibold xl:!text-lg' },
   { label: 'Quiz title', prop: 'quizTitle', minWidth: 260 },
@@ -116,15 +118,7 @@ const sortedResults = computed(() => {
   if (sortingPropOrder.value && results.value) {
     const { prop, order } = sortingPropOrder.value
 
-    return [...results.value].sort((prev, next) => {
-      if (order === 'ASC') {
-        return (prev[prop] as number) - (next[prop] as number)
-      } else if (order === 'DESC') {
-        return (next[prop] as number) - (prev[prop] as number)
-      } else {
-        return 0
-      }
-    })
+    return sortNumberData([...results.value], order, prop)
   } else {
     return results.value
   }

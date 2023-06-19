@@ -185,7 +185,7 @@
 
 <script setup lang="ts">
 import UpsertQuestion from './components/UpsertQuestion.vue'
-import { convertSeconds, addLeadingZero } from '@/core/helpers'
+import { convertSeconds, addLeadingZero, sortStringData, sortNumberData } from '@/core/helpers'
 interface IProps {
   selectedRows?: any[]
 }
@@ -215,19 +215,9 @@ const sortedQuestions = computed(() => {
   if (sortingPropOrder.value && questions.value) {
     const { prop, order } = sortingPropOrder.value
 
-    return [...questions.value].sort((prev, next) => {
-      if (order === 'ASC') {
-        return (typeof prev[prop] === 'string')
-          ? (prev[prop] as string).localeCompare(next[prop] as string)
-          : (prev[prop] as number) - (next[prop] as number)
-      } else if (order === 'DESC') {
-        return (typeof prev[prop] === 'string')
-          ? (next[prop] as string).localeCompare(prev[prop] as string)
-          : (next[prop] as number) - (prev[prop] as number)
-      } else {
-        return 0
-      }
-    })
+    return prop === 'title'
+      ? sortStringData([...questions.value], order, prop)
+      : sortNumberData([...questions.value], order, prop)
   } else {
     return questions.value
   }
