@@ -54,7 +54,7 @@
     </div>
 
     <AppTable
-      v-if="questions && tags"
+      v-if="sortedQuestions && tags"
       :selected="selectedRows"
       :dataset="sortedQuestions"
       :headers="headers"
