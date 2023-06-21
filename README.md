@@ -8,3 +8,13 @@ QuizCraft advantages:
 2. Scoring: QuizCraft automatically scores candidates' answers and provides a detailed report on their performance. Recruiters only need to view the results, saving time and effort.
 3. Efficiency in candidate selection: With QuizCraft, recruiters can quickly weed out candidates with insufficient knowledge or inappropriate skills. This helps to focus on the best applicants and shorten the selection process.
 4. Reduced workload for recruiters: An automated test review process allows recruiters to efficiently manage a large volume of job applications, reducing workload and completing tasks faster.
+
+**# QUIZCRAFT has two roles: **
+
+ ADMIN: 
+ email: admin@softonix.org 
+ pass: admin@softonix.org 
+
+ USER: 
+ email: user1@gmail.com
+ pass: user1@gmail.com
