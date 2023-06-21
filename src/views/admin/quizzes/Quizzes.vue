@@ -101,7 +101,7 @@
       :small="$mq.smaller('md').value"
       :layout="`total, ${$mq.smaller('md').value ? '': 'sizes'},
       prev, pager, next, ${$mq.smaller('md').value ? '': 'jumper'}`"
-      class="quizzes--align-center"
+      class="quizzes--align-center my-2"
       @current-change="handleChangeCurrentPage"
       @size-change="handleChangeSize"
     />

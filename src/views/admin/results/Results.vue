@@ -80,7 +80,9 @@
         {{ row.quiz_row.title }}
       </template>
       <template #questions="{row}">
-        {{ row.questions.length }}
+        <el-tag round>
+          {{ row.questions.length }}
+        </el-tag>
       </template>
       <template #percentage_score="{row}">
         <p :class="{'text-black font-semibold pt-[2px] pr-2': $mq.smaller('md').value}">
