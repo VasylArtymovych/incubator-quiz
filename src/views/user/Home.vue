@@ -16,19 +16,24 @@
           <h1 class="mb-2 md:mb-3 font-bold text-lg md:text-3xl xl:text-4xl text-center indent-0">
             Welcome to  <em class="text-accent">QuizCraft</em> !
           </h1>
-          <p class="mb-3 text-justify">
+          <p v-if="$mq.greaterOrEqual('md').value" class="mb-3 text-justify">
             We are happy to introduce to you the TechQuizApp that has been developed to assess the skills of
             candidates for various job vacancies and streamline the decision-making process for recruiters
             when reviewing applications.
           </p>
-          <p class="mb-3 ">
+          <p class="mb-3">
             To pass a quiz, go to section <em class="text-accent">Quizzes</em>
             chose the available quiz and answer the questions within the allocated time.
           </p>
-          <p>
+          <p class="mb-3">
             In section <em class="text-accent">Results</em>
             you are able to see your quiz score and results of your answers.
           </p>
+          <p>
+            <span class="text-accent font-bold">Admin role:</span>
+          </p>
+          <p>email: admin@softonix.org</p>
+          <p>pass: admin@softonix.org</p>
 
           <img
             :src="owlLogo"
